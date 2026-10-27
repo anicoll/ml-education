@@ -11,7 +11,8 @@ notebooks/
 ├── 03-neural-networks/
 ├── 04-architectures/
 ├── 05-training/
-└── 06-open-models/
+├── 06-open-models/
+└── 07-rl/
 ```
 
 ## Environment

@@ -42,7 +42,12 @@ const parts = [
     text: 'Hugging Face, running models locally, quantisation, and fine-tuning with LoRA and QLoRA.',
   },
   {
-    title: '7. Your hardware',
+    title: '7. Reinforcement learning',
+    to: '/docs/reinforcement-learning/rl-basics',
+    text: 'Agents that learn from rewards: Q-learning, DQN and PPO in Gymnasium, then a capstone that teaches an AI to drive in Trackmania.',
+  },
+  {
+    title: '8. Your hardware',
     to: '/docs/hardware/overview',
     text: 'RTX 3070 vs Apple Silicon, what fits in 8 GB vs 48 GB, setup for Windows/WSL2, Ubuntu and macOS, and when to rent.',
   },

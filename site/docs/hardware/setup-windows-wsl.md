@@ -50,6 +50,21 @@ Then run `wsl --shutdown` in PowerShell and reopen Ubuntu.
 
 From here, it's the same as native Linux. Follow [Native Ubuntu](./setup-linux.md) from **Step 2 (build tools)** onwards, skipping the driver step.
 
+## A native Windows environment (for Trackmania)
+
+Most of the course runs in WSL. The exception is the [Trackmania capstone](../reinforcement-learning/capstone-trackmania.md): the game only runs on Windows, and the agent has to capture its window and send controller input, which a WSL environment can't do. For that project, set up a separate Python environment directly in Windows:
+
+```powershell
+winget install astral-sh.uv
+mkdir C:\code\trackmania; cd C:\code\trackmania
+uv venv --python 3.12
+.venv\Scripts\activate
+uv pip install torch --index-url https://download.pytorch.org/whl/cu124
+python -c "import torch; print(torch.cuda.is_available())"
+```
+
+Use the exact PyTorch command from [pytorch.org](https://pytorch.org/get-started/locally/) for Windows. The Windows NVIDIA driver you installed in Step 1 serves both environments, so nothing else needs installing.
+
 ## WSL-specific problems
 
 | Symptom | Fix |

@@ -1,6 +1,6 @@
 {
-  "label": "7. Your hardware",
-  "position": 8,
+  "label": "8. Your hardware",
+  "position": 9,
   "link": {
     "type": "doc",
     "id": "hardware/overview"

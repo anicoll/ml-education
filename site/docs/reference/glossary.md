@@ -15,6 +15,8 @@ title: Glossary
 
 **Autograd.** Automatic differentiation: the framework records operations and computes gradients for you via backpropagation.
 
+**Agent.** In reinforcement learning, the learner that observes the environment and chooses actions.
+
 **Backpropagation.** Computing gradients of the loss with respect to all parameters by applying the chain rule backwards through the network.
 
 **Base model.** A model after pre-training only, before instruction tuning. It continues text rather than following instructions.
@@ -31,11 +33,17 @@ title: Glossary
 
 **Cross-entropy.** The standard classification loss: the negative log probability assigned to the correct class or token.
 
+**Discount factor ($\gamma$).** In RL, how much future rewards count compared with immediate ones.
+
 **DPO (Direct Preference Optimisation).** A preference-tuning method that trains on pairs of preferred and rejected responses, without a separate reward model.
 
 **Dropout.** Regularisation that randomly zeros activations during training.
 
+**DQN (Deep Q-Network).** A neural network that learns Q-values, trained with experience replay and a target network.
+
 **Embedding.** A learned vector representing a discrete item, such as a token.
+
+**Episode.** One run of an RL environment from reset to termination or time-out.
 
 **Epoch.** One full pass through the training dataset.
 
@@ -77,9 +85,15 @@ title: Glossary
 
 **Parameter.** A learned number in the model (a weight or bias).
 
+**Policy.** In RL, the agent's strategy: a mapping (usually a neural network) from observations to actions.
+
+**PPO (Proximal Policy Optimisation).** A stable actor-critic RL algorithm that clips each policy update so it can't change too much.
+
 **Perplexity.** $e^{\text{loss}}$ for a language model; lower is better.
 
 **Pre-training.** The first, large-scale training phase on huge amounts of unlabelled data, usually by next-token prediction.
+
+**Q-value.** The expected future reward from taking an action in a state, then following the policy.
 
 **QLoRA.** LoRA on top of a base model stored in 4-bit, to save memory.
 
@@ -87,11 +101,17 @@ title: Glossary
 
 **RAG (Retrieval-Augmented Generation).** Fetching relevant documents and adding them to the prompt so the model can use them.
 
+**Replay buffer.** Stored past experience that off-policy RL algorithms (DQN, SAC) sample from repeatedly.
+
+**Reward.** The number an RL environment returns after each step; the agent learns to maximise its sum over time.
+
 **Regularisation.** Any technique that reduces overfitting, such as weight decay, dropout or data augmentation.
 
 **Residual connection.** Adding a layer's input to its output, so the layer learns a change. Lets gradients flow through deep networks.
 
 **RLHF.** Reinforcement Learning from Human Feedback: tuning a model with RL against a reward model trained on human preferences.
+
+**SAC (Soft Actor-Critic).** A sample-efficient, off-policy actor-critic RL algorithm for continuous actions. Used by TMRL.
 
 **SFT (Supervised Fine-Tuning).** Fine-tuning on example prompts and ideal responses.
 

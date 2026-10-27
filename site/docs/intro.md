@@ -22,7 +22,8 @@ Machine learning is **writing programs whose behaviour is learned from data inst
 | 4. Architectures | CNNs, embeddings, attention, transformers | Build a CNN and a self-attention layer |
 | 5. Training from scratch | Training loops, data, debugging, efficiency | Train a tiny GPT on your own text |
 | 6. Open-source models | Hugging Face, quantisation, LoRA, QLoRA | QLoRA fine-tune an LLM on the 3070 or the Mac |
-| 7. Your hardware | 3070 vs Apple Silicon, memory budgeting, setup, when to rent | A working PyTorch environment on CUDA and/or MPS |
+| 7. Reinforcement learning | Rewards, Q-learning, DQN, policy gradients, PPO | Train agents in Gymnasium, then an AI that drives in Trackmania |
+| 8. Your hardware | 3070 vs Apple Silicon, memory budgeting, setup, when to rent | A working PyTorch environment on CUDA and/or MPS |
 
 ## How each lesson works
 
@@ -64,9 +65,10 @@ npm start     # opens http://localhost:3000
 You don't need to finish all the theory before touching real models. A good rhythm is:
 
 - **Weeks 1–2:** Parts 1 and 2. Get comfortable with the core loop.
-- **Weeks 3–4:** Part 3, plus setting up your machines (Part 7). Train something on the GPU.
+- **Weeks 3–4:** Part 3, plus setting up your machines (Part 8). Train something on the GPU.
 - **Week 5:** Jump ahead and run a model locally (Part 6, "Running models locally"). It's motivating.
 - **Weeks 6–8:** Part 4 and Part 5, ending with the tiny GPT capstone.
 - **Weeks 9–10:** Part 6 properly: your first QLoRA fine-tune.
+- **Weeks 11–14:** Part 7, reinforcement learning, ending with the Trackmania capstone.
 
 See the [learning roadmap](./roadmap.md) for a more detailed path and milestones.
