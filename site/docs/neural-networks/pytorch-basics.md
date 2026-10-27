@@ -17,9 +17,16 @@ import torch
 x = torch.randn(32, 784)          # batch of 32 flattened images
 print(x.shape, x.dtype, x.device) # torch.Size([32, 784]) torch.float32 cpu
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
+if torch.cuda.is_available():
+    device = "cuda"               # NVIDIA GPU (your 3070)
+elif torch.backends.mps.is_available():
+    device = "mps"                # Apple Silicon GPU (your Mac)
+else:
+    device = "cpu"
 x = x.to(device)                  # move to the GPU
 ```
+
+The rest of this course often writes `"cuda"` directly. On the Mac, use `device` (or `"mps"`) instead. See [Choosing your machine](../hardware/overview.md).
 
 Operations between tensors must be on the same device. "Expected all tensors to be on the same device" is an error you'll see often.
 
@@ -41,7 +48,7 @@ x.transpose(0, 1)    # swap dimensions: (784, 32)
 | --- | --- | --- |
 | `float32` | 4 | Default. Safe, but uses the most memory. |
 | `float16` | 2 | Mixed-precision training. Can overflow. |
-| `bfloat16` | 2 | Same range as float32, less precision. Preferred for LLMs. Supported on your 3070 (Ampere). |
+| `bfloat16` | 2 | Same range as float32, less precision. Preferred for LLMs. Supported on your 3070 (Ampere) and on recent macOS/PyTorch with MPS. |
 | `int8` / 4-bit | 1 / 0.5 | Quantised weights for inference and QLoRA. |
 
 ## Modules

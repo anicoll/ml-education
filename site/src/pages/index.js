@@ -42,9 +42,9 @@ const parts = [
     text: 'Hugging Face, running models locally, quantisation, and fine-tuning with LoRA and QLoRA.',
   },
   {
-    title: '7. Your RTX 3070',
-    to: '/docs/rtx-3070/what-fits',
-    text: 'What fits in 8 GB of VRAM, how to set up CUDA and PyTorch, and when to rent a bigger GPU.',
+    title: '7. Your hardware',
+    to: '/docs/hardware/overview',
+    text: 'RTX 3070 vs Apple Silicon, what fits in 8 GB vs 48 GB, setup for Windows/WSL2, Ubuntu and macOS, and when to rent.',
   },
 ];
 

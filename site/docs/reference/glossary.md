@@ -67,6 +67,10 @@ title: Glossary
 
 **Loss.** A number measuring how wrong the model is; training minimises it.
 
+**MLX.** Apple's machine learning framework for Apple Silicon. `mlx-lm` runs and fine-tunes LLMs with it.
+
+**MPS (Metal Performance Shaders).** The PyTorch backend that runs on Apple Silicon GPUs (`device="mps"`).
+
 **MoE (Mixture of Experts).** An architecture where each token is routed to a few of many expert MLPs per layer.
 
 **Overfitting.** When a model fits its training data well but generalises poorly to new data.
@@ -104,6 +108,8 @@ title: Glossary
 **Transformer.** The neural network architecture built from attention and MLP blocks with residual connections, used by modern LLMs.
 
 **Validation set.** Data held out from training, used to tune choices and detect overfitting.
+
+**Unified memory.** On Apple Silicon, one pool of memory shared by the CPU and GPU, so the GPU can use most of the machine's RAM.
 
 **VRAM.** The GPU's memory. Your RTX 3070 has 8 GB.
 

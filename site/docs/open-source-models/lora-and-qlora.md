@@ -81,6 +81,20 @@ Approximate, with gradient checkpointing, bf16 compute and batch size 1–2 plus
 
 **Unsloth** is a library that rewrites the key kernels for LoRA/QLoRA training and typically cuts memory use substantially and roughly doubles speed. On an 8 GB card it can make the difference between a 7–8B run fitting or not. Worth using once you understand the plain `peft` version.
 
+## What fits on a 48 GB Apple Silicon Mac
+
+With about 36–40 GB usable by the GPU, using MLX (`mlx_lm.lora`):
+
+| Base model | Method | Verdict |
+| --- | --- | --- |
+| 1.5–3B | LoRA (bf16 base) | Easy, long sequences fine. Good for fast iteration. |
+| 7–8B | LoRA (bf16 base) | Comfortable. No quantisation needed. |
+| 14B | QLoRA (4-bit base) | Comfortable. |
+| 27–32B | QLoRA (4-bit base) | Possible with short sequences and fewer LoRA layers. |
+| 70B | — | Doesn't fit. Rent a GPU. |
+
+Steps are slower than on an NVIDIA card of similar size, but the Mac can fine-tune much larger models than the 3070. A good workflow is to debug your data and settings on a small model on either machine, then do the 7B+ run on the Mac. See [Apple Silicon](../hardware/apple-silicon.md) for the commands.
+
 ## After training
 
 You have two choices:

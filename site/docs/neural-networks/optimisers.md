@@ -31,7 +31,7 @@ optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4, weight_decay=0.01)
 ```
 
 :::note Memory cost
-Adam stores two extra numbers for every parameter. With 32-bit floats that's 8 extra bytes per parameter, which matters a lot when you're budgeting VRAM. More in [VRAM maths](../rtx-3070/vram-math.md).
+Adam stores two extra numbers for every parameter. With 32-bit floats that's 8 extra bytes per parameter, which matters a lot when you're budgeting VRAM. More in [VRAM maths](../hardware/vram-math.md).
 :::
 
 ## The learning rate is the most important hyperparameter

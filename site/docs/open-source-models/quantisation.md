@@ -68,6 +68,8 @@ model = AutoModelForCausalLM.from_pretrained("meta-llama/Llama-3.1-8B-Instruct",
 print(model.get_memory_footprint() / 1e9, "GB")
 ```
 
+bitsandbytes needs an NVIDIA GPU. On a Mac, use 4-bit models in MLX format (from the `mlx-community` organisation on Hugging Face) or GGUF models through llama.cpp and Ollama. See [Apple Silicon](../hardware/apple-silicon.md).
+
 Weights are stored in 4-bit but **computed in bf16**: each layer's weights are dequantised on the fly as they're used. That saves memory, not compute.
 
 ## Quantisation and training

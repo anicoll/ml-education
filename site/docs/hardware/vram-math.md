@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 7
 title: VRAM maths
 ---
 
@@ -50,6 +50,10 @@ $$
 
 For Llama 3.1 8B (32 layers, 8 KV heads, head dim 128) in bf16, that's 2 × 32 × 8 × 128 × 2 bytes = 128 KB per token, so an 8,192-token context costs about 1 GB.
 
+## On a Mac: unified memory
+
+The same four costs apply on Apple Silicon. The difference is the budget: instead of a fixed amount of VRAM, the GPU shares the machine's RAM with macOS and your apps. On a 48 GB Mac, budget about **36 GB** by default, or about 40 GB after raising the limit (see [Apple Silicon](./apple-silicon.md)). Everything else you have open eats into the same pool.
+
 ## Worked examples on 8 GB
 
 **Full fine-tuning a 1.5B model:** 1.5B × 16 bytes = 24 GB before activations. Doesn't fit.
@@ -69,6 +73,14 @@ For Llama 3.1 8B (32 layers, 8 KV heads, head dim 128) in bf16, that's 2 × 32 �
 
 **Running an 8B model at Q4_K_M with 4k context:** about 4.9 GB weights + 0.5 GB KV cache + overhead. Fits comfortably.
 
+## Worked examples on a 48 GB Mac
+
+**LoRA on an 8B model (bf16 base):** 16 GB frozen weights + about 0.5 GB adapters and optimiser state + a few GB of activations. About 20 GB. Fits easily, without needing 4-bit at all.
+
+**QLoRA on a 32B model:** about 18 GB of 4-bit weights + adapters + activations. Around 25–30 GB with short sequences. Fits, with care.
+
+**Running a 70B model at 4-bit:** about 40 GB of weights alone, plus KV cache. Only fits after raising the GPU memory limit, with a short context.
+
 ## Measuring
 
 ```python
@@ -80,6 +92,8 @@ print(torch.cuda.max_memory_allocated() / 1e9, "GB peak")
 ```bash
 nvidia-smi -l 1          # live view, refresh every second
 ```
+
+On a Mac, use `torch.mps.driver_allocated_memory()` from PyTorch, `mx.get_peak_memory()` from MLX (older versions: `mx.metal.get_peak_memory()`), and the Memory tab of Activity Monitor.
 
 PyTorch reserves memory in chunks, so `nvidia-smi` shows more than `max_memory_allocated`. If you're right at the limit, setting `PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True` can reduce fragmentation.
 

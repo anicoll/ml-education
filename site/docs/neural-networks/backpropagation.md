@@ -48,7 +48,7 @@ Both gradients are negative, so increasing $w$ and $b$ would reduce the loss. Co
 
 Each gradient reuses the one computed just above it. Computing all gradients costs roughly the same as one or two forward passes, no matter how many parameters there are. Without this trick, deep learning would be computationally impossible.
 
-The cost: the backward pass needs the intermediate values from the forward pass ($x$, $u$, $e$ and so on), so they must be kept in memory. These are called **activations**, and storing them is a major part of GPU memory use during training. It's why training needs much more VRAM than inference, as you'll see in the [RTX 3070 guide](../rtx-3070/vram-math.md).
+The cost: the backward pass needs the intermediate values from the forward pass ($x$, $u$, $e$ and so on), so they must be kept in memory. These are called **activations**, and storing them is a major part of GPU memory use during training. It's why training needs much more VRAM than inference, as you'll see in the [VRAM maths](../hardware/vram-math.md).
 
 ## Autograd does this for you
 

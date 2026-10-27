@@ -42,6 +42,7 @@ You can read these now. Skim for the main idea and the diagrams; don't worry abo
 - [micrograd](https://github.com/karpathy/micrograd), [nanoGPT](https://github.com/karpathy/nanoGPT), [build-nanogpt](https://github.com/karpathy/build-nanogpt). Small, readable reference implementations.
 - [llama.cpp](https://github.com/ggml-org/llama.cpp) and [Ollama](https://ollama.com). Local inference.
 - [Unsloth](https://github.com/unslothai/unsloth). Fast, memory-efficient LoRA and QLoRA, great for an 8 GB GPU.
+- [MLX](https://github.com/ml-explore/mlx) and [mlx-lm](https://github.com/ml-explore/mlx-lm). Running and fine-tuning models on Apple Silicon.
 - [TensorFlow Playground](https://playground.tensorflow.org/). Train tiny networks in the browser.
 
 ## Keeping up

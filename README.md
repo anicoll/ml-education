@@ -1,6 +1,6 @@
 # ml-education
 
-A personal workspace for learning machine learning, from first principles through to fine-tuning open-source LLMs on an RTX 3070.
+A personal workspace for learning machine learning, from first principles through to fine-tuning open-source LLMs on an RTX 3070 PC (WSL2 or Ubuntu) and an Apple Silicon Mac.
 
 | Folder | What's in it |
 | --- | --- |
