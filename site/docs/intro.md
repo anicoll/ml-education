@@ -6,7 +6,7 @@ slug: /intro
 
 # How to use this site
 
-This is a self-paced course on machine learning, written for someone who can program but has not studied ML before. It goes from "what is a model, really?" all the way to fine-tuning an open-source language model on your own RTX 3070.
+This is a self-paced course on machine learning, written for someone who can program but has not studied ML before. It goes from "what is a model, really?" all the way to fine-tuning an open-source language model on your own hardware: an RTX 3070 PC (Windows with WSL2, or Ubuntu) and an Apple Silicon Mac.
 
 ## The big picture in one paragraph
 
@@ -21,8 +21,8 @@ Machine learning is **writing programs whose behaviour is learned from data inst
 | 3. Neural networks | Neurons, backprop, optimisers, PyTorch | Train an MLP on MNIST on your GPU |
 | 4. Architectures | CNNs, embeddings, attention, transformers | Build a CNN and a self-attention layer |
 | 5. Training from scratch | Training loops, data, debugging, efficiency | Train a tiny GPT on your own text |
-| 6. Open-source models | Hugging Face, quantisation, LoRA, QLoRA | QLoRA fine-tune a small LLM on the 3070 |
-| 7. Your RTX 3070 | VRAM budgeting, setup, when to rent | A working CUDA + PyTorch environment |
+| 6. Open-source models | Hugging Face, quantisation, LoRA, QLoRA | QLoRA fine-tune an LLM on the 3070 or the Mac |
+| 7. Your hardware | 3070 vs Apple Silicon, memory budgeting, setup, when to rent | A working PyTorch environment on CUDA and/or MPS |
 
 ## How each lesson works
 
@@ -64,7 +64,7 @@ npm start     # opens http://localhost:3000
 You don't need to finish all the theory before touching real models. A good rhythm is:
 
 - **Weeks 1–2:** Parts 1 and 2. Get comfortable with the core loop.
-- **Weeks 3–4:** Part 3, plus setting up your GPU (Part 7). Train something on the 3070.
+- **Weeks 3–4:** Part 3, plus setting up your machines (Part 7). Train something on the GPU.
 - **Week 5:** Jump ahead and run a model locally (Part 6, "Running models locally"). It's motivating.
 - **Weeks 6–8:** Part 4 and Part 5, ending with the tiny GPT capstone.
 - **Weeks 9–10:** Part 6 properly: your first QLoRA fine-tune.

@@ -28,6 +28,8 @@ After that, his [nanoGPT](https://github.com/karpathy/nanoGPT) repo (and its suc
 | TinyStories, GPT-2 tokeniser | ~15–30M | 200–500M tokens | 512 | 1–3 hours | Short, mostly coherent children's stories. Genuinely impressive. |
 | TinyStories, bigger | ~60–100M | 1–2B tokens | 512 | Overnight or longer | Better grammar and plot consistency. |
 
+On the Mac (PyTorch with `device="mps"`), the same configurations work but expect them to take longer, since `torch.compile` isn't available and per-step compute is usually lower. Memory won't be a constraint at these sizes. Running the same config on both machines and comparing tokens per second is a worthwhile experiment in itself.
+
 Times are rough; measure your own throughput. Use bf16 autocast, `torch.compile` if you can, and batch size plus gradient accumulation to fill memory without going out of it.
 
 ## Sampling
@@ -62,7 +64,7 @@ Once it works, experiment. Change one thing at a time and record results in `not
 
 ## Then: GPT-2 itself
 
-Karpathy's [Let's reproduce GPT-2 (124M)](https://www.youtube.com/watch?v=l8pRSuU81PU) video reproduces the real GPT-2 small. A full reproduction on 10B tokens is out of reach for a 3070 in reasonable time (it's a few hours on 8 high-end data-centre GPUs), but you can follow the code, train on a slice of the data, and rent a cloud GPU for a few dollars if you want to see it through. See [When to rent a GPU](../rtx-3070/cloud-gpus.md).
+Karpathy's [Let's reproduce GPT-2 (124M)](https://www.youtube.com/watch?v=l8pRSuU81PU) video reproduces the real GPT-2 small. A full reproduction on 10B tokens is out of reach for a 3070 in reasonable time (it's a few hours on 8 high-end data-centre GPUs), but you can follow the code, train on a slice of the data, and rent a cloud GPU for a few dollars if you want to see it through. See [When to rent a GPU](../hardware/cloud-gpus.md).
 
 :::info Key idea
 Everything in the big LLMs is here in miniature: tokeniser, embeddings, attention, MLPs, residuals, next-token loss, AdamW, a cosine schedule. The difference between your model and a frontier one is mostly scale, data quality and the post-training steps covered in Part 6.

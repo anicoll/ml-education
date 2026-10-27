@@ -5,7 +5,7 @@ title: Running models locally
 
 # Running models locally
 
-Before fine-tuning anything, get a feel for what open models can do by running them on your own machine. This is the quickest win in the course: you can be chatting with a capable model on your 3070 in about ten minutes.
+Before fine-tuning anything, get a feel for what open models can do by running them on your own machine. This is the quickest win in the course: you can be chatting with a capable model on your 3070 or Mac in about ten minutes.
 
 ## The options
 
@@ -15,7 +15,8 @@ Before fine-tuning anything, get a feel for what open models can do by running t
 | **LM Studio** | Point-and-click | Desktop app with a model browser and chat UI. |
 | **llama.cpp** | Control and efficiency | The engine underneath Ollama and LM Studio. Runs GGUF quantised models on GPU, CPU or both. |
 | **Hugging Face `transformers`** | Experimenting in Python | Most flexible, not the fastest. |
-| **vLLM / SGLang** | Serving many requests fast | Best throughput; more setup; Linux or WSL2. |
+| **MLX (`mlx-lm`)** | Speed on a Mac | Apple's framework; usually the fastest way to run models on Apple Silicon. |
+| **vLLM / SGLang** | Serving many requests fast | Best throughput; more setup; Linux or WSL2 with an NVIDIA GPU. |
 
 ## Quick start with Ollama
 
@@ -54,6 +55,8 @@ llama.cpp can split layers between GPU and CPU (`--n-gpu-layers` / `-ngl`). Laye
 - 7–8B at Q4, fully on GPU: fast, typically 40+ tokens per second.
 - 13–14B at Q4: just over 8 GB, so a few layers spill to CPU. Usable but noticeably slower.
 - 30B+: mostly on CPU. Slow, but it runs if you have 32 GB+ of system RAM.
+
+On a 48 GB Mac, there's no split to worry about: the GPU uses unified memory, so 27–32B models at Q4 (about 17–20 GB) run entirely on the GPU at a usable speed. For the fastest generation on a Mac, try MLX models with `mlx_lm.chat` or in LM Studio. See [Apple Silicon](../hardware/apple-silicon.md).
 
 ## What to notice
 

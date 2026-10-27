@@ -75,7 +75,7 @@ const config = {
             position: 'left',
             label: 'Curriculum',
           },
-          {to: '/docs/rtx-3070/what-fits', label: 'RTX 3070 guide', position: 'left'},
+          {to: '/docs/hardware/overview', label: 'Hardware', position: 'left'},
           {to: '/docs/reference/glossary', label: 'Glossary', position: 'left'},
         ],
       },

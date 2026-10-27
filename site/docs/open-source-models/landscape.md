@@ -48,7 +48,7 @@ The number in a model name (1.5B, 8B, 70B) is its parameter count. On an 8 GB RT
 | 13–14B | 4-bit, tight, with small context | Not really practical |
 | 30B+ | Only with heavy CPU offload (slow) | Rent a GPU |
 
-The [RTX 3070 guide](../rtx-3070/what-fits.md) explains where these numbers come from.
+On a 48 GB Apple Silicon Mac everything shifts up a lot: 27–32B models run comfortably at 4-bit, and 7–8B models can be LoRA fine-tuned without quantisation. See [Choosing your machine](../hardware/overview.md), and [VRAM maths](../hardware/vram-math.md) for where these numbers come from.
 
 ## Model cards
 

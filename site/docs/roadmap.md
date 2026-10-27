@@ -33,15 +33,15 @@ Work through Part 2.
 
 ## Stage 3: Neural networks and PyTorch
 
-Work through Part 3 and set up your GPU using [Setting up your machine](./rtx-3070/setup.md).
+Work through Part 3 and set up your GPU using [Setting up your machine](./hardware/overview.md).
 
-**Milestone:** Train a small multi-layer network on MNIST using PyTorch on your 3070, reaching about 98% test accuracy. Write the training loop yourself, without a high-level trainer.
+**Milestone:** Train a small multi-layer network on MNIST using PyTorch on your GPU (CUDA or MPS), reaching about 98% test accuracy. Write the training loop yourself, without a high-level trainer.
 
 ## Stage 4: A quick win with real models
 
 Read [Running models locally](./open-source-models/running-locally.md).
 
-**Milestone:** Chat with a 7–8B parameter model running on your own GPU through Ollama or llama.cpp. Notice how fast it is, and how much VRAM it uses.
+**Milestone:** Chat with a 7–8B parameter model running on your own GPU through Ollama or llama.cpp. Notice how fast it is, and how much memory it uses. On the Mac, try a 27–32B model too and compare.
 
 ## Stage 5: Architectures
 
@@ -59,7 +59,7 @@ Work through Part 5.
 
 Work through Part 6.
 
-**Milestone:** QLoRA fine-tune a 1–3B parameter instruction model on a small dataset of your own on the 3070. Compare its answers to the base model's on prompts it hasn't seen.
+**Milestone:** QLoRA fine-tune a 1–3B parameter instruction model on a small dataset of your own (on the 3070 with bitsandbytes, or on the Mac with MLX). Compare its answers to the base model's on prompts it hasn't seen.
 
 ## After that
 

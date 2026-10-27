@@ -31,7 +31,7 @@ for step in range(total_steps):
     optimizer.zero_grad(set_to_none=True)
     for _ in range(accum_steps):
         x, y = get_batch("train")
-        with torch.autocast(device_type="cuda", dtype=torch.bfloat16):
+        with torch.autocast(device_type=device, dtype=torch.bfloat16):   # device is "cuda" or "mps"
             logits = model(x)
             loss = F.cross_entropy(logits.view(-1, logits.size(-1)), y.view(-1)) / accum_steps
         loss.backward()
@@ -89,7 +89,7 @@ PyTorch 2 can compile your model into faster fused kernels. It often gives a 1.3
 model = torch.compile(model)
 ```
 
-On Windows this needs WSL2 or a recent PyTorch build with Triton support. See [Setting up your machine](../rtx-3070/setup.md).
+On Windows this needs WSL2 or a recent PyTorch build with Triton support. On a Mac, MPS support is limited, so skip `torch.compile` there. See [Choosing your machine](../hardware/overview.md).
 
 :::tip Try it
 Take your MNIST script from Part 3 and add: a cosine learning rate schedule with warmup, bf16 autocast, gradient clipping, a validation loss check every epoch, checkpoint saving, and TensorBoard logging. Kill the script halfway, then make it resume from the checkpoint.
