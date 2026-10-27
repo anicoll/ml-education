@@ -1,0 +1,8 @@
+{
+  "label": "2. Classical ML",
+  "position": 3,
+  "link": {
+    "type": "generated-index",
+    "description": "Linear and logistic regression built by hand, decision trees, and how to evaluate a model honestly."
+  }
+}

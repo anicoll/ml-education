@@ -1,0 +1,15 @@
+# Install PyTorch separately with the CUDA index URL from pytorch.org first.
+numpy
+pandas
+matplotlib
+scikit-learn
+jupyterlab
+tensorboard
+transformers
+datasets
+tokenizers
+sentence-transformers
+peft
+trl
+accelerate
+bitsandbytes

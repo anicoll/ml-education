@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+
+# ML artefacts
+data/
+runs/
+checkpoints/
+*.pt
+*.bin
+*.safetensors
+*.gguf
+wandb/
+
+# OS / editors
+.DS_Store
+.vscode/
+.idea/
