@@ -1,0 +1,83 @@
+---
+sidebar_position: 2
+title: Backpropagation
+---
+
+# Backpropagation
+
+We know how to train a model if we have the gradient of the loss with respect to every parameter. A network might have millions of parameters, so how do we get millions of gradients efficiently? **Backpropagation**: the chain rule, applied backwards through the network, reusing work as it goes.
+
+## A computation graph
+
+Any calculation can be drawn as a graph of simple operations. Take $L = (wx + b - y)^2$:
+
+```mermaid
+flowchart LR
+  w --> mul((×))
+  x --> mul
+  mul -->|"u = wx"| add((+))
+  b --> add
+  add -->|"ŷ = u + b"| sub((−))
+  y --> sub
+  sub -->|"e = ŷ − y"| sq(("²"))
+  sq --> L
+```
+
+## Forward pass
+
+Plug in numbers: $w = 2, x = 3, b = 1, y = 10$.
+
+- $u = wx = 6$
+- $\hat{y} = u + b = 7$
+- $e = \hat{y} - y = -3$
+- $L = e^2 = 9$
+
+## Backward pass
+
+Now walk backwards, computing how much $L$ changes with respect to each intermediate value. Each step only needs the *local* derivative of one simple operation, multiplied by the gradient flowing in from above (the chain rule).
+
+- $\frac{\partial L}{\partial e} = 2e = -6$
+- $\frac{\partial L}{\partial \hat{y}} = \frac{\partial L}{\partial e}\cdot 1 = -6$
+- $\frac{\partial L}{\partial b} = \frac{\partial L}{\partial \hat{y}} \cdot 1 = -6$
+- $\frac{\partial L}{\partial u} = \frac{\partial L}{\partial \hat{y}} \cdot 1 = -6$
+- $\frac{\partial L}{\partial w} = \frac{\partial L}{\partial u}\cdot x = -18$
+
+Both gradients are negative, so increasing $w$ and $b$ would reduce the loss. Correct: the prediction (7) is too low.
+
+## Why it's efficient
+
+Each gradient reuses the one computed just above it. Computing all gradients costs roughly the same as one or two forward passes, no matter how many parameters there are. Without this trick, deep learning would be computationally impossible.
+
+The cost: the backward pass needs the intermediate values from the forward pass ($x$, $u$, $e$ and so on), so they must be kept in memory. These are called **activations**, and storing them is a major part of GPU memory use during training. It's why training needs much more VRAM than inference, as you'll see in the [RTX 3070 guide](../rtx-3070/vram-math.md).
+
+## Autograd does this for you
+
+In PyTorch, any tensor with `requires_grad=True` records the operations applied to it. Calling `.backward()` runs backpropagation through that record.
+
+```python
+import torch
+
+w = torch.tensor(2.0, requires_grad=True)
+b = torch.tensor(1.0, requires_grad=True)
+x, y = torch.tensor(3.0), torch.tensor(10.0)
+
+L = (w * x + b - y) ** 2
+L.backward()
+
+print(w.grad, b.grad)   # tensor(-18.) tensor(-6.)
+```
+
+Same numbers as the hand calculation.
+
+## Problems that show up in deep networks
+
+- **Vanishing gradients:** multiplying many small local derivatives together gives a gradient near zero, so early layers barely learn. Fixes: ReLU-family activations, careful initialisation, normalisation layers, residual connections.
+- **Exploding gradients:** multiplying many large derivatives gives enormous gradients and the loss goes to `NaN`. Fix: **gradient clipping** (cap the gradient's size), plus the same fixes as above.
+
+:::info Key idea
+Backpropagation is the chain rule run backwards through a computation graph. It gets every gradient for about the cost of one extra forward pass, at the price of storing intermediate activations in memory.
+:::
+
+:::tip Try it
+Watch Andrej Karpathy's ["The spelled-out intro to neural networks and backpropagation: building micrograd"](https://www.youtube.com/watch?v=VMj-3S1tku0) (about 2.5 hours) and build micrograd alongside him in `notebooks/03-neural-networks/micrograd.ipynb`. It's the single best exercise for understanding backprop. Afterwards, check your gradients match PyTorch's on a few expressions.
+:::

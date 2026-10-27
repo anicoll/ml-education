@@ -1,0 +1,31 @@
+/* KaTeX styles bundled locally so maths renders offline. */
+@import 'katex/dist/katex.min.css';
+
+:root {
+  --ifm-color-primary: #4f46e5;
+  --ifm-color-primary-dark: #4338ca;
+  --ifm-color-primary-darker: #3f37c0;
+  --ifm-color-primary-darkest: #3730a3;
+  --ifm-color-primary-light: #6366f1;
+  --ifm-color-primary-lighter: #737bf3;
+  --ifm-color-primary-lightest: #818cf8;
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #a5b4fc;
+  --ifm-color-primary-dark: #8b9cfb;
+  --ifm-color-primary-darker: #818cf8;
+  --ifm-color-primary-darkest: #6366f1;
+  --ifm-color-primary-light: #c7d2fe;
+  --ifm-color-primary-lighter: #d4dcfe;
+  --ifm-color-primary-lightest: #e0e7ff;
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+}
+
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.25rem 0;
+}

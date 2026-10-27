@@ -1,0 +1,8 @@
+{
+  "label": "3. Neural networks",
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "description": "From a single neuron to a trained network: activations, backpropagation, optimisers and PyTorch."
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "label": "6. Open-source models",
+  "position": 7,
+  "link": {
+    "type": "generated-index",
+    "description": "Using, quantising and fine-tuning models other people have trained, with LoRA and QLoRA."
+  }
+}

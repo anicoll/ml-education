@@ -1,0 +1,69 @@
+---
+sidebar_position: 4
+title: "Capstone: train a tiny GPT"
+---
+
+# Capstone: train a tiny GPT
+
+Time to put everything together and train a language model from nothing but random numbers and text. On your 3070 this takes between ten minutes and a couple of hours, depending on how big you go.
+
+## The plan
+
+1. Get a dataset and tokenise it.
+2. Build the [GPT model](../architectures/transformer.md).
+3. Train it with the [full training loop](./the-training-loop.md).
+4. Sample text and watch it improve.
+
+## Recommended path: follow Karpathy
+
+Andrej Karpathy's [Let's build GPT: from scratch, in code, spelled out](https://www.youtube.com/watch?v=kCc8FmEb1nY) builds this exact model from an empty file in about two hours, on Tiny Shakespeare. Follow along and type every line yourself into `notebooks/05-training/tiny-gpt/`. Pause and predict what the next line will be before he writes it.
+
+After that, his [nanoGPT](https://github.com/karpathy/nanoGPT) repo (and its successor [build-nanogpt](https://github.com/karpathy/build-nanogpt)) is a clean, readable training codebase for the same model at larger scale.
+
+## Suggested configurations for an RTX 3070
+
+| Config | Params | Data | Context | Approx. time | What to expect |
+| --- | --- | --- | --- | --- | --- |
+| Char-level Shakespeare | ~10M | 1 MB of text | 256 | 10–20 min | Shakespeare-ish nonsense with correct formatting and plausible words. |
+| TinyStories, GPT-2 tokeniser | ~15–30M | 200–500M tokens | 512 | 1–3 hours | Short, mostly coherent children's stories. Genuinely impressive. |
+| TinyStories, bigger | ~60–100M | 1–2B tokens | 512 | Overnight or longer | Better grammar and plot consistency. |
+
+Times are rough; measure your own throughput. Use bf16 autocast, `torch.compile` if you can, and batch size plus gradient accumulation to fill memory without going out of it.
+
+## Sampling
+
+```python
+@torch.no_grad()
+def generate(model, idx, max_new_tokens, temperature=0.8, top_k=50):
+    model.eval()
+    for _ in range(max_new_tokens):
+        idx_cond = idx[:, -block_size:]              # crop to context length
+        logits = model(idx_cond)[:, -1, :] / temperature
+        if top_k:
+            v, _ = torch.topk(logits, top_k)
+            logits[logits < v[:, [-1]]] = -float("inf")
+        probs = F.softmax(logits, dim=-1)
+        next_id = torch.multinomial(probs, num_samples=1)
+        idx = torch.cat([idx, next_id], dim=1)
+    return idx
+```
+
+Sample every few hundred steps and save the outputs. Reading them in order is the most satisfying part of the whole course: you'll see the model go from random characters, to word-shaped blobs, to real words, to grammar, to something like style.
+
+## Questions to investigate
+
+Once it works, experiment. Change one thing at a time and record results in `notes/`:
+
+1. What happens to validation loss if you double the number of layers? Double the width?
+2. How does loss scale with training tokens? Plot validation loss against tokens seen on a log-log scale. Is it roughly a straight line? (That's a **scaling law**.)
+3. Remove the residual connections. Remove the layer norms. What breaks, and how badly?
+4. Train two models of different sizes for the same amount of *compute*. Which wins?
+5. Compare a character-level tokeniser with GPT-2's BPE on the same text.
+
+## Then: GPT-2 itself
+
+Karpathy's [Let's reproduce GPT-2 (124M)](https://www.youtube.com/watch?v=l8pRSuU81PU) video reproduces the real GPT-2 small. A full reproduction on 10B tokens is out of reach for a 3070 in reasonable time (it's a few hours on 8 high-end data-centre GPUs), but you can follow the code, train on a slice of the data, and rent a cloud GPU for a few dollars if you want to see it through. See [When to rent a GPU](../rtx-3070/cloud-gpus.md).
+
+:::info Key idea
+Everything in the big LLMs is here in miniature: tokeniser, embeddings, attention, MLPs, residuals, next-token loss, AdamW, a cosine schedule. The difference between your model and a frontier one is mostly scale, data quality and the post-training steps covered in Part 6.
+:::
