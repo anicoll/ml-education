@@ -79,6 +79,78 @@ flowchart TB
 2. Training means adjusting those parameters to fit example data.
 3. The goal is not to fit the training data perfectly, but to do well on data you haven't seen.
 
+## Spotting a problem that suits ML
+
+A useful rule of thumb:
+
+:::info Rule of thumb
+ML is a good fit when the rule is **hard to write down** but **examples are easy to collect**.
+:::
+
+You can't write an `if` statement that says which emails are important to you, but you already have years of emails and you know which ones you replied to. That combination (no clear rule, plenty of examples) is exactly where a learned function shines.
+
+When looking for problems, ask:
+
+1. **Is there a decision or a guess I make repeatedly?** Sorting, prioritising, estimating, spotting something odd.
+2. **Could I describe it as input → output?** The input is what you look at; the output is what you decide.
+3. **Do I have a record of past inputs and what the answer turned out to be?** Logs, history, spreadsheets, exports. Often the labels already exist because they're a side effect of something you did anyway.
+
+## Worked examples
+
+Here are five examples written out in full, the way you'll write your own. Some are personal, some are software-engineering problems.
+
+### 1. Email triage
+
+- **Input $x$:** an incoming email: sender, subject, body text, whether you're in To or CC, time sent.
+- **Output $y$:** a category such as *reply today*, *read later*, *newsletter* or *ignore*. This is **classification**.
+- **Where the data comes from:** your existing mailbox. You don't need to label anything by hand: emails you replied to within a few hours are *reply today*, ones you archived unread are *ignore*, ones from senders with an unsubscribe link are probably *newsletter*.
+- **Why not just write rules?** You could write `if sender == boss`, but what makes an email urgent is subtle and changes over time. Your past behaviour captures it better.
+
+### 2. Commute time
+
+- **Input $x$:** departure time, day of the week, weather (rain or not), route, whether it's school holidays.
+- **Output $y$:** how many minutes the trip will take. This is **regression** (the output is a number).
+- **Where the data comes from:** log each trip for a few weeks (a phone shortcut that records start and end times), or export your phone's location history. Weather history is freely available online.
+- **What you'd learn:** which features actually matter. Maybe rain adds 12 minutes and Fridays are 8 minutes faster.
+
+### 3. Flaky CI tests
+
+- **Input $x$:** a failed test run: the test's name, its pass/fail history over the last 50 runs, how much its duration varies, which files the commit changed, which CI runner it ran on.
+- **Output $y$:** was this failure **flaky** (a random failure unrelated to the change) or **real**? Binary classification.
+- **Where the data comes from:** your CI history. Every time a failed job was re-run on the *same commit* and passed, you have a free "flaky" label. Failures fixed by a follow-up commit are "real".
+- **Why it's useful:** auto-retry or quarantine likely-flaky failures, and flag real ones loudly.
+
+### 4. Expense categorisation
+
+- **Input $x$:** a bank transaction: merchant description text (for example `SQ *BLUE BOTTLE 0423`), amount, date, day of the week.
+- **Output $y$:** a category such as groceries, eating out, transport or subscriptions. Classification.
+- **Where the data comes from:** bank CSV exports from months you've already categorised, in a spreadsheet or a budgeting app.
+- **Why not rules?** Merchant strings are messy and endlessly varied. A model learns that `SQ *` plus a café-sounding word usually means eating out.
+
+### 5. Incident detection from metrics
+
+- **Input $x$:** the last 30 minutes of service metrics: request latency (p50 and p99), error rate, CPU, memory, queue depth.
+- **Output $y$:** will there be an incident in the next 15 minutes? Binary classification. Alternatively, an "unusualness" score, which is **unsupervised** anomaly detection and needs no labels at all.
+- **Where the data comes from:** your monitoring system's history (Prometheus, Datadog, CloudWatch) joined with your incident log's timestamps.
+- **Watch out for:** incidents are rare, so "never predict an incident" scores 99.9% accuracy and is useless. This is the class-imbalance problem from [Evaluating models](../classical-ml/evaluation.md).
+
+### Non-examples: when ML is the wrong tool
+
+- **Calculating tax, converting units, sorting a list.** The rule is known exactly. Write the code.
+- **Predicting the lottery.** There's no pattern to learn.
+- **Something you've only done three times.** Not enough examples. Write a rule, or wait until you have data.
+
+## A template for your own
+
+```text
+Problem:      <what decision or guess do I make repeatedly?>
+Input x:      <what information do I look at when I decide?>
+Output y:     <what do I decide? a category, a number, a yes/no?>
+Data source:  <where are past examples, and where do the answers (labels) come from?>
+Type:         <classification / regression / unsupervised>
+Baseline:     <what simple rule would I compare against?>
+```
+
 :::tip Try it
-Before going further, write down in `notes/` three problems from your own life or work where you'd *want* a learned function. For each one: what's the input $x$, what's the output $y$, and where would the example data come from? You'll revisit this list later.
+Before going further, write down in `notes/` three problems from your own life or work where you'd *want* a learned function, using the template above. It's fine to adapt one of the worked examples to your own situation; the point is to practise seeing problems as "input → output, learned from examples". You'll revisit this list later.
 :::

@@ -68,6 +68,25 @@ As you play, pay attention to:
 
 These observations will guide what you choose to fine-tune and what you can realistically expect from it.
 
+## Building a test prompt set
+
+A good personal test set mixes different skills, includes some prompts you know the answer to, and includes some that are likely to trip a small model up. Here's an example set of ten you can use as-is or adapt:
+
+| # | Skill | Prompt | What a good answer looks like |
+| --- | --- | --- | --- |
+| 1 | Factual | What's the difference between a process and a thread? | Correct, concise, mentions shared memory. |
+| 2 | Factual (likely to hallucinate) | Who wrote the paper "Attention Is All You Need", and in what year? | Vaswani et al., 2017. Watch for made-up author names. |
+| 3 | Reasoning | A bat and a ball cost \$1.10 in total. The bat costs \$1.00 more than the ball. How much is the ball? | 5 cents, not 10. |
+| 4 | Multi-step maths | I run 5 km at 5:30 per km, then 3 km at 6:10 per km. What's my total time and average pace? | 46:00 total, 5:45 per km. |
+| 5 | Code | Write a Python function that returns the n most common words in a text file, ignoring case and punctuation. | Runs, uses `collections.Counter`, handles punctuation. |
+| 6 | Code review | Paste a 20-line function with a subtle bug and ask "What's wrong with this code?" | Finds the bug without inventing others. |
+| 7 | Writing | Rewrite this paragraph to be half as long without losing information: (paste a paragraph of your own) | Shorter, nothing important lost. |
+| 8 | Structured output | Extract the name, date and amount from this text as JSON: "Paid Sarah 45 dollars on 3 March for concert tickets." | Valid JSON with the right three fields. |
+| 9 | Explaining | Explain gradient descent to someone who knows programming but no calculus. | Clear analogy, no errors. |
+| 10 | Knowing its limits | What was the closing price of Apple stock yesterday? | Says it can't know this, rather than inventing a number. |
+
+Score each answer quickly (for example 0 = wrong, 1 = partly right, 2 = good) so you can compare models and, later, your fine-tunes with a number as well as a gut feeling.
+
 :::tip Try it
-Install Ollama and run a 1–3B model and a 7–8B model. Write ten test prompts that matter to you (some factual, some reasoning, some writing, some code), run both models on them, and save the prompts and answers in `notes/model-comparison.md`. You'll reuse these prompts to evaluate your fine-tunes.
+Install Ollama and run a 1–3B model and a 7–8B model (on the Mac, add a 27–32B model too). Run the ten prompts above, or your own version of them, on each model, and save the prompts, answers and scores in `notes/model-comparison.md`. You'll reuse these prompts to evaluate your fine-tunes.
 :::
