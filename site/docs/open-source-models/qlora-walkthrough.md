@@ -5,13 +5,13 @@ title: "Walkthrough: your first QLoRA fine-tune"
 
 # Walkthrough: your first QLoRA fine-tune
 
-This page takes you through a complete QLoRA fine-tune of a small instruct model on your 3070. Budget an evening for it, most of it spent on data.
+This page takes you through a complete QLoRA fine-tune of a small instruct model on an 8 GB NVIDIA GPU. Budget an evening for it, most of it spent on data.
 
-:::info On a Mac?
-This walkthrough uses bitsandbytes for 4-bit quantisation, which needs an NVIDIA GPU. On Apple Silicon, follow the same steps for data (2), baseline (3) and evaluation (5), but do the training with MLX instead: see [Fine-tuning with MLX](../hardware/apple-silicon.md#fine-tuning-with-mlx-lora-and-qlora). With 48 GB of unified memory you can also skip quantisation entirely and run plain LoRA on a bf16 base up to about 8B, by deleting `quantization_config` below and using `device_map="mps"`.
+:::info[On a Mac?]
+This walkthrough uses bitsandbytes for 4-bit quantisation, which needs an NVIDIA GPU. On Apple Silicon, follow the same steps for data (2), baseline (3) and evaluation (5), but do the training with MLX instead: see [Fine-tuning with MLX](../hardware/apple-silicon.md#fine-tuning-with-mlx-lora-and-qlora). With 32 GB or more of unified memory you can also skip quantisation entirely and run plain LoRA on a bf16 base up to about 8B, by deleting `quantization_config` below and using `device_map="mps"`.
 :::
 
-:::note Library versions
+:::note[Library versions]
 The Hugging Face libraries change quickly, and argument names occasionally move between versions. If something here errors, check the current [TRL SFTTrainer docs](https://huggingface.co/docs/trl/sft_trainer) and [PEFT docs](https://huggingface.co/docs/peft). The concepts don't change.
 :::
 
@@ -153,3 +153,51 @@ The loop that matters is: **look at failures → improve data → retrain → co
 - Try preference tuning with `trl`'s `DPOTrainer` on pairs of good and bad answers.
 - Compare LoRA ranks 8, 16 and 64 on the same data.
 - Distil: generate high-quality answers for your prompts with a large model, and fine-tune your small model on them.
+
+## Check your understanding
+
+<MultipleChoice
+  id="qlora-walk-1"
+  question="Why run the untuned model on your test prompts before training?"
+  options={["To warm up the GPU", "To get a baseline, so you can tell whether fine-tuning actually helped", "Because SFTTrainer requires it", "To download the model weights"]}
+  answer={1}
+  explanation="Without a baseline you can only guess whether the fine-tuned answers are better."
+/>
+
+<MultipleChoice
+  id="qlora-walk-2"
+  question="With per_device_train_batch_size=2 and gradient_accumulation_steps=8, what's the effective batch size?"
+  options={["2", "8", "10", "16"]}
+  answer={3}
+  explanation="2 examples per step × 8 accumulated steps = 16 examples per optimiser update."
+/>
+
+<MultipleChoice
+  id="qlora-walk-3"
+  question="Training loss drops close to zero and eval loss starts rising. What should you change first?"
+  options={["Train for more epochs", "Train for fewer epochs (or add more data): the model is memorising", "Increase the learning rate", "Increase max_length"]}
+  answer={1}
+  explanation="SFT loss on good data typically ends around 0.5–1.5. Near zero with rising eval loss is overfitting."
+/>
+
+<MultipleChoice
+  id="qlora-walk-4"
+  question="Your fine-tuned model still fails on a type of input. What usually helps most?"
+  options={["Changing the LoRA rank", "Adding better training examples that cover those cases", "Switching optimiser", "Training on the test set"]}
+  answer={1}
+  explanation="Changing hyperparameters helps a little; changing data helps a lot. Look at failures, improve the data, retrain, compare."
+/>
+
+<OpenQuestion
+  id="qlora-walk-5"
+  question="You run the training script and get 'CUDA out of memory' on the first step. Which settings in SFTConfig would you change, in what order, and what does each trade away?">
+
+1. **`per_device_train_batch_size` from 2 to 1**, and `gradient_accumulation_steps` from 8 to 16. The effective batch stays 16; you trade some speed.
+2. **`max_length` from 1024 to 512** (or just above your longest example, from the token-length check in step 2). Biggest single saving; you lose anything past the cut-off, so check how many examples get truncated.
+3. **Make sure `gradient_checkpointing=True` and `bf16=True`** are on (they are in the example). Checkpointing trades about 30% speed for much less activation memory.
+4. **Lower the LoRA rank** (`r=8`) or target fewer modules. Small memory saving; slightly less adapter capacity.
+5. **Use a smaller base model**, or switch to Unsloth, if it still doesn't fit.
+
+After each change, watch `nvidia-smi` for a few steps so you know how much headroom you have.
+
+</OpenQuestion>

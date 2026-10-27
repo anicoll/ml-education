@@ -65,6 +65,60 @@ class Block(nn.Module):
         return x + self.ff(self.norm(x))   # pre-norm residual block
 ```
 
-:::info Key idea
+:::info[Key idea]
 Random init breaks symmetry. Normalisation keeps activations well-scaled. Residual connections give gradients a highway. Dropout and weight decay fight overfitting. Every one of these exists to make optimisation easier.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="reg-1"
+  question="Why can't you initialise all of a network's weights to zero?"
+  options={[
+    "Zero weights use too much memory",
+    "Every neuron in a layer would compute the same thing and get the same gradient, so they'd never become different",
+    "PyTorch doesn't allow it",
+    "The loss would be negative",
+  ]}
+  answer={1}
+  explanation="Random initialisation breaks the symmetry so different neurons can learn different features."
+/>
+
+<MultipleChoice
+  id="reg-2"
+  question="What does a residual connection compute?"
+  options={["h_out = F(h_in)", "h_out = h_in + F(h_in)", "h_out = h_in × F(h_in)", "h_out = 0 during training"]}
+  answer={1}
+  explanation="The layer only learns a change to its input, and gradients flow straight back through the + without shrinking. That's what makes very deep networks trainable."
+/>
+
+<MultipleChoice
+  id="reg-3"
+  question="Your model with dropout scores worse at evaluation time than you expect, and results change every run on the same input. What did you probably forget?"
+  options={["`model.eval()`", "`optimizer.step()`", "Weight decay", "A learning rate schedule"]}
+  answer={0}
+  explanation="Without model.eval(), dropout stays on (and BatchNorm keeps using batch statistics), so predictions are randomly degraded."
+/>
+
+<MultipleChoice
+  id="reg-4"
+  question="Which normalisation layer do Llama and most recent LLMs use?"
+  options={["BatchNorm", "RMSNorm", "Dropout", "None"]}
+  answer={1}
+  explanation="RMSNorm is a simplified LayerNorm without mean subtraction. Transformers use LayerNorm-family norms; BatchNorm is standard in CNNs."
+/>
+
+<OpenQuestion
+  id="reg-5"
+  question="Read the `Block` class at the end of this page and describe, line by line, what happens to `x` in `forward`.">
+
+`return x + self.ff(self.norm(x))` does four things:
+
+1. `self.norm(x)`: LayerNorm rescales each example's features to a stable mean and spread, so the next layers see well-behaved numbers.
+2. `self.ff(...)`: the feed-forward network. A `Linear` layer expands the size from `dim` to `4 * dim`, `GELU` adds the non-linearity, a second `Linear` shrinks it back to `dim`, and `Dropout` randomly zeroes 10% of values during training.
+3. `x + ...`: the residual connection. The block's output is the original input plus the change the feed-forward network computed.
+4. The result has the same shape as the input, so blocks like this can be stacked as deep as you like.
+
+Because the norm is applied *before* the feed-forward layer (inside the residual branch), this is called a "pre-norm" block, the layout most modern transformers use.
+
+</OpenQuestion>

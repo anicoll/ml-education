@@ -101,8 +101,71 @@ model.save("dqn_cartpole")
 
 CartPole is "solved" at an average return of 500 (the episode limit). DQN on CartPole is notoriously sensitive to hyperparameters; the [RL Baselines3 Zoo](https://github.com/DLR-RM/rl-baselines3-zoo) has tuned settings for many environments.
 
-:::tip Try it
+:::tip[Try it]
 1. Run the tabular Q-learning code on FrozenLake. Print the learned policy grid and check it reaches the goal. Then set `is_slippery=True` and see how much harder it gets.
 2. Train SB3's DQN on CartPole and watch `rollout/ep_rew_mean` in TensorBoard.
 3. Stretch goal: write DQN yourself in PyTorch (a replay buffer, a target network and an MLP) and get CartPole above an average return of 400. Following the [CleanRL DQN implementation](https://docs.cleanrl.dev/rl-algorithms/dqn/), a single readable file, is a good guide.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="dqn-1"
+  question="In tabular Q-learning, what is the TD error?"
+  options={[
+    "The difference between the Bellman target (r + γ max Q(s′, a′)) and the current estimate Q(s, a)",
+    "The total reward of an episode",
+    "The probability of a random action",
+    "The size of the Q-table",
+  ]}
+  answer={0}
+  explanation="It measures how surprised the agent was. The update moves Q(s, a) a step α towards the target."
+/>
+
+<MultipleChoice
+  id="dqn-2"
+  question="What does epsilon-greedy with ε = 0.1 do?"
+  options={["Always takes the best known action", "Takes a random action 10% of the time and the best known action otherwise", "Takes a random action 90% of the time", "Lowers the learning rate by 10%"]}
+  answer={1}
+  explanation="It balances exploration (random actions) with exploitation (best known action). ε usually starts at 1 and decays."
+/>
+
+<MultipleChoice
+  id="dqn-3"
+  question="Why does DQN use experience replay?"
+  options={[
+    "To save memory",
+    "Training on random mini-batches from a buffer breaks the correlation between consecutive frames and reuses each experience many times",
+    "To replay episodes to the user",
+    "So the agent never explores",
+  ]}
+  answer={1}
+  explanation="Consecutive frames are nearly identical, which makes training unstable. Reuse also matters when experience is slow to collect."
+/>
+
+<MultipleChoice
+  id="dqn-4"
+  question="Why can't plain DQN handle continuous analogue steering?"
+  options={["It's too slow", "It needs max over all actions of Q(s′, a′), which means trying every action, and there are infinitely many continuous values", "Continuous actions have no reward", "Neural networks can't output continuous values"]}
+  answer={1}
+  explanation="That's why continuous control uses policy gradient or actor-critic methods, or (like Linesight) a small set of discrete action combinations."
+/>
+
+<OpenQuestion
+  id="dqn-5"
+  question="Walk through one Q-learning update by hand: Q(s, a) = 0.5, reward r = 1, γ = 0.9, max Q(s′, a′) = 2.0, α = 0.1. What's the new Q(s, a)?">
+
+1. **Target:** r + γ × max Q(s′, a′) = 1 + 0.9 × 2.0 = **2.8**
+2. **TD error:** target − current = 2.8 − 0.5 = **2.3**
+3. **Update:** Q(s, a) + α × TD error = 0.5 + 0.1 × 2.3 = **0.73**
+
+The estimate moved 10% of the way towards the target. The agent was "surprised" that this action led somewhere so good, so it raised its estimate. Repeating this over many steps lets good values spread backwards from rewarding states to the actions that lead to them.
+
+The same line in the code above is:
+
+```python
+target = r + gamma * np.max(Q[s2]) * (not terminated)   # 2.8
+Q[s, a] += alpha * (target - Q[s, a])                   # 0.5 + 0.1 * 2.3
+```
+
+</OpenQuestion>

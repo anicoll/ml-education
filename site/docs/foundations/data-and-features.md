@@ -56,6 +56,55 @@ Compute $\mu$ and $\sigma$ on the **training set only**, then apply the same val
 
 For fine-tuning LLMs this matters even more: a thousand carefully written examples usually beat a hundred thousand sloppy ones.
 
-:::tip Try it
+:::tip[Try it]
 Download the classic [Iris](https://scikit-learn.org/stable/datasets/toy_dataset.html#iris-dataset) or [California housing](https://scikit-learn.org/stable/datasets/real_world.html#california-housing-dataset) dataset via scikit-learn. Split it 80/10/10, standardise the features using training statistics only, and plot a histogram of each feature before and after.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="data-features-1"
+  question="What is the test set for?"
+  options={[
+    "Choosing the learning rate",
+    "Deciding when to stop training",
+    "Reporting how good the final model really is, used once at the very end",
+    "Training the model when the training set is too small",
+  ]}
+  answer={2}
+  explanation="Choices like learning rate and when to stop are made on the validation set. The test set stays untouched until the end so its score is honest."
+/>
+
+<MultipleChoice
+  id="data-features-2"
+  question="You standardise every feature using the mean and standard deviation of the whole dataset, then split into train and test. What's the problem?"
+  options={[
+    "None, that's the standard approach",
+    "Data leakage: statistics from the test set influenced how the training data was processed",
+    "Standardisation only works on images",
+    "The features will no longer be numbers",
+  ]}
+  answer={1}
+  explanation="Compute μ and σ on the training set only, then apply those same values to validation and test. Otherwise information from the test set leaks into training."
+/>
+
+<MultipleChoice
+  id="data-features-3"
+  question="How would one-hot encoding represent the category 'blue' with categories [red, green, blue]?"
+  options={["[3]", "[0, 0, 1]", "[1, 1, 0]", "[0.33, 0.33, 0.33]"]}
+  answer={1}
+  explanation="One-hot puts a single 1 in the position of the category and 0 everywhere else."
+/>
+
+<OpenQuestion
+  id="data-features-4"
+  question="You're building a model to predict whether a customer will cancel their subscription. Each customer has many rows (one per month). Describe how you'd split the data and one way leakage could sneak in.">
+
+Split **by customer**, not by row. Put each customer's rows entirely into train, validation or test (for example 80/10/10 of customers). If you split rows randomly, the same customer appears in both train and test, and the model can score well just by recognising them, which won't happen with real new customers.
+
+Other leakage traps to mention:
+
+- **Using the future.** A feature like "number of support tickets in the month after" includes information that wouldn't exist at prediction time. Only use data from before the moment you'd make the prediction. Often the cleanest split is by time: train on older months, test on the most recent ones.
+- **Normalising on everything.** Compute averages and standard deviations on the training customers only.
+
+</OpenQuestion>

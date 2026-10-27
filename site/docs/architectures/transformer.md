@@ -71,7 +71,7 @@ class GPT(nn.Module):
         return self.head(self.ln_f(x))            # (B, T, vocab_size) logits
 ```
 
-That's a complete GPT. With these default sizes it has about 10M parameters and trains well on a 3070. You'll do exactly that in the [capstone](../training-from-scratch/capstone-tiny-gpt.md).
+That's a complete GPT. With these default sizes it has about 10M parameters and trains well on a single consumer GPU or an Apple Silicon Mac. You'll do exactly that in the [capstone](../training-from-scratch/capstone-tiny-gpt.md).
 
 ## Training objective
 
@@ -111,6 +111,71 @@ The core is the same. The refinements:
 - **Mixture of experts (MoE)** in some models: many MLPs per layer, and a router picks a few per token. More total parameters, same compute per token.
 - And above all: **much more data and much more compute.**
 
-:::tip Try it
+:::tip[Try it]
 Read [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) by Jay Alammar for a visual walk-through. Then copy the `GPT` class above into a notebook, instantiate it with a vocabulary of 65 (characters), and check that a random input of shape `(4, 32)` produces logits of shape `(4, 32, 65)`. Count its parameters.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="transformer-1"
+  question="Inside a transformer block, what does attention do versus the feed-forward MLP?"
+  options={[
+    "Attention mixes information between tokens; the MLP processes each token on its own",
+    "Attention processes each token on its own; the MLP mixes between tokens",
+    "They do the same thing",
+    "Attention is only used during training",
+  ]}
+  answer={0}
+  explanation="Attention is the only place tokens talk to each other. The MLP holds most of the parameters and works on each token's vector separately."
+/>
+
+<MultipleChoice
+  id="transformer-2"
+  question="For input tokens [t0, t1, t2, t3], what are the training targets?"
+  options={["[t0, t1, t2, t3]", "[t1, t2, t3, t4]", "Only t4", "[t3, t2, t1, t0]"]}
+  answer={1}
+  explanation="Every position predicts the next token, so one sequence gives T training examples at once."
+/>
+
+<MultipleChoice
+  id="transformer-3"
+  question="You want a chatbot's answers to be more predictable and less random. Which sampling change helps?"
+  options={["Raise temperature above 1", "Lower temperature below 1", "Increase top-p to 1.0", "Remove the causal mask"]}
+  answer={1}
+  explanation="Dividing logits by a temperature below 1 sharpens the distribution towards the most likely tokens."
+/>
+
+<MultipleChoice
+  id="transformer-4"
+  question="Which variant would you use to produce sentence embeddings for search?"
+  options={["Decoder-only (GPT)", "Encoder-only (BERT-style)", "A CNN", "None, transformers can't do that"]}
+  answer={1}
+  explanation="Encoder-only models see the whole input without a causal mask, which suits understanding tasks like classification and embeddings."
+/>
+
+<OpenQuestion
+  id="transformer-5"
+  question="Describe, step by step, how a trained GPT generates the sentence that follows a prompt.">
+
+1. **Tokenise** the prompt into token IDs.
+2. **Run the model** on all the tokens. It outputs logits at every position, but only the **last** position matters: it's the model's guess for the next token.
+3. **Turn those logits into probabilities**, after dividing by the temperature (and optionally cutting to the top-k or top-p tokens).
+4. **Sample** one token from that distribution.
+5. **Append** it to the sequence.
+6. **Repeat** from step 2 until the model produces an end-of-text token or you hit a length limit.
+7. **Decode** the token IDs back into text.
+
+In code it's a short loop:
+
+```python
+for _ in range(max_new_tokens):
+    logits = model(idx)[:, -1, :] / temperature   # last position only
+    probs = torch.softmax(logits, dim=-1)
+    next_id = torch.multinomial(probs, num_samples=1)
+    idx = torch.cat([idx, next_id], dim=1)
+```
+
+Real inference engines also use a KV cache so step 2 doesn't recompute the earlier tokens every time.
+
+</OpenQuestion>

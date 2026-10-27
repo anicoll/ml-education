@@ -84,10 +84,64 @@ Sigmoid and tanh **saturate**: for large inputs their slope is nearly zero, so g
 
 Each layer transforms its input into a new representation. In an image network, early layers learn edges, middle layers learn textures and parts, later layers learn whole objects. Nobody programs this; it emerges from minimising the loss. This is the key difference from classical ML: **the network learns its own features.**
 
-:::info Key idea
+:::info[Key idea]
 A neural network is layers of "linear transform, then non-linearity", stacked. The non-linearity is what makes depth useful.
 :::
 
-:::tip Try it
+:::tip[Try it]
 Go to the [TensorFlow Playground](https://playground.tensorflow.org/) in your browser. Pick the spiral dataset. Try to classify it with no hidden layers, then one, then several. Swap ReLU for linear activation and watch it fail. Fifteen minutes here builds more intuition than an hour of reading.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="neuron-1"
+  question="A single neuron with a sigmoid activation is mathematically the same as which model?"
+  options={["Linear regression", "Logistic regression", "A decision tree", "k-means"]}
+  answer={1}
+  explanation="Weighted sum plus bias, then sigmoid: that's exactly logistic regression."
+/>
+
+<MultipleChoice
+  id="neuron-2"
+  question="What happens if you stack several linear layers with no activation function between them?"
+  options={[
+    "The network becomes much more powerful",
+    "It collapses into a single linear layer, so the extra layers add nothing",
+    "Training becomes impossible",
+    "It becomes a decision tree",
+  ]}
+  answer={1}
+  explanation="W₂(W₁x) = (W₂W₁)x, which is just another linear layer. The non-linearity is what makes depth useful."
+/>
+
+<MultipleChoice
+  id="neuron-3"
+  question="A layer takes 784 inputs and has 128 neurons. How many weights (ignoring biases) does it have?"
+  options={["912", "784", "128", "100,352"]}
+  answer={3}
+  explanation="W has shape (128, 784): one weight per input per neuron, 128 × 784 = 100,352. Add 128 biases for the full count."
+/>
+
+<MultipleChoice
+  id="neuron-4"
+  question="Why did ReLU help make deep networks trainable compared with sigmoid?"
+  options={[
+    "ReLU outputs probabilities",
+    "Its slope is 1 for positive inputs, so gradients don't shrink towards zero the way they do when sigmoid saturates",
+    "It uses less memory",
+    "It's always positive, so the loss is always positive",
+  ]}
+  answer={1}
+  explanation="Sigmoid's slope is close to zero for large inputs, and multiplying many such slopes makes gradients vanish in deep networks."
+/>
+
+<OpenQuestion
+  id="neuron-5"
+  question="What does it mean that a neural network 'learns its own features'? Contrast it with what you did in linear regression.">
+
+In linear regression, if the data curved, **you** had to invent useful inputs, like adding x² or log(x) as new columns. The model could only weigh the features you gave it.
+
+A neural network's hidden layers transform the raw input into new representations, and training adjusts those transformations too, because they're just more parameters reducing the same loss. So the network discovers its own useful features. In an image model, nobody tells the first layers to detect edges or the later layers to detect eyes and wheels; those detectors emerge because they help reduce the loss.
+
+</OpenQuestion>

@@ -62,7 +62,7 @@ Work through Part 5.
 
 Work through Part 6.
 
-**Milestone:** QLoRA fine-tune a 1–3B parameter instruction model on a small dataset of your own (on the 3070 with bitsandbytes, or on the Mac with MLX). Compare its answers to the base model's on prompts it hasn't seen.
+**Milestone:** QLoRA fine-tune a 1–3B parameter instruction model on a small dataset of your own (on an NVIDIA GPU with bitsandbytes, or on a Mac with MLX). Compare its answers to the base model's on prompts it hasn't seen.
 
 ## Stage 8: Reinforcement learning
 

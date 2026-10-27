@@ -1,6 +1,6 @@
 # ml-education
 
-A personal workspace for learning machine learning, from first principles through to fine-tuning open-source LLMs on an RTX 3070 PC (WSL2 or Ubuntu) and an Apple Silicon Mac.
+A workspace for learning machine learning, from first principles through to fine-tuning open-source LLMs on a PC with an NVIDIA GPU (WSL2 or Ubuntu) or an Apple Silicon Mac.
 
 | Folder | What's in it |
 | --- | --- |
@@ -19,4 +19,4 @@ npm install   # first time only
 npm start     # http://localhost:3000
 ```
 
-The site is local only and isn't deployed anywhere.
+The site is published to GitHub Pages automatically when changes land on `main` (see `.github/workflows/deploy-site.yml`). Progress and quiz answers are saved in your browser's localStorage only.

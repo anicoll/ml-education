@@ -79,8 +79,55 @@ model = torchvision.models.resnet18(weights="IMAGENET1K_V1")
 model.fc = nn.Linear(model.fc.in_features, num_classes)
 ```
 
-:::tip Try it
-1. Train `SmallCNN` on CIFAR-10 (`torchvision.datasets.CIFAR10`) on your 3070. Aim for about 80% test accuracy. Add random crops and horizontal flips as data augmentation and see how much it helps.
+:::tip[Try it]
+1. Train `SmallCNN` on CIFAR-10 (`torchvision.datasets.CIFAR10`) on your GPU. Aim for about 80% test accuracy. Add random crops and horizontal flips as data augmentation and see how much it helps.
 2. Fine-tune a pre-trained ResNet-18 on the same data and compare.
 3. Visualise the 32 filters of the first conv layer as tiny images. Can you see edge detectors?
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="cnn-1"
+  question="What does weight sharing in a convolution layer mean?"
+  options={[
+    "All layers use the same weights",
+    "The same small filter is slid across the whole image, so a pattern is detected wherever it appears, with very few parameters",
+    "Weights are shared between the training and test sets",
+    "Every pixel gets its own weight",
+  ]}
+  answer={1}
+  explanation="A 3×3 filter on a colour image has just 27 weights plus a bias, reused at every position. An MLP would need a separate weight for every pixel."
+/>
+
+<MultipleChoice
+  id="cnn-2"
+  question="A 32×32 feature map goes through a 2×2 max pooling layer. What size is the output?"
+  options={["32×32", "16×16", "8×8", "64×64"]}
+  answer={1}
+  explanation="Max pooling over 2×2 blocks halves the width and height, so each later layer 'sees' a bigger region of the original image."
+/>
+
+<MultipleChoice
+  id="cnn-3"
+  question="You have 300 photos each of 5 kinds of plant. What's the most practical way to build a good classifier?"
+  options={[
+    "Train a large CNN from scratch",
+    "Transfer learning: take a network pre-trained on ImageNet, replace its last layer, and fine-tune",
+    "Use linear regression on the raw pixels",
+    "Collect a million more photos first",
+  ]}
+  answer={1}
+  explanation="A pre-trained network already knows edges, textures and shapes. With a new final layer, a few hundred examples per class is often enough."
+/>
+
+<OpenQuestion
+  id="cnn-4"
+  question="Why does a CNN work better than an MLP on images? Give two reasons.">
+
+1. **It knows neighbouring pixels belong together.** Each filter looks at a small local patch, which matches how images work: edges and textures are local. An MLP treats the image as a flat list and has to discover from scratch that pixel 37 is next to pixel 38.
+2. **It recognises a pattern anywhere.** Because the same filter slides over the whole image (weight sharing), a cat's ear detected in the top-left uses the same weights as one in the bottom-right. An MLP would have to learn separate weights for every position.
+
+A bonus third reason: far fewer parameters. Fewer parameters means less overfitting and less data needed.
+
+</OpenQuestion>

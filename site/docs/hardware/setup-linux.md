@@ -3,7 +3,7 @@ sidebar_position: 5
 title: "Setup: native Ubuntu"
 ---
 
-# Setup: native Ubuntu (RTX 3070)
+# Setup: native Ubuntu (NVIDIA GPU)
 
 Native Linux is the smoothest platform for CUDA work: every library in this course supports it. These steps are for Ubuntu 24.04 or newer. If you're using WSL2 on Windows, start with [Windows + WSL2](./setup-windows-wsl.md), which sends you back here for the shared steps.
 
@@ -28,7 +28,7 @@ Check it:
 nvidia-smi
 ```
 
-You should see your RTX 3070, the driver version, and the highest CUDA version the driver supports.
+You should see your GPU's name, the driver version, and the highest CUDA version the driver supports.
 
 ## Step 2: Build tools
 
@@ -63,8 +63,8 @@ PyTorch wheels bundle their own CUDA runtime, so you **don't need to install the
 import time, torch
 print(torch.__version__)
 print(torch.cuda.is_available())             # True
-print(torch.cuda.get_device_name(0))         # NVIDIA GeForce RTX 3070
-print(torch.cuda.is_bf16_supported())        # True on Ampere
+print(torch.cuda.get_device_name(0))         # e.g. NVIDIA GeForce RTX 4060
+print(torch.cuda.is_bf16_supported())        # True on RTX 30-series (Ampere) and newer
 
 x = torch.randn(4096, 4096, device="cuda")
 torch.cuda.synchronize()
@@ -93,6 +93,36 @@ Then start Jupyter with `jupyter lab`, or open the repo in VS Code with the Pyth
 | Driver broke after a kernel update | `sudo ubuntu-drivers install` again, then reboot. |
 | Out of memory immediately | Something else is using the GPU. Check `nvidia-smi` for other processes, including your desktop. |
 
-:::tip Try it
+:::tip[Try it]
 Get the verification script running and save its output to `notes/setup.md`, along with your driver, PyTorch and Python versions. Future you will thank you when something breaks after an update.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="linux-1"
+  question="`torch.cuda.is_available()` returns False, but `nvidia-smi` works. What's the most likely cause?"
+  options={["The GPU is broken", "You installed the CPU-only PyTorch wheel; reinstall using the CUDA index URL from pytorch.org", "Secure Boot", "Not enough RAM"]}
+  answer={1}
+  explanation="If nvidia-smi works, the driver is fine. The PyTorch build is the problem."
+/>
+
+<MultipleChoice
+  id="linux-2"
+  question="Do you need to install the CUDA toolkit separately to use PyTorch on the GPU?"
+  options={["Yes, always", "No: PyTorch wheels bundle their own CUDA runtime; you only need a recent enough driver", "Only on Ubuntu", "Only for inference"]}
+  answer={1}
+  explanation="You only need the full toolkit if you compile custom CUDA code."
+/>
+
+<OpenQuestion
+  id="linux-3"
+  question="After a reboot, `nvidia-smi` says it can't communicate with the driver. What do you check, and in what order?">
+
+1. **Secure Boot / MOK enrolment.** The most common cause. If you skipped the blue "MOK management" screen after installing the driver, the kernel won't load the unsigned driver. Re-run `sudo ubuntu-drivers install`, reboot, and complete the enrolment with the password you set (or disable Secure Boot in the BIOS).
+2. **Kernel update.** If the system updated its kernel, the driver module may not have rebuilt. Run `sudo ubuntu-drivers install` again and reboot.
+3. **Check what's installed:** `ubuntu-drivers devices` shows the recommended driver; make sure that's the one installed.
+
+Once `nvidia-smi` shows your GPU again, re-run the verification script from Step 5 to confirm PyTorch can see it.
+
+</OpenQuestion>

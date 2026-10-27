@@ -49,7 +49,7 @@ const parts = [
   {
     title: '8. Your hardware',
     to: '/docs/hardware/overview',
-    text: 'RTX 3070 vs Apple Silicon, what fits in 8 GB vs 48 GB, setup for Windows/WSL2, Ubuntu and macOS, and when to rent.',
+    text: 'NVIDIA vs Apple Silicon, what fits in how much memory, setup for Windows/WSL2, Ubuntu and macOS, and when to rent.',
   },
 ];
 

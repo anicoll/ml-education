@@ -37,7 +37,7 @@ $$
 
 **Learning** means finding values of $\theta$ that make $f$ produce good outputs. That's it. A linear regression has two parameters. GPT-4-class models have hundreds of billions. The idea is the same.
 
-:::info Key idea
+:::info[Key idea]
 Machine learning = choose a flexible family of functions, then use data to pick the member of that family that works best.
 :::
 
@@ -83,7 +83,7 @@ flowchart TB
 
 A useful rule of thumb:
 
-:::info Rule of thumb
+:::info[Rule of thumb]
 ML is a good fit when the rule is **hard to write down** but **examples are easy to collect**.
 :::
 
@@ -151,6 +151,76 @@ Type:         <classification / regression / unsupervised>
 Baseline:     <what simple rule would I compare against?>
 ```
 
-:::tip Try it
+:::tip[Try it]
 Before going further, write down in `notes/` three problems from your own life or work where you'd *want* a learned function, using the template above. It's fine to adapt one of the worked examples to your own situation; the point is to practise seeing problems as "input → output, learned from examples". You'll revisit this list later.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="what-is-ml-1"
+  question="In traditional programming you write the rules. What do you provide in machine learning instead?"
+  options={[
+    "The rules, written in a special ML language",
+    "Example inputs together with the answers you want, so an algorithm can find the rules",
+    "Only the inputs, never the answers",
+    "A list of every possible input and its output",
+  ]}
+  answer={1}
+  explanation="ML flips it around: data + answers go in, and the learning algorithm produces the rules (the model). Listing every possible input would just be a lookup table, which can't handle new inputs."
+/>
+
+<MultipleChoice
+  id="what-is-ml-2"
+  question="In the equation `ŷ = f(x; θ)`, what is θ (theta)?"
+  options={["The input, such as an email", "The prediction", "The adjustable parameters inside the function", "The correct answer (the label)"]}
+  answer={2}
+  explanation="θ are the parameters: the numbers training adjusts. x is the input, ŷ is the prediction, and the correct answer is usually written y."
+/>
+
+<MultipleChoice
+  id="what-is-ml-3"
+  question="A model scores 100% on the examples it was trained on but badly on new ones. What has gone wrong?"
+  options={[
+    "Nothing: 100% on training data is the goal",
+    "It has memorised the quirks of its training examples instead of learning the real pattern, so it doesn't generalise",
+    "It needs a bigger learning rate",
+    "The new examples must be labelled wrongly",
+  ]}
+  answer={1}
+  explanation="The goal is good performance on data the model hasn't seen. Fitting the training data perfectly while failing on new data is called overfitting, and it's the central tension of ML."
+/>
+
+<MultipleChoice
+  id="what-is-ml-4"
+  question="Which of these is the best fit for machine learning?"
+  options={[
+    "Converting kilometres to miles",
+    "Predicting tomorrow's lottery numbers",
+    "Deciding which support tickets are urgent, given thousands of past tickets and how quickly each was handled",
+    "Sorting a list of names alphabetically",
+  ]}
+  answer={2}
+  explanation="The rule for 'urgent' is hard to write down, and past tickets give you plenty of labelled examples. Unit conversion and sorting have exact rules, and lottery numbers have no pattern to learn."
+/>
+
+<OpenQuestion
+  id="what-is-ml-5"
+  question="Using the template on this page, describe one problem from your own life or work that could suit ML. Fill in the input, output, data source and type.">
+
+There's no single right answer. Here's a fully worked example to compare against:
+
+```text
+Problem:      How long will this code review take to get approved?
+Input x:      lines changed, number of files, which folders were touched,
+              author's past review times, day of week, number of reviewers
+Output y:     hours until approval
+Data source:  the history of merged pull requests in the repo. The label
+              (hours until approval) is already recorded for every one.
+Type:         regression (the output is a number)
+Baseline:     "the median review time for PRs of this size"
+```
+
+Check yours for the same things: is the output something you could actually record, do labels already exist (or come for free), and is there a simple baseline to beat? If the answer could be written as a short `if` statement, it probably doesn't need ML.
+
+</OpenQuestion>

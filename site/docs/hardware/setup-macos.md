@@ -67,7 +67,7 @@ mx.eval(b)            # MLX is lazy: work only happens when you evaluate
 print(mx.default_device())   # Device(gpu, 0)
 ```
 
-Run the same matmul benchmark on the 3070 (from the [Ubuntu setup](./setup-linux.md)) and compare. It's a quick, concrete feel for the two machines.
+If you also have an NVIDIA PC, run the same matmul benchmark there (from the [Ubuntu setup](./setup-linux.md)) and compare. It's a quick, concrete feel for the two machines.
 
 ## Step 6: The rest of the stack
 
@@ -94,10 +94,38 @@ Install [Ollama](https://ollama.com) or [LM Studio](https://lmstudio.ai). Both u
 | --- | --- |
 | `torch.backends.mps.is_available()` is `False` | You're probably on an x86 Python under Rosetta. Check `platform.machine()` prints `arm64`, then recreate the environment. |
 | `NotImplementedError` for an operation on MPS | Set `PYTORCH_ENABLE_MPS_FALLBACK=1`. |
-| Errors mentioning `bitsandbytes` or CUDA | That code path is CUDA-only. Use MLX for quantised models and QLoRA, or run that notebook on the 3070. |
+| Errors mentioning `bitsandbytes` or CUDA | That code path is CUDA-only. Use MLX for quantised models and QLoRA, or run that notebook on an NVIDIA machine. |
 | A big model loads but generation crawls | Memory pressure is high and macOS is swapping. Close apps, shorten the context, or use a smaller quantisation. |
 | Model too big for the default GPU memory limit | Raise it with `sudo sysctl iogpu.wired_limit_mb=...` (see [Apple Silicon](./apple-silicon.md)). |
 
-:::tip Try it
+:::tip[Try it]
 Save the outputs of both verification scripts to `notes/setup.md`, along with your macOS, PyTorch and MLX versions.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="macos-1"
+  question="`torch.backends.mps.is_available()` returns False on an Apple Silicon Mac. What's the most likely cause?"
+  options={["MPS needs a driver install", "You're running an Intel (x86) Python under Rosetta; check that platform.machine() prints arm64", "The Mac has too little memory", "PyTorch doesn't support macOS"]}
+  answer={1}
+  explanation="Recreate the environment with a native arm64 Python (uv does this automatically)."
+/>
+
+<MultipleChoice
+  id="macos-2"
+  question="What does `PYTORCH_ENABLE_MPS_FALLBACK=1` do?"
+  options={["Runs everything on the CPU", "Runs operations that MPS doesn't support yet on the CPU instead of raising an error", "Enables CUDA on the Mac", "Speeds up training"]}
+  answer={1}
+  explanation="Most operations still run on the GPU; only the missing ones fall back."
+/>
+
+<OpenQuestion
+  id="macos-3"
+  question="In the MLX check, why is `mx.eval(b)` needed before the work actually happens?">
+
+MLX is **lazy**: when you write `b = a @ a`, it only records that `b` should be the product of `a` with itself, without computing it. The actual work happens when the result is needed, for example when you print it, convert it to NumPy, or explicitly call `mx.eval(b)`.
+
+That's why benchmarks in MLX must call `mx.eval(...)` inside the timed section; otherwise you'd only be timing how long it takes to *describe* the computation. Laziness lets MLX fuse and optimise operations before running them.
+
+</OpenQuestion>

@@ -10,7 +10,7 @@ For language models, data work means: get text, clean it, tokenise it, and feed 
 ## Where training text comes from
 
 - **Small and classic:** Tiny Shakespeare (1 MB), perfect for first experiments.
-- **Children's stories:** [TinyStories](https://huggingface.co/datasets/roneneldan/TinyStories), synthetic simple stories designed so that very small models can learn coherent English. Excellent for a 3070.
+- **Children's stories:** [TinyStories](https://huggingface.co/datasets/roneneldan/TinyStories), synthetic simple stories designed so that very small models can learn coherent English. Excellent for a single consumer GPU.
 - **Web scale:** FineWeb, The Pile, RedPajama. Billions to trillions of tokens. Far more than you need, but you can stream a slice.
 - **Your own:** your notes, a book, a codebase. Small, but fun.
 
@@ -72,10 +72,52 @@ A useful rule of thumb from the **Chinchilla** paper: for the best model for a f
 
 Modern small models are trained far beyond this (Llama 3 8B saw 15 trillion tokens) because a smaller model that's been over-trained is cheaper to *run*. For your experiments, 20 tokens per parameter is a good target.
 
-## Throughput budget on a 3070
+## Throughput budget on a consumer GPU
 
-As a rough guide, a 3070 trains a 10M-parameter GPT at somewhere around 100k–200k tokens per second with bf16 and `torch.compile`. 200M tokens then takes about 20–30 minutes. A 100M-parameter model at 2B tokens would take a day or more. Measure your own numbers; they depend heavily on sequence length and batch size.
+As a rough guide, a mid-range consumer GPU (an RTX 3070 or 4060 class card) trains a 10M-parameter GPT at somewhere around 100k–200k tokens per second with bf16 and `torch.compile`. 200M tokens then takes about 20–30 minutes. A 100M-parameter model at 2B tokens would take a day or more. Measure your own numbers; they depend heavily on sequence length and batch size.
 
-:::tip Try it
+:::tip[Try it]
 Download TinyStories, tokenise the first 100k stories with the GPT-2 tokeniser, and save `train.bin` and `val.bin` in `notebooks/05-training/data/`. How many tokens did you get? How many parameters would be compute-optimal for that many tokens?
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="data-pipe-1"
+  question="Why tokenise the whole dataset once and save it, rather than tokenising during training?"
+  options={[
+    "Tokenising during training changes the results",
+    "Tokenising on the fly wastes time every epoch and can leave the GPU waiting for data",
+    "Saved tokens take less disk space than text, and that's the only reason",
+    "The tokenizer only works offline",
+  ]}
+  answer={1}
+  explanation="Do the slow work once, store a compact array of token IDs, and the training loop only has to slice windows out of it."
+/>
+
+<MultipleChoice
+  id="data-pipe-2"
+  question="By the Chinchilla rule of thumb, how many training tokens suit a 50M-parameter model?"
+  options={["50M", "200M", "1B", "50B"]}
+  answer={2}
+  explanation="About 20 tokens per parameter: 50M × 20 = 1B tokens."
+/>
+
+<MultipleChoice
+  id="data-pipe-3"
+  question="In get_batch, how do x and y relate?"
+  options={["They are the same window", "y is the same window as x shifted one token to the right", "y is a random different window", "y is the reversed window"]}
+  answer={1}
+  explanation="Each position in x has its next token at the same position in y, which is exactly what next-token prediction needs."
+/>
+
+<OpenQuestion
+  id="data-pipe-4"
+  question="You tokenised TinyStories and got 120M tokens. What model size would be compute-optimal, and roughly how long might training take at 150k tokens per second?">
+
+- **Compute-optimal size:** 120M tokens ÷ 20 tokens per parameter = **6M parameters**.
+- **Training time** for one pass over the data: 120,000,000 ÷ 150,000 ≈ 800 seconds, so about **13 minutes**.
+
+That's a quick experiment, which makes it a good first run. You could also try a model a few times bigger (say 20M parameters) on the same data. It would be "over-sized" by Chinchilla's measure, but might still reach a lower loss if you train for a few epochs. Comparing the two is a nice experiment.
+
+</OpenQuestion>

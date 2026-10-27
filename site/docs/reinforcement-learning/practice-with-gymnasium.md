@@ -84,11 +84,11 @@ Things to try and notice:
 
 ## Which machine?
 
-- Small MLP policies (CartPole, LunarLander, Pendulum) are often as fast on the **CPU** as on a GPU, because the environment simulation is the bottleneck, not the network. Either your PC or your Mac is fine.
-- Image-based environments (CarRacing) benefit from a GPU for the CNN. The 3070 with CUDA is the most straightforward. Gymnasium and SB3 also run on the Mac.
+- Small MLP policies (CartPole, LunarLander, Pendulum) are often as fast on the **CPU** as on a GPU, because the environment simulation is the bottleneck, not the network. Any laptop or desktop is fine.
+- Image-based environments (CarRacing) benefit from a GPU for the CNN. An NVIDIA GPU with CUDA is the most straightforward. Gymnasium and SB3 also run on the Mac.
 - Trackmania needs Windows. See the [capstone](./capstone-trackmania.md).
 
-:::tip Try it
+:::tip[Try it]
 Work through the table above in `notebooks/07-rl/`, one environment at a time:
 
 1. PPO on CartPole until it reliably reaches 500.
@@ -98,3 +98,45 @@ Work through the table above in `notebooks/07-rl/`, one environment at a time:
 
 Keep a table in `notes/rl-log.md` of each run: algorithm, key hyperparameters, steps, wall-clock time and final return.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="gym-1"
+  question="What's the difference between `terminated` and `truncated` in Gymnasium?"
+  options={[
+    "They mean the same thing",
+    "terminated: the episode ended for a real reason (fell, crashed, finished); truncated: it hit a time limit",
+    "terminated: time limit; truncated: crashed",
+    "truncated means the observation was cropped",
+  ]}
+  answer={1}
+  explanation="It matters for value targets: after a real ending there are no future rewards, but after a time limit the future would have continued."
+/>
+
+<MultipleChoice
+  id="gym-2"
+  question="Why are small MLP policies like CartPole's often just as fast on a CPU as on a GPU?"
+  options={["GPUs can't run RL", "The environment simulation is the bottleneck, not the tiny network", "CartPole is written in C", "MLPs don't support CUDA"]}
+  answer={1}
+  explanation="A GPU only helps when the network is big enough to keep it busy, like a CNN on CarRacing's images."
+/>
+
+<MultipleChoice
+  id="gym-3"
+  question="One PPO run on LunarLander reached a return of 250. What should you conclude?"
+  options={["PPO solves LunarLander every time", "Very little yet: RL varies a lot between runs, so run several seeds before drawing conclusions", "Your hyperparameters are optimal", "You should stop experimenting"]}
+  answer={1}
+  explanation="One good run proves little; three runs that all learn prove something."
+/>
+
+<OpenQuestion
+  id="gym-4"
+  question="CarRacing's reward is +1000/N per new track tile visited and −0.1 per frame. What behaviour does each part encourage, and how does it relate to Trackmania?">
+
+- **+1000/N per tile:** rewards **progress** around the track. Visiting all N tiles earns 1000 in total, and you only get credit for new tiles, so driving in circles over the same tiles earns nothing.
+- **−0.1 per frame:** a **time penalty**. The longer the agent takes, the more it loses, so it's pushed to go fast rather than creep around safely.
+
+Together: "get round the whole track, quickly". TMRL's Trackmania reward is the same idea in a different form: reward is how far along your recorded reference line the car has progressed each step, so faster progress means more reward per second and stopping or crashing earns nothing. That's why CarRacing is the ideal warm-up.
+
+</OpenQuestion>

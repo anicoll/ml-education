@@ -30,7 +30,7 @@ Think of a ball rolling downhill. It builds up speed in directions where the gra
 optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4, weight_decay=0.01)
 ```
 
-:::note Memory cost
+:::note[Memory cost]
 Adam stores two extra numbers for every parameter. With 32-bit floats that's 8 extra bytes per parameter, which matters a lot when you're budgeting VRAM. More in [VRAM maths](../hardware/vram-math.md).
 :::
 
@@ -75,6 +75,52 @@ for i, (x, y) in enumerate(loader):
         optimizer.zero_grad()
 ```
 
-:::tip Try it
+:::tip[Try it]
 Train the same small MLP on MNIST with SGD (lr 0.1), SGD with momentum, and AdamW (lr 1e-3). Plot all three loss curves on one chart. Then try AdamW at lr 1e-1 and 1e-5 to see "too high" and "too low" in practice.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="optim-1"
+  question="What's a sensible starting learning rate for full fine-tuning a pre-trained model with AdamW?"
+  options={["1.0", "0.1", "3e-4", "2e-5"]}
+  answer={3}
+  explanation="Full fine-tuning uses small rates (1e-5 to 5e-5) because big steps would wreck what the model already knows. 3e-4 is a from-scratch default."
+/>
+
+<MultipleChoice
+  id="optim-2"
+  question="Why is learning rate warmup used at the start of transformer training?"
+  options={[
+    "To save memory",
+    "Early gradients are large and erratic and Adam's statistics aren't settled, so starting with tiny steps avoids destabilising the model",
+    "To make training finish faster",
+    "Warmup is only for inference",
+  ]}
+  answer={1}
+  explanation="Ramping the learning rate up over the first few hundred steps prevents early chaos. A decay (often cosine) then shrinks it towards the end."
+/>
+
+<MultipleChoice
+  id="optim-3"
+  question="You want an effective batch size of 64 but only 16 examples fit in memory. What do you do?"
+  options={[
+    "Give up and use 16",
+    "Gradient accumulation: run 4 batches of 16, adding up gradients, then take one optimiser step",
+    "Raise the learning rate 4×",
+    "Use 4 times more epochs",
+  ]}
+  answer={1}
+  explanation="Accumulating gradients over 4 small batches is mathematically equivalent to one batch of 64, at the cost of time rather than memory."
+/>
+
+<OpenQuestion
+  id="optim-4"
+  question="Explain momentum using the ball-rolling-downhill picture. What problem does it solve?">
+
+Plain gradient descent only looks at the slope right under its feet at each step. In a long narrow valley the slope mostly points across the valley, so it zig-zags from side to side and makes slow progress along the valley floor.
+
+Momentum keeps a running average of recent gradients, like a ball that carries its speed. Directions where the gradient keeps pointing the same way (along the valley) build up speed. Directions where it keeps flipping (across the valley) cancel out. The result is faster, smoother progress towards the minimum. β = 0.9 means the ball remembers roughly the last 10 steps.
+
+</OpenQuestion>
