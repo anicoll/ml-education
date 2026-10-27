@@ -56,4 +56,12 @@ Every model on the Hub has a **model card**. Read it. It tells you the licence, 
 
 :::tip Try it
 Browse the Hub and pick three instruct models between 1B and 8B parameters. For each, write down in `notes/`: its licence, context length, chat template, and the size of its weight files. Which would you choose to fine-tune first, and why?
+
+Here's what one row might look like. Check the model card yourself, as details change between releases:
+
+| Model | Licence | Context | Chat template | Weights (bf16) |
+| --- | --- | --- | --- | --- |
+| `Qwen/Qwen2.5-1.5B-Instruct` | Apache 2.0 | 32k tokens | ChatML (`im_start` / `im_end` tokens) | About 3 GB |
+
+A good first choice is small (fast to iterate on), permissively licensed, and has a well-documented chat template.
 :::

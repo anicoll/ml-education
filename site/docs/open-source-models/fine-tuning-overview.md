@@ -57,6 +57,31 @@ The quality of your fine-tune depends far more on your data than on hyperparamet
 
 Training hard on a narrow dataset can make the model worse at everything else. Mitigations: lower learning rates, fewer epochs (1–3 is typical), LoRA (which naturally limits how far the model can move), and mixing in some general-purpose data.
 
+## Worked example: a fine-tuning plan
+
+Here's a complete plan for one project, to show the level of detail that's useful.
+
+**Project: commit messages from diffs.**
+
+- **Behaviour wanted:** given a `git diff`, write a commit message in a consistent house style: a short imperative summary line under 72 characters, a blank line, then a few lines explaining *why*.
+- **Why prompting alone isn't enough:** a big model can do this with a good prompt, but a small local model (1.5–3B) drifts from the format, writes vague summaries ("Update files") and describes *what* changed instead of *why*. Fine-tuning should make the format reliable and let a small, fast model do the job.
+- **Where the data comes from:** open-source repositories with good commit hygiene. Take (diff, message) pairs from their git history with a script, and filter out merge commits, huge diffs (over about 1,500 tokens), and messages under 20 characters. Aim for 1,000 training examples and 100 test examples from a *different* repository, to check the model generalises.
+- **Model and method:** `Qwen2.5-1.5B-Instruct` with QLoRA on the 3070, or LoRA via MLX on the Mac. Two epochs, rank 16.
+- **How success is judged:**
+  1. Format: the percentage of outputs with a summary line under 72 characters, in the imperative, followed by a blank line. A script can check this.
+  2. Quality: score 30 test diffs by hand on a 0–2 scale for "summary is accurate" and "explains why". Compare with the base model and with a big model given a careful prompt.
+  3. Regression check: run the ten prompts from [Running models locally](./running-locally.md) to make sure general ability hasn't collapsed.
+
+### More project ideas, each with a data source
+
+| Project | Input → output | Where 300–1,000 examples come from |
+| --- | --- | --- |
+| ML tutor in your style | ML question → explanation pitched the way you like | Write 50 by hand, generate more with a big model, then edit them. |
+| Notes to JSON | Messy meeting notes → `{"decisions": [...], "actions": [...], "owners": [...]}` | Your own notes, plus a big model drafting the JSON that you then correct. |
+| Incident summariser | Alert and log excerpt → one-paragraph incident summary | Past incident tickets and postmortems (scrub anything sensitive first). |
+| Bank transaction categoriser | Raw transaction line → category | Your categorised bank exports (see [What is machine learning?](../foundations/what-is-ml.md#4-expense-categorisation)). |
+| Author's voice | Topic → paragraph in that author's style | Public-domain books from Project Gutenberg, split into passages, with a big model writing a "topic" for each one. |
+
 :::tip Try it
-Pick a fine-tuning project for yourself and write a one-page plan in `notes/fine-tuning-plan.md`: the behaviour you want, why prompting alone isn't enough, where you'll get 300–1,000 examples, and how you'll judge success. Some ideas: a model that explains ML concepts in your preferred style, one that converts informal notes into structured JSON, or one that writes in the voice of your favourite author.
+Pick a fine-tuning project for yourself and write a one-page plan in `notes/fine-tuning-plan.md`, following the structure of the worked example: the behaviour you want, why prompting alone isn't enough, where you'll get 300–1,000 examples, which model and method, and how you'll judge success. Borrowing one of the ideas above is completely fine.
 :::
