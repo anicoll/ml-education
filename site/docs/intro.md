@@ -33,6 +33,12 @@ Each page follows the same pattern:
 2. **Then the maths**, kept to what you need, with every symbol explained.
 3. **Then code**, usually small enough to type out yourself.
 4. **A "Try it" box** pointing at an exercise you should do in the repo's `notebooks/` folder.
+5. **Check your understanding** questions at the end:
+   - **Multiple choice** questions tell you straight away whether you were right, and why.
+   - **Open questions** ask you to write an answer in your own words. Once you save it, a suggested answer (often a fully worked example) appears so you can compare.
+6. A **Mark lesson complete** button. Completed lessons get a tick in the sidebar, and [My progress](/progress) shows everything you've done.
+
+Your answers and progress are saved in this browser only (in its local storage), so nothing is sent anywhere. If you switch browsers or clear your browsing data you'll lose them, so use **Export progress** on the [My progress](/progress) page to keep a backup.
 
 :::tip[Try it]
 Exercises look like this. They tell you what to build, not just what to read. Do them. Reading about ML without writing code is like reading about swimming.
@@ -52,7 +58,7 @@ ml-education/
 └── notes/       ← your own notes, questions, things to revisit
 ```
 
-To run the site locally:
+The site is published to GitHub Pages automatically. To run it locally instead:
 
 ```bash
 cd site
@@ -72,3 +78,34 @@ You don't need to finish all the theory before touching real models. A good rhyt
 - **Weeks 11–14:** Part 7, reinforcement learning, ending with the Trackmania capstone.
 
 See the [learning roadmap](./roadmap.md) for a more detailed path and milestones.
+
+## Check your understanding
+
+Try these to see how the questions work.
+
+<MultipleChoice
+  id="intro-1"
+  question="What are the three ingredients of the loop every ML model is trained with?"
+  options={[
+    "A database, a web server and a cache",
+    "A function with adjustable parameters, a loss that scores how wrong it is, and an optimiser that nudges the parameters to reduce the loss",
+    "A GPU, a dataset and a tokenizer",
+    "Rules, if-statements and tests",
+  ]}
+  answer={1}
+  explanation="Model, loss, optimiser. Everything from linear regression to GPT is a variation on that loop."
+/>
+
+<OpenQuestion
+  id="intro-2"
+  question="Why do you want to learn machine learning? Write a sentence or two; you can come back and compare later.">
+
+There's no right answer here. This one is for you. Some common goals, to compare with yours:
+
+- "I want to understand what's actually happening inside tools like ChatGPT, not just use them."
+- "I want to fine-tune a small open model to do one task at work reliably and cheaply."
+- "I want to build something fun, like an AI that drives in a racing game."
+
+Revisit this when you finish the course and see how your answer has changed.
+
+</OpenQuestion>

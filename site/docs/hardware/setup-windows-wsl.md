@@ -73,3 +73,31 @@ Use the exact PyTorch command from [pytorch.org](https://pytorch.org/get-started
 | Very slow data loading | Move the data from `/mnt/c/...` into your Linux home directory. |
 | WSL runs out of memory or gets killed | Raise `memory` in `.wslconfig`. |
 | Disk filling up | WSL's virtual disk grows but doesn't shrink on its own. Clean up `~/.cache/huggingface` and old checkpoints. |
+
+## Check your understanding
+
+<MultipleChoice
+  id="wsl-1"
+  question="Where should the NVIDIA driver be installed when using WSL2?"
+  options={["Inside WSL (Ubuntu) only", "In Windows only; it provides CUDA to WSL automatically", "In both", "Neither, WSL doesn't use the GPU"]}
+  answer={1}
+  explanation="Installing a Linux NVIDIA driver inside WSL breaks GPU access."
+/>
+
+<MultipleChoice
+  id="wsl-2"
+  question="Data loading in WSL is very slow. Your dataset is in /mnt/c/Users/.../data. What's the fix?"
+  options={["Buy a faster GPU", "Move the data into the Linux filesystem (e.g. your home directory in WSL)", "Use more DataLoader workers", "Switch to Windows Python"]}
+  answer={1}
+  explanation="File access across the Windows/Linux boundary is much slower. Keep the repo and data inside WSL."
+/>
+
+<OpenQuestion
+  id="wsl-3"
+  question="Why does the Trackmania capstone need a separate native Windows Python environment, when everything else runs in WSL?">
+
+The TMRL worker has to **see** the game (capture its window) and **control** it (send virtual gamepad input). TrackMania runs on Windows, and a WSL Linux environment can't capture Windows windows or create a Windows virtual gamepad. So the worker must run in Windows Python.
+
+The two environments don't interfere: the Windows NVIDIA driver serves both, so you just need a separate `uv venv` in a Windows folder with CUDA-enabled PyTorch and TMRL installed. Everything else in the course stays in WSL.
+
+</OpenQuestion>

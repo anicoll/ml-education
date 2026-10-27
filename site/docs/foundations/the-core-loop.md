@@ -130,3 +130,86 @@ Create `notebooks/01-foundations/gradient-descent.ipynb`. Run the code above, th
 2. Try learning rates 0.001, 0.1, 1.0 and 1.5. What happens to the loss in each case?
 3. Change the data to $y = x^2$. Can a straight line fit it? What does the final loss tell you?
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="core-loop-1"
+  question="What does the loss function tell you?"
+  options={[
+    "Which direction to move each parameter",
+    "A single number saying how wrong the model is on the data; lower is better",
+    "How many training steps are left",
+    "How big each update step should be",
+  ]}
+  answer={1}
+  explanation="The loss scores the predictions. The gradient tells you which direction to move each parameter, and the learning rate sets the step size."
+/>
+
+<MultipleChoice
+  id="core-loop-2"
+  question="The gradient of the loss with respect to w is positive. What should gradient descent do to w?"
+  options={["Increase w", "Decrease w", "Leave it alone", "Set it to zero"]}
+  answer={1}
+  explanation="A positive gradient means increasing w increases the loss. You want the loss to go down, so you step the other way: w ← w − η × gradient."
+/>
+
+<MultipleChoice
+  id="core-loop-3"
+  question="You set the learning rate very high and the loss bounces around and then shoots up to huge numbers. What's happening?"
+  options={[
+    "The model has finished learning",
+    "Each step is so big it overshoots the minimum, so the parameters get worse instead of better",
+    "The data has too much noise",
+    "The learning rate is too small",
+  ]}
+  answer={1}
+  explanation="Too large a learning rate overshoots the valley and can make the loss explode. Too small just makes training slow."
+/>
+
+<MultipleChoice
+  id="core-loop-4"
+  question="What is the difference between a step and an epoch?"
+  options={[
+    "They are the same thing",
+    "A step is one parameter update on one batch; an epoch is one full pass through the whole training set",
+    "An epoch is one update; a step is a pass through the data",
+    "A step only happens on the test set",
+  ]}
+  answer={1}
+  explanation="With 1,000 examples and a batch size of 100, one epoch is 10 steps."
+/>
+
+<OpenQuestion
+  id="core-loop-5"
+  question="In your own words, explain each line of the PyTorch loop: `pred = model(x)`, `loss = loss_fn(pred, y)`, `optimizer.zero_grad()`, `loss.backward()`, `optimizer.step()`.">
+
+- `pred = model(x)`: the **forward pass**. Run the inputs through the model to get predictions.
+- `loss = loss_fn(pred, y)`: compare the predictions with the true answers and get one number for how wrong they are.
+- `optimizer.zero_grad()`: clear the gradients left over from the last step. PyTorch *adds* new gradients to old ones, so without this they'd pile up.
+- `loss.backward()`: the **backward pass**. PyTorch works out the gradient of the loss with respect to every parameter, automatically (autograd).
+- `optimizer.step()`: nudge every parameter a little in the downhill direction, using those gradients and the learning rate.
+
+It's exactly the plain-Python version above: predictions, loss, `dw` and `db`, then `w -= lr * dw`. PyTorch just does the gradient maths for you.
+
+</OpenQuestion>
+
+<OpenQuestion
+  id="core-loop-6"
+  question="In the plain-Python example, you change the data to y = x². The loss stops going down at a fairly high value. Why, and what would fix it?">
+
+A straight line `w * x + b` can't bend, so it can't match a parabola however well you tune `w` and `b`. Gradient descent finds the *best possible line*, which is roughly flat through the middle of the data, and the leftover error is the loss you see. The optimiser is working fine; the **model is too simple** for the data (this is called *underfitting*).
+
+The fix is a more flexible model. For example, add a parameter for x²:
+
+```python
+# model: y_hat = a * x**2 + w * x + b   (three parameters now)
+preds = [a * x**2 + w * x + b for x in xs]
+# the gradient for a works the same way as for w, but uses x**2 instead of x
+da = sum(2 * (p - y) * x**2 for p, y, x in zip(preds, ys, xs)) / len(xs)
+a -= lr * da
+```
+
+Now the loss can drop to almost zero. Neural networks (Part 3) solve this in general by being flexible enough to fit curves without you choosing the shape.
+
+</OpenQuestion>

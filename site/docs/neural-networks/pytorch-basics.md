@@ -143,3 +143,67 @@ Put this script in `notebooks/03-neural-networks/mnist_mlp.py` and run it on you
 2. Go back to your `make_moons` notebook from Part 2 and solve it with a small MLP. Plot the curved decision boundary.
 3. Replace the MLP with a single `nn.Linear(784, 10)` (that's softmax regression). How much accuracy do the hidden layers buy you?
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="pytorch-1"
+  question="You get the error 'Expected all tensors to be on the same device'. What's the usual cause?"
+  options={[
+    "The model is too big",
+    "The model is on the GPU but the input batch is still on the CPU (or the other way round)",
+    "The batch size is odd",
+    "You forgot to call model.eval()",
+  ]}
+  answer={1}
+  explanation="Move both the model and every batch to the same device: model.to(device) once, and x.to(device), y.to(device) inside the loop."
+/>
+
+<MultipleChoice
+  id="pytorch-2"
+  question="Why is `optimizer.zero_grad()` needed in every step?"
+  options={[
+    "It resets the weights",
+    "PyTorch adds new gradients to the old ones by default, so they must be cleared before each backward pass",
+    "It moves the model to the GPU",
+    "It saves a checkpoint",
+  ]}
+  answer={1}
+  explanation="Without it, gradients from every previous step pile up. (Gradient accumulation uses this behaviour on purpose.)"
+/>
+
+<MultipleChoice
+  id="pytorch-3"
+  question="What does wrapping evaluation in `torch.no_grad()` do?"
+  options={[
+    "Turns off dropout",
+    "Skips gradient tracking, saving memory and time, since you won't call backward during evaluation",
+    "Freezes the weights permanently",
+    "Makes the model more accurate",
+  ]}
+  answer={1}
+  explanation="Dropout is controlled by model.eval(); no_grad() just stops PyTorch recording operations for backprop."
+/>
+
+<MultipleChoice
+  id="pytorch-4"
+  question="`F.cross_entropy(logits, y)` expects which input?"
+  options={["Probabilities that already went through softmax", "Raw logits; it applies softmax internally", "One-hot labels only", "Log probabilities from sigmoid"]}
+  answer={1}
+  explanation="Pass raw logits. Applying softmax yourself first is a common bug that quietly hurts training."
+/>
+
+<OpenQuestion
+  id="pytorch-5"
+  question="If you don't know Python yet, read this line slowly: `correct += (model(x).argmax(1) == y).sum().item()`. Explain what each part does.">
+
+Read it from the inside out:
+
+- `model(x)`: run the batch through the model. The result has shape `(batch_size, 10)`: ten scores (logits) per image, one per digit.
+- `.argmax(1)`: for each image, take the index of the biggest score along dimension 1 (the 10 classes). That's the predicted digit. Shape `(batch_size,)`.
+- `== y`: compare each prediction with the true label, giving a tensor of `True`/`False`.
+- `.sum()`: count the `True` values (True counts as 1). That's how many predictions in this batch were right.
+- `.item()`: turn the one-number tensor into a plain Python number.
+- `correct += ...`: add it to the running total. After the loop, `correct / len(test_ds)` is the accuracy.
+
+</OpenQuestion>

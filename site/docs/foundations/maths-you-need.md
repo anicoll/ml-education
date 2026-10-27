@@ -105,3 +105,52 @@ In `notebooks/01-foundations/maths.ipynb`:
 2. What happens to softmax if you multiply every input by 10? By 0.1? (This is "temperature", and it's how you control randomness when sampling from an LLM.)
 3. Compute the derivative of $f(x) = x^3$ at $x = 2$ numerically using $(f(x+h) - f(x))/h$ with $h = 0.0001$, and compare to the exact answer.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="maths-1"
+  question="W has shape (4, 3) and x has shape (3,). What is the shape of `W @ x`?"
+  options={["(3,)", "(4,)", "(4, 3)", "It's an error"]}
+  answer={1}
+  explanation="A (out, in) matrix times an (in) vector gives an (out) vector: 3 inputs become 4 outputs."
+/>
+
+<MultipleChoice
+  id="maths-2"
+  question="What does softmax do?"
+  options={[
+    "Picks the largest number and sets the rest to zero",
+    "Turns any list of numbers (logits) into positive probabilities that sum to 1",
+    "Sorts the numbers from largest to smallest",
+    "Squares every number",
+  ]}
+  answer={1}
+  explanation="Softmax exponentiates each logit and divides by the total. Bigger logits get bigger probabilities, but every option keeps some probability."
+/>
+
+<MultipleChoice
+  id="maths-3"
+  question="A classifier gives the correct class a probability of 0.01. Roughly what is its cross-entropy loss for that example?"
+  options={["0.01", "0.69", "About 4.6", "Exactly 1"]}
+  answer={2}
+  explanation="Cross-entropy is −log p. −log(0.01) ≈ 4.6. Being confident and wrong is punished heavily."
+/>
+
+<MultipleChoice
+  id="maths-4"
+  question="A brand-new language model with a 50,000-token vocabulary starts training. Roughly what should its first loss be?"
+  options={["About 0", "About 1", "About 10.8 (log of 50,000)", "About 50,000"]}
+  answer={2}
+  explanation="An untrained model is close to guessing uniformly, and uniform guessing over K classes has loss log K. If your starting loss is far from this, something is probably wrong with the setup."
+/>
+
+<OpenQuestion
+  id="maths-5"
+  question="Why does deep learning need the chain rule? Explain without equations if you can.">
+
+A neural network is a long chain of functions: layer 1 feeds layer 2, which feeds layer 3, and so on until the loss. To improve a weight in layer 1 you need to know how changing it would change the loss at the very end, but its effect passes through every later layer.
+
+The chain rule says you can get that by multiplying the local effects along the chain: how much layer 1's output moves layer 2's output, times how much layer 2's output moves layer 3's, and so on down to the loss. Backpropagation does exactly this, starting from the loss and working backwards, reusing each step's result for the layer before it. That's what makes computing gradients for millions of parameters affordable.
+
+</OpenQuestion>

@@ -59,3 +59,49 @@ print(scores.mean(), scores.std())
 :::tip[Try it]
 Generate 30 noisy points from $y = \sin(x)$. Fit polynomials of degree 1, 3, 9 and 20 with `numpy.polyfit`, and plot each against the data. Then generate 1,000 fresh points and compute the error of each fit on them. Which degree wins? Now add L2 regularisation (`sklearn.linear_model.Ridge` with polynomial features) to the degree-20 model and see what happens.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="overfit-1"
+  question="Training loss keeps falling but validation loss has started rising. What should you do?"
+  options={[
+    "Keep training: training loss is what matters",
+    "Stop (or roll back to the checkpoint with the lowest validation loss): the model has started overfitting",
+    "Increase the model size",
+    "Evaluate on the test set to decide",
+  ]}
+  answer={1}
+  explanation="This is the classic overfitting curve. Early stopping keeps the model from the bottom of the validation curve."
+/>
+
+<MultipleChoice
+  id="overfit-2"
+  question="Training error and validation error are both high and close together. What's the likely problem?"
+  options={["Overfitting", "Underfitting: the model is too simple", "Data leakage", "Too much regularisation is impossible, so it must be the data"]}
+  answer={1}
+  explanation="If the model can't even fit the training data, it's too simple (or too heavily regularised). Try a more flexible model or better features."
+/>
+
+<MultipleChoice
+  id="overfit-3"
+  question="What does L2 regularisation (weight decay) add to the loss?"
+  options={["A penalty proportional to the sum of squared weights", "Random noise on the inputs", "Extra training data", "A penalty for training too long"]}
+  answer={0}
+  explanation="λ Σ w² nudges weights towards zero, which makes the model smoother and less able to memorise noise."
+/>
+
+<OpenQuestion
+  id="overfit-4"
+  question="Name three ways to fight overfitting and explain in a sentence why each one works.">
+
+Any three of these, for example:
+
+- **More data:** with more examples, the noise in any one example matters less, and memorising them all gets harder than learning the real pattern.
+- **A simpler model:** fewer parameters means less capacity to memorise.
+- **Regularisation (weight decay):** penalising large weights pushes the model towards smoother, simpler functions.
+- **Early stopping:** stop at the point where validation loss is lowest, before the model starts memorising.
+- **Data augmentation:** flipped, cropped or paraphrased copies teach the model which changes don't matter, which is like getting more data for free.
+- **Dropout:** randomly switching off neurons stops the network relying on any single one, so it learns more robust features.
+
+</OpenQuestion>

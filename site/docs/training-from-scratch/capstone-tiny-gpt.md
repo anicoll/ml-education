@@ -69,3 +69,40 @@ Karpathy's [Let's reproduce GPT-2 (124M)](https://www.youtube.com/watch?v=l8pRSu
 :::info[Key idea]
 Everything in the big LLMs is here in miniature: tokeniser, embeddings, attention, MLPs, residuals, next-token loss, AdamW, a cosine schedule. The difference between your model and a frontier one is mostly scale, data quality and the post-training steps covered in Part 6.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="tinygpt-1"
+  question="Early in training, your tiny GPT's samples are random characters. Later they become word-shaped blobs, then real words. What does this progression show?"
+  options={[
+    "The model is overfitting",
+    "The model is learning structure in stages: character statistics first, then words, then grammar",
+    "The temperature is changing",
+    "The tokeniser is being retrained",
+  ]}
+  answer={1}
+  explanation="Easy, frequent patterns reduce the loss most, so they're learned first. Longer-range structure comes later."
+/>
+
+<MultipleChoice
+  id="tinygpt-2"
+  question="In the generate function, what does `idx[:, -block_size:]` do?"
+  options={["Reverses the sequence", "Keeps only the most recent block_size tokens, because the model can't handle a longer context", "Removes the prompt", "Picks a random window"]}
+  answer={1}
+  explanation="The position embeddings only go up to block_size, so the input is cropped to the last block_size tokens."
+/>
+
+<OpenQuestion
+  id="tinygpt-3"
+  question="Pick one of the 'Questions to investigate' and write down your hypothesis before running it: what do you expect to happen and why?">
+
+A worked example for question 3 (removing residual connections):
+
+**Hypothesis:** with 6 layers, removing the residual connections will make training much slower and the final loss noticeably worse, and with 12+ layers it may barely train at all. The reason: without the `x + ...` shortcut, gradients have to pass through every layer's transformations on the way back, and they shrink (or grow) at each step. Residual connections give gradients a direct path to the early layers.
+
+**How to test it:** change `x = x + self.attn(...)` to `x = self.attn(...)` (and the same for the MLP line), train both versions with identical settings and seeds, and plot validation loss against steps on one chart.
+
+Writing the hypothesis first matters: it forces you to make a prediction, and being wrong is where most of the learning happens.
+
+</OpenQuestion>

@@ -46,7 +46,7 @@ llama.cpp and Ollama use **GGUF** files: model weights quantised to fewer bits. 
 - `K_M` / `K_S` are variants of the "k-quant" scheme (medium and small).
 - **Q4_K_M is the usual sweet spot**: about a quarter of the bf16 size, with small quality loss.
 
-An 8B model at Q4_K_M is about 4.9 GB, which leaves room on your 8 GB card for the KV cache and a few thousand tokens of context.
+An 8B model at Q4_K_M is about 4.9 GB, which leaves room on an 8 GB card for the KV cache and a few thousand tokens of context.
 
 ## What happens when a model doesn't fit
 
@@ -90,3 +90,54 @@ Score each answer quickly (for example 0 = wrong, 1 = partly right, 2 = good) so
 :::tip[Try it]
 Install Ollama and run a 1–3B model and a 7–8B model (on the Mac, add a 27–32B model too). Run the ten prompts above, or your own version of them, on each model, and save the prompts, answers and scores in `notes/model-comparison.md`. You'll reuse these prompts to evaluate your fine-tunes.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="local-1"
+  question="What does `Q4_K_M` in a GGUF file name tell you?"
+  options={[
+    "The model has 4 billion parameters",
+    "It's quantised to roughly 4 bits per weight using the medium k-quant variant",
+    "It needs 4 GPUs",
+    "It's the fourth version of the model",
+  ]}
+  answer={1}
+  explanation="Q4_K_M is the usual sweet spot: about a quarter of the bf16 size with small quality loss."
+/>
+
+<MultipleChoice
+  id="local-2"
+  question="A 14B model at Q4 is slightly too big for an 8 GB card, so llama.cpp puts a few layers on the CPU. What happens?"
+  options={["It refuses to run", "It runs, but noticeably slower, because layers on the CPU are much slower", "It runs at the same speed", "The answers become wrong"]}
+  answer={1}
+  explanation="Splitting works, but every layer that runs from system RAM on the CPU slows generation down."
+/>
+
+<MultipleChoice
+  id="local-3"
+  question="Ollama exposes an OpenAI-compatible API on localhost. What does that let you do?"
+  options={[
+    "Use OpenAI's models for free",
+    "Call your local model from code using the same client library you'd use for a hosted API",
+    "Fine-tune models",
+    "Share your model on the internet",
+  ]}
+  answer={1}
+  explanation="Point the OpenAI client at http://localhost:11434/v1 and your code talks to the local model instead."
+/>
+
+<OpenQuestion
+  id="local-4"
+  question="Why does it matter to build and save a fixed test prompt set before you start fine-tuning?">
+
+Because without it you can't tell whether a fine-tune actually helped. If you test with whatever prompts come to mind each time, you'll remember the impressive answers and forget the bad ones, and you'll unknowingly pick prompts the new model is good at.
+
+A fixed set, written before training, gives you:
+
+- **A baseline:** the original model's scores on exactly these prompts.
+- **A fair comparison:** every model and every fine-tune answers the same questions under the same settings.
+- **Coverage:** prompts across different skills, including ones that test what you *don't* want to break (general knowledge, saying "I don't know").
+- **A number**, as well as a gut feeling, to compare runs.
+
+</OpenQuestion>

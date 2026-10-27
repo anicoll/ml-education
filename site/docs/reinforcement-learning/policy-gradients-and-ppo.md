@@ -84,3 +84,53 @@ Policy gradients push up the probability of actions that did better than expecte
 2. Train SAC on `Pendulum-v1` (continuous torque). Then try PPO on the same task and compare how many steps each needs.
 3. Stretch goal: implement REINFORCE yourself on CartPole in about 50 lines of PyTorch. Then subtract a simple baseline (the average return) and see how much faster it learns.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="pg-1"
+  question="What does REINFORCE do, in one sentence?"
+  options={[
+    "Learns a Q-table",
+    "Increases the probability of actions that were followed by high returns and decreases it for low returns",
+    "Copies a human player's actions",
+    "Keeps every update within ±20%",
+  ]}
+  answer={1}
+  explanation="'Do more of what worked.' Its weakness is high variance, because returns vary a lot from luck alone."
+/>
+
+<MultipleChoice
+  id="pg-2"
+  question="What is the advantage A(s, a) = G − V(s)?"
+  options={["How much better (or worse) the outcome was than the critic expected", "The total reward", "The probability of the action", "The discount factor"]}
+  answer={0}
+  explanation="Scaling updates by the advantage instead of the raw return greatly reduces variance. That's the 'critic' in actor-critic."
+/>
+
+<MultipleChoice
+  id="pg-3"
+  question="What is the key safeguard PPO adds?"
+  options={["A replay buffer", "Clipping each update so the policy can't change too much at once", "A target network", "Discrete actions only"]}
+  answer={1}
+  explanation="Small, clipped updates keep training stable, which is why PPO works across many problems with little tuning."
+/>
+
+<MultipleChoice
+  id="pg-4"
+  question="A game runs only in real time, so experience is slow to collect. Which algorithm suits it better?"
+  options={["PPO, because it's on-policy", "SAC, because it's off-policy and reuses experience from a replay buffer many times", "Tabular Q-learning", "REINFORCE"]}
+  answer={1}
+  explanation="This is why TMRL uses SAC for Trackmania. PPO throws data away after each update, which is wasteful when data is expensive."
+/>
+
+<OpenQuestion
+  id="pg-5"
+  question="Explain the difference between on-policy and off-policy learning, and why it matters for Trackmania.">
+
+- **On-policy** (PPO): the agent only learns from experience collected by its *current* policy. After each update the policy has changed, so the old experience is thrown away and new experience must be collected.
+- **Off-policy** (DQN, SAC): the agent stores experience in a replay buffer and keeps learning from it, even though it was collected by older versions of the policy. Each frame can be reused many times.
+
+**Why it matters for Trackmania:** the game runs in real time, so an hour of training gives you only an hour of driving, and you can't easily run hundreds of copies in parallel. Throwing experience away after one use (on-policy) wastes most of that precious hour. Off-policy SAC squeezes far more learning out of every frame, which is why TMRL uses it. In a fast simulator like CartPole, where experience is nearly free, PPO's simplicity and stability often win instead.
+
+</OpenQuestion>

@@ -78,3 +78,54 @@ Some models (like Llama) are "gated": accept the licence on the model's web page
 :::tip[Try it]
 Load `Qwen/Qwen2.5-0.5B-Instruct` and `HuggingFaceTB/SmolLM2-1.7B-Instruct`. Print each architecture and identify the attention, MLP and normalisation layers. Then ask both the same five questions and compare the answers. Note VRAM use for each with `torch.cuda.max_memory_allocated()`.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="hf-1"
+  question="Which Hugging Face library would you use to add LoRA adapters to a model?"
+  options={["datasets", "tokenizers", "peft", "accelerate"]}
+  answer={2}
+  explanation="peft (parameter-efficient fine-tuning) provides LoRA, QLoRA and friends. trl provides training recipes like SFT on top."
+/>
+
+<MultipleChoice
+  id="hf-2"
+  question="Why should you use `tok.apply_chat_template(...)` instead of writing prompts like 'User: ... Assistant:' by hand?"
+  options={[
+    "It's faster",
+    "Each instruct model was trained on a specific format with special tokens; the wrong format makes it behave strangely",
+    "Hand-written prompts are not allowed",
+    "It translates the prompt into English",
+  ]}
+  answer={1}
+  explanation="A mismatched chat template is one of the most common reasons a model (especially a fine-tuned one) misbehaves."
+/>
+
+<MultipleChoice
+  id="hf-3"
+  question="About how much memory do the weights of a 1.5B-parameter model take in bf16?"
+  options={["0.75 GB", "1.5 GB", "3 GB", "6 GB"]}
+  answer={2}
+  explanation="bf16 is 2 bytes per parameter: 1.5B × 2 = 3 GB."
+/>
+
+<OpenQuestion
+  id="hf-4"
+  question="After running `print(model)` on a Hugging Face LLM, how would you map what you see onto the GPT you built in Part 5?">
+
+Look for the same parts under different names. For a Llama or Qwen-style model you'd see something like:
+
+| In `print(model)` | In your GPT |
+| --- | --- |
+| `embed_tokens` | `self.tok` (token embeddings) |
+| `layers` (a list of N decoder layers) | `self.blocks` |
+| `self_attn` with `q_proj`, `k_proj`, `v_proj`, `o_proj` | the attention's query, key, value and output projections |
+| `mlp` with `gate_proj`, `up_proj`, `down_proj` | the feed-forward MLP (SwiGLU has an extra "gate" matrix) |
+| `input_layernorm`, `post_attention_layernorm` (RMSNorm) | `ln1`, `ln2` |
+| `norm` | `ln_f` |
+| `lm_head` | `self.head` |
+
+There's no position embedding table because these models use RoPE inside attention instead. Otherwise, it's the same design at a larger scale.
+
+</OpenQuestion>

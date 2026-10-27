@@ -135,3 +135,67 @@ Switch to full image observations with a CNN policy. Expect much longer training
 :::info[Key idea]
 Trackmania is CarRacing with real-world constraints: a real game, real time and a reward you record yourself. The concepts are the same: observations, actions, a progress-based reward and an off-policy actor-critic that makes the most of every frame.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="tm-1"
+  question="How does TMRL define the reward for driving?"
+  options={[
+    "The car's speed",
+    "How far along a reference line (recorded by you driving the track) the car has progressed since the last step",
+    "+1 for every second without crashing",
+    "The final race time only",
+  ]}
+  answer={1}
+  explanation="Progress along your recorded trajectory gives a dense signal every step and is hard to game by driving in circles."
+/>
+
+<MultipleChoice
+  id="tm-2"
+  question="Why does TMRL use SAC rather than DQN?"
+  options={[
+    "SAC is newer",
+    "The controls are continuous (analogue gas, brake and steering), and SAC's replay buffer makes the most of slow, real-time experience",
+    "DQN can't use a GPU",
+    "SAC doesn't need rewards",
+  ]}
+  answer={1}
+  explanation="DQN needs discrete actions. SAC handles continuous actions and is off-policy, so every frame can be reused many times."
+/>
+
+<MultipleChoice
+  id="tm-3"
+  question="Why does the TMRL worker need native Windows rather than WSL?"
+  options={[
+    "WSL has no GPU support",
+    "The worker must capture the game window and send virtual gamepad input, which a WSL Linux environment can't do",
+    "TMRL is written in C#",
+    "Python doesn't run in WSL",
+  ]}
+  answer={1}
+  explanation="The game runs on Windows, and the worker has to see and control it. Everything else in the course can stay in WSL."
+/>
+
+<MultipleChoice
+  id="tm-4"
+  question="What does the LIDAR observation mode measure?"
+  options={["Real laser data from the car", "Distances from the car to the track borders along 19 rays, computed from each screenshot", "The car's GPS position", "The full-resolution screenshot"]}
+  answer={1}
+  explanation="It turns each frame into a small vector, so a simple MLP can learn quickly. It works best on flat tracks with clear borders."
+/>
+
+<OpenQuestion
+  id="tm-5"
+  question="Your Trackmania agent learns to zig-zag across the track instead of driving smoothly. Suggest why, and one change you'd test.">
+
+**Likely why:** the reward only measures progress along the reference line, so nothing discourages jerky steering. Zig-zagging may even feel "safe" to the agent if it keeps it away from walls, or it may just be leftover exploration from SAC's entropy bonus, which rewards staying random where it doesn't cost much.
+
+**A change to test (one at a time):**
+
+- Add a small **steering-jitter penalty** to the reward: subtract something like `0.05 * abs(steer_now - steer_previous)` each step, so big swings in steering cost a little.
+- Or train longer: SAC's automatic entropy tuning usually reduces randomness as the agent becomes confident.
+
+**How to judge it:** compare lap times and watch videos of both versions. Watch for new reward hacking. If the penalty is too strong, the agent might stop steering at all and crash into the first corner. Log the result in `notes/rl-log.md`.
+
+</OpenQuestion>

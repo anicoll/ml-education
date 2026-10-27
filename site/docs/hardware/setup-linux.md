@@ -96,3 +96,33 @@ Then start Jupyter with `jupyter lab`, or open the repo in VS Code with the Pyth
 :::tip[Try it]
 Get the verification script running and save its output to `notes/setup.md`, along with your driver, PyTorch and Python versions. Future you will thank you when something breaks after an update.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="linux-1"
+  question="`torch.cuda.is_available()` returns False, but `nvidia-smi` works. What's the most likely cause?"
+  options={["The GPU is broken", "You installed the CPU-only PyTorch wheel; reinstall using the CUDA index URL from pytorch.org", "Secure Boot", "Not enough RAM"]}
+  answer={1}
+  explanation="If nvidia-smi works, the driver is fine. The PyTorch build is the problem."
+/>
+
+<MultipleChoice
+  id="linux-2"
+  question="Do you need to install the CUDA toolkit separately to use PyTorch on the GPU?"
+  options={["Yes, always", "No: PyTorch wheels bundle their own CUDA runtime; you only need a recent enough driver", "Only on Ubuntu", "Only for inference"]}
+  answer={1}
+  explanation="You only need the full toolkit if you compile custom CUDA code."
+/>
+
+<OpenQuestion
+  id="linux-3"
+  question="After a reboot, `nvidia-smi` says it can't communicate with the driver. What do you check, and in what order?">
+
+1. **Secure Boot / MOK enrolment.** The most common cause. If you skipped the blue "MOK management" screen after installing the driver, the kernel won't load the unsigned driver. Re-run `sudo ubuntu-drivers install`, reboot, and complete the enrolment with the password you set (or disable Secure Boot in the BIOS).
+2. **Kernel update.** If the system updated its kernel, the driver module may not have rebuilt. Run `sudo ubuntu-drivers install` again and reboot.
+3. **Check what's installed:** `ubuntu-drivers devices` shows the recommended driver; make sure that's the one installed.
+
+Once `nvidia-smi` shows your GPU again, re-run the verification script from Step 5 to confirm PyTorch can see it.
+
+</OpenQuestion>

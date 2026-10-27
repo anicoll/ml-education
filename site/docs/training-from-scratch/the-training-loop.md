@@ -94,3 +94,46 @@ On Windows this needs WSL2 or a recent PyTorch build with Triton support. On a M
 :::tip[Try it]
 Take your MNIST script from Part 3 and add: a cosine learning rate schedule with warmup, bf16 autocast, gradient clipping, a validation loss check every epoch, checkpoint saving, and TensorBoard logging. Kill the script halfway, then make it resume from the checkpoint.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="loop-1"
+  question="Why does the checkpoint save the optimiser's state as well as the model's weights?"
+  options={[
+    "It doesn't need to; that's just a habit",
+    "AdamW keeps running averages per parameter; without them a resumed run restarts those statistics and training is disrupted",
+    "The optimiser state contains the training data",
+    "So the checkpoint file is bigger",
+  ]}
+  answer={1}
+  explanation="To resume exactly where you left off you need the weights, the optimiser's running averages, and the step number (for the learning rate schedule)."
+/>
+
+<MultipleChoice
+  id="loop-2"
+  question="What does `clip_grad_norm_(model.parameters(), 1.0)` protect against?"
+  options={["Overfitting", "A single bad batch producing a huge gradient that wrecks the weights", "Running out of disk space", "Slow data loading"]}
+  answer={1}
+  explanation="If the total gradient size is above 1.0, it's scaled down to 1.0 before the update. The returned grad_norm is also worth logging."
+/>
+
+<MultipleChoice
+  id="loop-3"
+  question="What does mixed precision (bf16 autocast) give you?"
+  options={["Better accuracy than fp32", "Roughly half the activation memory and much faster maths on tensor cores", "Automatic checkpointing", "A learning rate schedule"]}
+  answer={1}
+  explanation="bf16 values take 2 bytes instead of 4, and modern GPUs have dedicated hardware for low-precision matrix maths."
+/>
+
+<OpenQuestion
+  id="loop-4"
+  question="List the five things you should log in every training run, and say what problem each one helps you spot.">
+
+- **Training loss:** whether the model is learning at all. Flat means something's broken; NaN means instability.
+- **Validation loss:** the honest signal. If it rises while training loss falls, you're overfitting.
+- **Learning rate:** confirms the schedule (warmup and decay) is doing what you think. A bug here is easy to miss otherwise.
+- **Gradient norm:** a sudden jump often comes just before a loss spike; near zero suggests gradients aren't flowing.
+- **Throughput (tokens or examples per second):** spots a slow data pipeline or accidental CPU work, and tells you how long the run will take.
+
+</OpenQuestion>

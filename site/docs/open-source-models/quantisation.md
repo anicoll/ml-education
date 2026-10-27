@@ -33,7 +33,7 @@ Every weight is now slightly off, but neural networks are surprisingly tolerant 
 | int8 | 1 | 8 GB |
 | 4-bit | ~0.5–0.6 | ~4.5–5 GB |
 
-That last row is why an 8B model fits on your card.
+That last row is why an 8B model fits on an 8 GB card.
 
 ## Quality cost
 
@@ -79,3 +79,55 @@ You can't train 4-bit weights directly: the steps would be too small to register
 :::tip[Try it]
 Load the same 1.5B or 3B model in bf16, 8-bit and 4-bit. For each, record memory footprint and tokens per second, and run your ten test prompts from [Running models locally](./running-locally.md). Can you tell the difference in answer quality?
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="quant-1"
+  question="Roughly how big are the weights of a 70B model at 4-bit?"
+  options={["About 9 GB", "About 35–40 GB", "About 140 GB", "About 280 GB"]}
+  answer={1}
+  explanation="At roughly 0.5–0.6 bytes per parameter, 70B × 0.55 ≈ 38 GB. In bf16 it would be 140 GB."
+/>
+
+<MultipleChoice
+  id="quant-2"
+  question="You have a fixed amount of memory. Which usually gives better answers?"
+  options={["A smaller model at 16-bit", "A bigger model at 4-bit", "They are always equal", "A smaller model at 32-bit"]}
+  answer={1}
+  explanation="A bigger model at 4-bit usually beats a smaller one at full precision for the same memory."
+/>
+
+<MultipleChoice
+  id="quant-3"
+  question="Why can't you simply fine-tune the 4-bit weights directly?"
+  options={[
+    "4-bit weights are read-only files",
+    "The small updates training makes would be too small to register in so few bits",
+    "Quantised models can't do a forward pass",
+    "It's illegal under most licences",
+  ]}
+  answer={1}
+  explanation="That's why QLoRA freezes the 4-bit base and trains small 16-bit adapter matrices alongside it."
+/>
+
+<MultipleChoice
+  id="quant-4"
+  question="Does 4-bit quantisation make each forward pass compute in 4-bit?"
+  options={["Yes, everything is computed in 4-bit", "No: weights are stored in 4-bit but dequantised and computed in bf16, so it saves memory, not compute", "It computes in fp32", "It skips half the layers"]}
+  answer={1}
+  explanation="It's a memory saving. Generation can still get faster on memory-bound hardware because fewer bytes have to be read per token."
+/>
+
+<OpenQuestion
+  id="quant-5"
+  question="Using the example on this page, work through quantising the weight 0.087 with scale s = 0.016 to 4-bit. What's the error?">
+
+1. Divide by the scale: 0.087 ÷ 0.016 ≈ 5.44.
+2. Round to the nearest allowed 4-bit integer (−8 to 7): **q = 5**.
+3. Dequantise: 0.016 × 5 = **0.080**.
+4. Error: 0.087 − 0.080 = **0.007**, about 8% of this weight's value.
+
+That sounds large for one weight, but the errors are small, random in direction and spread across billions of weights, so they largely average out. That's why 4-bit models lose surprisingly little quality.
+
+</OpenQuestion>

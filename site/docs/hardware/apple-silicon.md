@@ -133,3 +133,45 @@ Both use Metal on the Mac automatically and work well. Ollama is the easiest way
 3. **Watch memory pressure** in Activity Monitor. If it goes yellow or red, macOS is swapping and everything will crawl. Use a smaller model or a shorter context.
 4. **Keep the laptop plugged in** for long runs, and expect the fans to spin up.
 5. **When a tutorial says `cuda`**, change the device to `mps`. When it uses bitsandbytes, Unsloth or vLLM, look for the MLX equivalent or run it on an NVIDIA machine.
+
+## Check your understanding
+
+<MultipleChoice
+  id="apple-1"
+  question="By default, roughly how much of a 48 GB Mac's memory can the GPU use?"
+  options={["8 GB", "About 24 GB", "About 36 GB", "All 48 GB"]}
+  answer={2}
+  explanation="Above 36 GB of RAM, macOS lets the GPU use about three-quarters by default. You can raise the limit with sysctl, leaving at least 8 GB for macOS."
+/>
+
+<MultipleChoice
+  id="apple-2"
+  question="A tutorial uses `BitsAndBytesConfig` to load a model in 4-bit. What should you do on a Mac?"
+  options={[
+    "Install bitsandbytes with pip and it will work",
+    "Use a 4-bit MLX model from mlx-community (or GGUF via llama.cpp/Ollama) instead, since bitsandbytes needs CUDA",
+    "Set device to 'cuda'",
+    "Use fp32 instead",
+  ]}
+  answer={1}
+  explanation="bitsandbytes doesn't support MPS. MLX is Apple's framework and the usual fastest route for LLMs on a Mac."
+/>
+
+<MultipleChoice
+  id="apple-3"
+  question="Generation slows to a crawl with a big model, and Activity Monitor shows memory pressure in red. What's happening?"
+  options={["The GPU is overheating", "macOS is swapping because the model plus everything else doesn't fit in memory", "MLX is broken", "The model is too small"]}
+  answer={1}
+  explanation="Close other apps, shorten the context, or use a smaller or more heavily quantised model."
+/>
+
+<OpenQuestion
+  id="apple-4"
+  question="What's the difference between using PyTorch with MPS and using MLX on a Mac, and when would you pick each?">
+
+- **PyTorch with MPS** runs ordinary PyTorch code on the Mac's GPU. Set `device = "mps"` and most code from Parts 3–5 runs unchanged. Pick it for the from-scratch lessons (MLPs, CNNs, the tiny GPT) and anything that follows a PyTorch tutorial. Downsides: some operations fall back to the CPU, `torch.compile` is limited, and bitsandbytes doesn't work.
+- **MLX** is Apple's own array framework, built for Apple Silicon. The `mlx-lm` package can run, quantise and LoRA/QLoRA fine-tune LLMs from the command line, and is usually the fastest option on a Mac. Pick it for LLM work: running models and fine-tuning them.
+
+A good rule: PyTorch MPS for learning and building models, MLX for working with LLMs.
+
+</OpenQuestion>

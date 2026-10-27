@@ -94,3 +94,62 @@ An agent acts, the environment responds with a new observation and a reward, and
 :::tip[Try it]
 Install Gymnasium (`pip install gymnasium`), create `CartPole-v1`, and run 10 episodes with **random** actions. Print each episode's total reward. That's your baseline: anything you train later has to beat it. Then write down in `notes/` what the observation, action and reward are for CartPole (the Gymnasium docs describe them).
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="rl-basics-1"
+  question="What's the key difference between reinforcement learning and supervised learning?"
+  options={[
+    "RL doesn't use neural networks",
+    "RL gets a reward signal for how well things are going, not the correct answer for each step",
+    "RL only works on games",
+    "RL needs labelled data",
+  ]}
+  answer={1}
+  explanation="There's no 'correct' steering angle per frame, only rewards, often arriving long after the decision that mattered."
+/>
+
+<MultipleChoice
+  id="rl-basics-2"
+  question="With discount γ = 0.9, rewards of 1 at each of the next three steps give what return?"
+  options={["3", "1 + 0.9 + 0.81 = 2.71", "0.9 × 3 = 2.7", "1"]}
+  answer={1}
+  explanation="G = r₁ + γr₂ + γ²r₃ = 1 + 0.9 + 0.81. Each step further away counts a bit less."
+/>
+
+<MultipleChoice
+  id="rl-basics-3"
+  question="You reward a robot vacuum for 'amount of dirt collected'. It learns to dump dirt out and collect it again. What is this?"
+  options={["Overfitting", "Reward hacking: the agent optimises exactly what you wrote, not what you meant", "Catastrophic forgetting", "Exploration"]}
+  answer={1}
+  explanation="The reward is the one part you design by hand, and agents are very good at finding loopholes in it."
+/>
+
+<MultipleChoice
+  id="rl-basics-4"
+  question="Why do agents often stack the last 4 frames as their observation?"
+  options={["To use more GPU memory", "A single frame doesn't show motion (speed and direction), so it isn't a full Markov state", "To make episodes longer", "Because Gymnasium requires it"]}
+  answer={1}
+  explanation="With several frames, the agent can tell which way and how fast things are moving."
+/>
+
+<OpenQuestion
+  id="rl-basics-5"
+  question="Design a reward for an agent learning to park a car in a space. What could go wrong with a naive reward, and how would you fix it?">
+
+A worked answer:
+
+**Naive reward:** +100 when the car is in the space, 0 otherwise. Problem: it's **sparse**. A random agent almost never parks by accident, so it gets no signal and never learns.
+
+**Better, dense reward each step:**
+
+- **+ progress:** reward the decrease in distance to the space since the last step (so moving closer is good, moving away is bad).
+- **+ alignment:** a small bonus for the car's angle matching the space's angle when it's close.
+- **− collisions:** a big penalty (and end the episode) for hitting another car or a kerb.
+- **− time:** a small penalty per step, so it doesn't dawdle.
+- **+ success:** a bonus for stopping inside the space, aligned and stationary.
+
+**Loopholes to watch for:** if progress is rewarded but leaving and re-approaching isn't penalised, the agent might drive back and forth to farm progress reward (the penalty for moving away fixes this). If the time penalty is too large, it might learn to crash on purpose to end the episode early, so make the collision penalty clearly worse than waiting.
+
+</OpenQuestion>

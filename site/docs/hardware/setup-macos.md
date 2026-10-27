@@ -101,3 +101,31 @@ Install [Ollama](https://ollama.com) or [LM Studio](https://lmstudio.ai). Both u
 :::tip[Try it]
 Save the outputs of both verification scripts to `notes/setup.md`, along with your macOS, PyTorch and MLX versions.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="macos-1"
+  question="`torch.backends.mps.is_available()` returns False on an Apple Silicon Mac. What's the most likely cause?"
+  options={["MPS needs a driver install", "You're running an Intel (x86) Python under Rosetta; check that platform.machine() prints arm64", "The Mac has too little memory", "PyTorch doesn't support macOS"]}
+  answer={1}
+  explanation="Recreate the environment with a native arm64 Python (uv does this automatically)."
+/>
+
+<MultipleChoice
+  id="macos-2"
+  question="What does `PYTORCH_ENABLE_MPS_FALLBACK=1` do?"
+  options={["Runs everything on the CPU", "Runs operations that MPS doesn't support yet on the CPU instead of raising an error", "Enables CUDA on the Mac", "Speeds up training"]}
+  answer={1}
+  explanation="Most operations still run on the GPU; only the missing ones fall back."
+/>
+
+<OpenQuestion
+  id="macos-3"
+  question="In the MLX check, why is `mx.eval(b)` needed before the work actually happens?">
+
+MLX is **lazy**: when you write `b = a @ a`, it only records that `b` should be the product of `a` with itself, without computing it. The actual work happens when the result is needed, for example when you print it, convert it to NumPy, or explicitly call `mx.eval(b)`.
+
+That's why benchmarks in MLX must call `mx.eval(...)` inside the timed section; otherwise you'd only be timing how long it takes to *describe* the computation. Laziness lets MLX fuse and optimise operations before running them.
+
+</OpenQuestion>

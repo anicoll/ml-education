@@ -59,3 +59,43 @@ Always overfit one batch first. It takes two minutes and catches a huge fraction
 :::tip[Try it]
 Deliberately break your MNIST script in each of the "classic bugs" ways above, one at a time, and note in `notes/` what each one does to the loss curve. Next time you see that shape, you'll recognise it.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="debug-1"
+  question="What's the quickest sanity check to run before a long training run?"
+  options={["Train on the full dataset for an hour", "Overfit a single small batch: the loss should go to almost zero", "Double the model size", "Remove the validation set"]}
+  answer={1}
+  explanation="If the model can't memorise 32 examples, there's a bug. It takes two minutes and catches a lot."
+/>
+
+<MultipleChoice
+  id="debug-2"
+  question="The loss doesn't move at all from its starting value. Which is the most likely cause?"
+  options={["Overfitting", "The model is too big", "A missing `optimizer.step()`, a learning rate far too low, or inputs and labels mismatched", "Too much data"]}
+  answer={2}
+  explanation="A completely flat loss means the weights aren't changing or the signal is meaningless."
+/>
+
+<MultipleChoice
+  id="debug-3"
+  question="Training is mysteriously slow and your GPU usage is low. What's a common culprit?"
+  options={["Tensors left on the CPU, or calling `.item()` / printing GPU tensors every step", "Using bf16", "Using AdamW", "Gradient clipping"]}
+  answer={0}
+  explanation="Both force the CPU and GPU to wait for each other. Check devices, and only log every N steps."
+/>
+
+<OpenQuestion
+  id="debug-4"
+  question="You hit 'CUDA out of memory' while fine-tuning. Write down, in order, what you'd try.">
+
+1. **Halve the batch size** and double gradient accumulation steps to keep the same effective batch.
+2. **Make sure bf16 mixed precision is on.**
+3. **Shorten the sequence length** (for LLMs, often the biggest win).
+4. **Turn on gradient checkpointing** (about 30% slower, much less activation memory).
+5. **Use a smaller model, or switch to LoRA / QLoRA** if you're fine-tuning.
+
+After each change, measure peak memory with `torch.cuda.max_memory_allocated()` rather than guessing, so you know how much headroom each one bought.
+
+</OpenQuestion>

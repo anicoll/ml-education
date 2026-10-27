@@ -100,3 +100,45 @@ PyTorch reserves memory in chunks, so `nvidia-smi` shows more than `max_memory_a
 :::tip[Try it]
 Before your first QLoRA run, fill in this estimate for your chosen model and settings in `notes/`, then compare it with the measured peak. Being able to predict memory use within a gigabyte or so is a genuinely useful skill.
 :::
+
+## Check your understanding
+
+<MultipleChoice
+  id="vram-1"
+  question="Roughly how much memory does full fine-tuning a 3B model need, before activations?"
+  options={["6 GB", "12 GB", "48 GB", "3 GB"]}
+  answer={2}
+  explanation="About 16 bytes per parameter (bf16 weights and gradients, fp32 master weights and two AdamW values): 3B × 16 = 48 GB."
+/>
+
+<MultipleChoice
+  id="vram-2"
+  question="Which part of training memory changes when you change the batch size or sequence length?"
+  options={["Weights", "Optimiser state", "Activations", "None of them"]}
+  answer={2}
+  explanation="Activations scale with batch × sequence length × hidden size × layers. Weights, gradients and optimiser state depend only on the model."
+/>
+
+<MultipleChoice
+  id="vram-3"
+  question="What does gradient checkpointing trade?"
+  options={["Accuracy for speed", "About 20–30% more compute for much less activation memory", "Disk space for RAM", "Nothing, it's free"]}
+  answer={1}
+  explanation="It stores only some activations and recomputes the rest during the backward pass."
+/>
+
+<OpenQuestion
+  id="vram-4"
+  question="Estimate the memory to run a 14B model at 4-bit with an 8,000-token context, assuming 48 layers, 8 KV heads and a head dim of 128 in bf16. Does it fit on a 12 GB card?">
+
+**Weights:** 14B × about 0.55 bytes ≈ **7.7 GB**.
+
+**KV cache per token:** 2 (K and V) × 48 layers × 8 heads × 128 head dim × 2 bytes = 196,608 bytes ≈ **192 KB**.
+
+**KV cache for 8,000 tokens:** 8,000 × 192 KB ≈ **1.5 GB**.
+
+**Overhead** (CUDA context, buffers): about **0.5–1 GB**.
+
+**Total:** 7.7 + 1.5 + 0.75 ≈ **10 GB**. It fits on a 12 GB card with a little room to spare, but not on an 8 GB card (there, some layers would spill to the CPU, or you'd need a shorter context and a smaller quantisation).
+
+</OpenQuestion>
