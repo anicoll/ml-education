@@ -81,6 +81,6 @@ A linear model can only draw straight lines (or flat planes in higher dimensions
 1. **Engineer features**: add $x^2$, $x_1 x_2$, $\log x$ as new columns. The model is still linear in its parameters, but can now fit curves.
 2. **Learn the features**: let a neural network discover useful transformations of the input itself. This is the leap that deep learning makes.
 
-:::tip Try it
+:::tip[Try it]
 In `notebooks/02-classical-ml/linear-regression.ipynb`, run the NumPy version above on the California housing dataset (standardise first). Compare your weights to scikit-learn's. Then add squared features and see whether validation error improves.
 :::

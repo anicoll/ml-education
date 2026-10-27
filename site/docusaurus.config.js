@@ -1,5 +1,6 @@
 // @ts-check
-// Local-only learning site. Run with `npm start` from this folder.
+// Learning site, deployed to GitHub Pages by .github/workflows/deploy-site.yml.
+// Run locally with `npm start` from this folder.
 
 import {themes as prismThemes} from 'prism-react-renderer';
 import remarkMath from 'remark-math';
@@ -15,9 +16,12 @@ const config = {
     v4: true,
   },
 
-  // Not hosted anywhere; these just need to be valid.
-  url: 'http://localhost',
-  baseUrl: '/',
+  // GitHub Pages project site: https://<owner>.github.io/<repo>/
+  url: 'https://anicoll.github.io',
+  baseUrl: '/ml-education/',
+  organizationName: 'anicoll',
+  projectName: 'ml-education',
+  trailingSlash: false,
 
   onBrokenLinks: 'throw',
 
@@ -25,6 +29,7 @@ const config = {
     mermaid: true,
   },
   themes: ['@docusaurus/theme-mermaid'],
+  plugins: ['./src/plugins/quiz-index.js'],
 
   i18n: {
     defaultLocale: 'en',
@@ -77,6 +82,7 @@ const config = {
           },
           {to: '/docs/hardware/overview', label: 'Hardware', position: 'left'},
           {to: '/docs/reference/glossary', label: 'Glossary', position: 'left'},
+          {to: '/progress', label: 'My progress', position: 'right'},
         ],
       },
       footer: {
@@ -87,6 +93,7 @@ const config = {
             items: [
               {label: 'How to use this site', to: '/docs/intro'},
               {label: 'Learning roadmap', to: '/docs/roadmap'},
+              {label: 'My progress', to: '/progress'},
             ],
           },
           {
@@ -97,7 +104,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Personal learning notes. Built with Docusaurus.`,
+        copyright: `Your progress and answers are saved only in this browser. Built with Docusaurus.`,
       },
       prism: {
         theme: prismThemes.github,

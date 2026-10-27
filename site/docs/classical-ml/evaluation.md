@@ -45,10 +45,10 @@ LLMs need different tools:
 - **Your own eval set.** For fine-tuning, the most useful evaluation is a set of 50–200 prompts representative of *your* use case, with answers you've checked. Compare models side by side on it.
 - **LLM-as-judge:** use a strong model to grade outputs. Cheap and scalable, but it has biases (it tends to prefer longer answers, for example).
 
-:::info Key idea
+:::info[Key idea]
 Choose the metric that matches the real-world cost of mistakes, and always compare against a dumb baseline (predict the mean, predict the most common class). If you can't beat the baseline, nothing else matters.
 :::
 
-:::tip Try it
+:::tip[Try it]
 Create an imbalanced dataset with `make_classification(weights=[0.95, 0.05])`. Train logistic regression and report accuracy, precision, recall and F1. Then compare against a model that always predicts the majority class. Plot precision and recall as you vary the threshold from 0.1 to 0.9.
 :::

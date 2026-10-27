@@ -91,6 +91,6 @@ model = torch.compile(model)
 
 On Windows this needs WSL2 or a recent PyTorch build with Triton support. On a Mac, MPS support is limited, so skip `torch.compile` there. See [Choosing your machine](../hardware/overview.md).
 
-:::tip Try it
+:::tip[Try it]
 Take your MNIST script from Part 3 and add: a cosine learning rate schedule with warmup, bf16 autocast, gradient clipping, a validation loss check every epoch, checkpoint saving, and TensorBoard logging. Kill the script halfway, then make it resume from the checkpoint.
 :::

@@ -84,11 +84,11 @@ Things to try and notice:
 
 ## Which machine?
 
-- Small MLP policies (CartPole, LunarLander, Pendulum) are often as fast on the **CPU** as on a GPU, because the environment simulation is the bottleneck, not the network. Either your PC or your Mac is fine.
-- Image-based environments (CarRacing) benefit from a GPU for the CNN. The 3070 with CUDA is the most straightforward. Gymnasium and SB3 also run on the Mac.
+- Small MLP policies (CartPole, LunarLander, Pendulum) are often as fast on the **CPU** as on a GPU, because the environment simulation is the bottleneck, not the network. Any laptop or desktop is fine.
+- Image-based environments (CarRacing) benefit from a GPU for the CNN. An NVIDIA GPU with CUDA is the most straightforward. Gymnasium and SB3 also run on the Mac.
 - Trackmania needs Windows. See the [capstone](./capstone-trackmania.md).
 
-:::tip Try it
+:::tip[Try it]
 Work through the table above in `notebooks/07-rl/`, one environment at a time:
 
 1. PPO on CartPole until it reliably reaches 500.

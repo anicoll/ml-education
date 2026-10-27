@@ -47,10 +47,10 @@ print(rf.score(X_val, y_val), gb.score(X_val, y_val))
 | Text | Pre-trained transformers |
 | Very small datasets | Linear models or small trees |
 
-:::info Key idea
+:::info[Key idea]
 Deep learning isn't always the answer. For a spreadsheet, try gradient boosting before reaching for a neural network.
 :::
 
-:::tip Try it
+:::tip[Try it]
 On the same dataset you used for logistic regression, compare logistic regression, a single decision tree (try `max_depth` of 2, 5 and unlimited), a random forest and gradient boosting. Record train and validation accuracy for each in a table. Which one overfits the most?
 :::

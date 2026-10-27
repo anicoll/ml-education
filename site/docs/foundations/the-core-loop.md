@@ -119,11 +119,11 @@ for x, y in dataloader:
 
 Training GPT is this loop with a much bigger `model`, a lot more `dataloader`, and a lot more GPUs.
 
-:::info Key idea
+:::info[Key idea]
 Model makes a prediction. Loss measures the error. Gradients say which way to change each parameter. The optimiser takes a small step. Repeat thousands of times.
 :::
 
-:::tip Try it
+:::tip[Try it]
 Create `notebooks/01-foundations/gradient-descent.ipynb`. Run the code above, then:
 
 1. Plot the loss over steps (use `matplotlib`).

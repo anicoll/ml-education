@@ -76,6 +76,6 @@ Weights are stored in 4-bit but **computed in bf16**: each layer's weights are d
 
 You can't train 4-bit weights directly: the steps would be too small to register in so few bits. This is where **QLoRA** comes in: keep the big base model frozen in 4-bit, and train small extra matrices in 16-bit alongside it. That's the next page.
 
-:::tip Try it
+:::tip[Try it]
 Load the same 1.5B or 3B model in bf16, 8-bit and 4-bit. For each, record memory footprint and tokens per second, and run your ten test prompts from [Running models locally](./running-locally.md). Can you tell the difference in answer quality?
 :::

@@ -72,10 +72,10 @@ $$
 
 The loss is $-\log \hat{p}_{\text{correct class}}$. This exact setup (a linear layer, softmax, cross-entropy) sits at the end of almost every classification network, and at the end of every LLM, where the "classes" are the tokens in its vocabulary.
 
-:::info Key idea
+:::info[Key idea]
 Linear score → sigmoid or softmax → probability → cross-entropy loss. Memorise this pipeline; it's the output end of nearly every model you'll train.
 :::
 
-:::tip Try it
+:::tip[Try it]
 Use `sklearn.datasets.make_moons` to generate two-class data. Train your from-scratch logistic regression, plot the decision boundary, and see where it fails. Keep this notebook: you'll come back and solve the same data with a neural network in Part 3.
 :::

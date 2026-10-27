@@ -71,7 +71,7 @@ class GPT(nn.Module):
         return self.head(self.ln_f(x))            # (B, T, vocab_size) logits
 ```
 
-That's a complete GPT. With these default sizes it has about 10M parameters and trains well on a 3070. You'll do exactly that in the [capstone](../training-from-scratch/capstone-tiny-gpt.md).
+That's a complete GPT. With these default sizes it has about 10M parameters and trains well on a single consumer GPU or an Apple Silicon Mac. You'll do exactly that in the [capstone](../training-from-scratch/capstone-tiny-gpt.md).
 
 ## Training objective
 
@@ -111,6 +111,6 @@ The core is the same. The refinements:
 - **Mixture of experts (MoE)** in some models: many MLPs per layer, and a router picks a few per token. More total parameters, same compute per token.
 - And above all: **much more data and much more compute.**
 
-:::tip Try it
+:::tip[Try it]
 Read [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) by Jay Alammar for a visual walk-through. Then copy the `GPT` class above into a notebook, instantiate it with a vocabulary of 65 (characters), and check that a random input of shape `(4, 32)` produces logits of shape `(4, 32, 65)`. Count its parameters.
 :::

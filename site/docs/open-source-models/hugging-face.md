@@ -39,7 +39,7 @@ out = model.generate(inputs, max_new_tokens=200, temperature=0.7, do_sample=True
 print(tok.decode(out[0][inputs.shape[1]:], skip_special_tokens=True))
 ```
 
-A 1.5B model in bf16 needs about 3 GB of VRAM, so this runs comfortably on your 3070.
+A 1.5B model in bf16 needs about 3 GB of VRAM, so this runs comfortably on an 8 GB GPU or any recent Mac.
 
 ## Chat templates
 
@@ -75,6 +75,6 @@ Downloaded models are cached in `~/.cache/huggingface/hub` (on Windows, `C:\User
 
 Some models (like Llama) are "gated": accept the licence on the model's web page, then log in locally with `huggingface-cli login`.
 
-:::tip Try it
+:::tip[Try it]
 Load `Qwen/Qwen2.5-0.5B-Instruct` and `HuggingFaceTB/SmolLM2-1.7B-Instruct`. Print each architecture and identify the attention, MLP and normalisation layers. Then ask both the same five questions and compare the answers. Note VRAM use for each with `torch.cuda.max_memory_allocated()`.
 :::

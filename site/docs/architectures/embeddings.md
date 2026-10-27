@@ -59,7 +59,7 @@ $$
 
 An embedding table gives the same vector for "dog" wherever it appears. But order matters: "dog bites man" vs "man bites dog". Transformers add **positional information**, either as learned position embeddings added to each token vector (GPT-2), or by rotating vectors according to their position (**RoPE**, used by Llama and most modern models).
 
-:::tip Try it
+:::tip[Try it]
 1. Use the GPT-2 tokeniser to tokenise a paragraph of English, some code, and a sentence in another language. Compare token counts per character.
 2. Load a sentence-embedding model (`sentence-transformers/all-MiniLM-L6-v2`), embed 20 sentences on mixed topics, and find the most similar pair for each sentence. This model is tiny and runs fine on your GPU or even CPU.
 :::

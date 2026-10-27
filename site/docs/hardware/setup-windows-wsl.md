@@ -3,9 +3,9 @@ sidebar_position: 4
 title: "Setup: Windows + WSL2"
 ---
 
-# Setup: Windows + WSL2 (RTX 3070)
+# Setup: Windows + WSL2 (NVIDIA GPU)
 
-WSL2 runs a real Ubuntu inside Windows, with full access to your NVIDIA GPU. It gives you the Linux ML tooling (bitsandbytes, `torch.compile`, vLLM, Unsloth) without dual-booting. This is the recommended way to use the 3070 from Windows.
+WSL2 runs a real Ubuntu inside Windows, with full access to your NVIDIA GPU. It gives you the Linux ML tooling (bitsandbytes, `torch.compile`, vLLM, Unsloth) without dual-booting. This is the recommended way to use an NVIDIA GPU for ML from Windows.
 
 | Setup | Pros | Cons |
 | --- | --- | --- |
@@ -14,7 +14,7 @@ WSL2 runs a real Ubuntu inside Windows, with full access to your NVIDIA GPU. It 
 
 ## Step 1: NVIDIA driver on Windows
 
-Install the latest **Game Ready** or **Studio** driver from NVIDIA for your 3070, **in Windows only**. The Windows driver provides CUDA to WSL automatically. **Do not** install a Linux NVIDIA driver inside WSL; it will break GPU access.
+Install the latest **Game Ready** or **Studio** driver from NVIDIA for your card, **in Windows only**. The Windows driver provides CUDA to WSL automatically. **Do not** install a Linux NVIDIA driver inside WSL; it will break GPU access.
 
 ## Step 2: Install WSL2 and Ubuntu
 
@@ -37,7 +37,7 @@ Clone the repo inside the Linux filesystem, for example `~/code/ml-education`, n
 
 ## Step 4: Give WSL enough memory
 
-By default WSL2 can use about half your PC's RAM. For data processing or llama.cpp CPU offload you may want more. Create `C:\Users\<you>\.wslconfig`:
+By default WSL2 can use about half your PC's RAM. For data processing or llama.cpp CPU offload you may want more. Create `.wslconfig` in your Windows user folder (`%UserProfile%\.wslconfig`), giving WSL as much as your PC can spare:
 
 ```text
 [wsl2]

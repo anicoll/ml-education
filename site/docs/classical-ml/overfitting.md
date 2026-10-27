@@ -56,6 +56,6 @@ scores = cross_val_score(model, X, y, cv=5)
 print(scores.mean(), scores.std())
 ```
 
-:::tip Try it
+:::tip[Try it]
 Generate 30 noisy points from $y = \sin(x)$. Fit polynomials of degree 1, 3, 9 and 20 with `numpy.polyfit`, and plot each against the data. Then generate 1,000 fresh points and compute the error of each fit on them. Which degree wins? Now add L2 regularisation (`sklearn.linear_model.Ridge` with polynomial features) to the degree-20 model and see what happens.
 :::

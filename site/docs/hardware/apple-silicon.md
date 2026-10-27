@@ -3,23 +3,23 @@ sidebar_position: 3
 title: Apple Silicon (unified memory)
 ---
 
-# Apple Silicon: M4 Pro, M4 Max and newer
+# Apple Silicon Macs
 
-Apple Silicon Macs are a very different machine from a gaming PC, and in one important way a better one for LLMs: **memory**. An M4 Max with 48 GB can hold models that would never fit on an 8 GB card.
+Apple Silicon Macs are a very different machine from a gaming PC, and in one important way a better one for LLMs: **memory**. A Mac with 32 GB or more can hold models that would never fit on an 8 GB card. Any M-series chip works for this course; Pro, Max and Ultra chips have more GPU cores and more memory bandwidth, so they train and generate faster.
 
 ## Unified memory
 
 On a PC, the GPU has its own VRAM, separate from system RAM. On Apple Silicon, the CPU and GPU share one pool of **unified memory**. There's no copying between them, and the GPU can use most of the machine's RAM.
 
-- By default macOS lets the GPU use about **75% of RAM** on a 48 GB machine, so roughly **36 GB**.
-- You can raise this limit (until the next reboot) when you need it for a big model. Leave at least 8 GB for macOS:
+- By default macOS lets the GPU use roughly **two-thirds of RAM** on Macs with 36 GB or less, and about **three-quarters** above that. So about 21 GB on a 32 GB Mac, 24 GB on 36 GB, 36 GB on 48 GB and 48 GB on 64 GB.
+- You can raise this limit (until the next reboot) when you need it for a big model. Leave at least 8 GB for macOS. For example, on a 48 GB Mac:
 
 ```bash
 sudo sysctl iogpu.wired_limit_mb=40960   # allow the GPU about 40 GB
 ```
 
-- **Memory bandwidth** decides how fast LLMs generate text. The M4 Max has roughly 410–546 GB/s depending on the chip variant, and the M4 Pro about 273 GB/s. The RTX 3070 has about 448 GB/s. So token generation speed per GB of model is similar to the 3070, but you can load models four to five times bigger.
-- **Compute** (for training) is where the 3070 tends to win. NVIDIA's tensor cores are very fast at the mixed-precision matrix maths training needs. Expect training steps for a model that fits on both to be somewhat slower on the Mac. Compare them yourself.
+- **Memory bandwidth** decides how fast LLMs generate text. It ranges from about 100–150 GB/s on base M-series chips, through roughly 200–300 GB/s on Pro chips, to 400–550 GB/s on Max chips. A mid-range NVIDIA card has roughly 250–500 GB/s. So token generation speed per GB of model is similar on a Pro or Max chip, but you can load much bigger models.
+- **Compute** (for training) is where NVIDIA cards tend to win. NVIDIA's tensor cores are very fast at the mixed-precision matrix maths training needs. Expect training steps for a model that fits on both to be somewhat slower on the Mac. Compare them yourself.
 
 ## Two ways to use the GPU
 
@@ -40,7 +40,7 @@ Things to know:
 - bf16 works on recent macOS and PyTorch versions. If you hit dtype errors, fall back to float32 for small models (you have the memory).
 - `torch.compile` support for MPS is limited. Skip it on the Mac.
 - Memory tools differ: use `torch.mps.current_allocated_memory()` and `torch.mps.driver_allocated_memory()` instead of the `torch.cuda` functions, and Activity Monitor's GPU and memory views instead of `nvidia-smi`.
-- **bitsandbytes doesn't support MPS**, so the 4-bit `BitsAndBytesConfig` route from [Quantisation](../open-source-models/quantisation.md) and the [QLoRA walkthrough](../open-source-models/qlora-walkthrough.md) won't work here. Use MLX for that, or plain LoRA on a bf16 base (which fits in 48 GB for models up to about 8B).
+- **bitsandbytes doesn't support MPS**, so the 4-bit `BitsAndBytesConfig` route from [Quantisation](../open-source-models/quantisation.md) and the [QLoRA walkthrough](../open-source-models/qlora-walkthrough.md) won't work here. Use MLX for that, or plain LoRA on a bf16 base (which fits on a 48 GB Mac for models up to about 8B).
 
 ### MLX
 
@@ -91,30 +91,32 @@ mlx_lm.generate --model mlx-community/Qwen2.5-7B-Instruct-4bit \
 
 The concepts are exactly the same as on the [LoRA and QLoRA](../open-source-models/lora-and-qlora.md) page. Only the tool changes.
 
-## What fits in 48 GB
+## What fits at each memory size
 
-Assuming about 36 GB usable by the GPU (default limit), or about 40 GB after raising it. Use [VRAM maths](./vram-math.md) to check specific cases.
+These assume the default GPU memory limit. Use [VRAM maths](./vram-math.md) to check specific cases.
 
 ### Running LLMs
 
-| Model size | Format | Fits? |
-| --- | --- | --- |
-| 7–8B | bf16 (about 16 GB) | Yes, comfortably, with long context |
-| 14B | 8-bit (about 15 GB) | Yes |
-| 27–32B | 4-bit (about 17–20 GB) | Yes, comfortably. The sweet spot for quality on this machine. |
-| 30B-class mixture-of-experts | 4-bit | Yes, and fast, because only a few billion parameters are active per token |
-| 70B | 4-bit (about 40 GB) | Only after raising the GPU limit, with short context and little else running. 3-bit fits more easily, with some quality loss. |
-| 100B+ | Any | No |
+| Model size | Format | 16 GB Mac | 32–36 GB Mac | 48 GB Mac | 64 GB+ Mac |
+| --- | --- | --- | --- | --- | --- |
+| 7–8B | 4-bit (about 5 GB) | Yes | Yes | Yes | Yes |
+| 7–8B | bf16 (about 16 GB) | No | Yes | Yes, with long context | Yes |
+| 14B | 4-bit (about 9 GB) | Tight | Yes | Yes | Yes |
+| 27–32B | 4-bit (about 17–20 GB) | No | Tight, short context | Yes, comfortably | Yes |
+| 30B-class mixture-of-experts | 4-bit | No | Tight | Yes, and fast, because only a few billion parameters are active per token | Yes |
+| 70B | 4-bit (about 40 GB) | No | No | Only after raising the GPU limit, with short context | Yes |
 
 ### Fine-tuning
 
-| Model size | Method | Fits? |
+| Model size | Method | Needs roughly |
 | --- | --- | --- |
-| Up to about 1.5B | Full fine-tuning (about 16 bytes per parameter) | Yes |
-| 7–8B | LoRA on a bf16 base (MLX or PyTorch MPS) | Yes |
-| 14B | QLoRA (MLX, 4-bit base) | Yes, comfortably |
-| 27–32B | QLoRA (MLX, 4-bit base) | Possible with short sequences, a small batch and fewer LoRA layers |
-| 70B | Anything | No. Rent a GPU. |
+| Up to about 1.5B | Full fine-tuning (about 16 bytes per parameter) | 32 GB+ Mac |
+| 1.5–3B | QLoRA (MLX, 4-bit base) | 16 GB Mac |
+| 7–8B | QLoRA (MLX, 4-bit base) | 16 GB Mac, tightly; comfortable at 32 GB |
+| 7–8B | LoRA on a bf16 base (MLX or PyTorch MPS) | 32–36 GB Mac, tightly; comfortable at 48 GB |
+| 14B | QLoRA (MLX, 4-bit base) | 32 GB+ Mac |
+| 27–32B | QLoRA (MLX, 4-bit base) | 48 GB+ Mac, with short sequences and fewer LoRA layers |
+| 70B | Anything | Rent a GPU |
 
 ### Training from scratch
 
@@ -130,4 +132,4 @@ Both use Metal on the Mac automatically and work well. Ollama is the easiest way
 2. **Close memory-hungry apps** before loading a large model. Browsers and Electron apps share the same memory pool as the GPU.
 3. **Watch memory pressure** in Activity Monitor. If it goes yellow or red, macOS is swapping and everything will crawl. Use a smaller model or a shorter context.
 4. **Keep the laptop plugged in** for long runs, and expect the fans to spin up.
-5. **When a tutorial says `cuda`**, change the device to `mps`. When it uses bitsandbytes, Unsloth or vLLM, look for the MLX equivalent or run it on the 3070.
+5. **When a tutorial says `cuda`**, change the device to `mps`. When it uses bitsandbytes, Unsloth or vLLM, look for the MLX equivalent or run it on an NVIDIA machine.

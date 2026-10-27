@@ -52,10 +52,10 @@ Watch memory use live with `nvidia-smi -l 1` in a terminal, or from Python with 
 
 On a Mac the GPU shares memory with everything else, so instead of a clean out-of-memory error you'll often see macOS start swapping and training slow to a crawl. Watch memory pressure in Activity Monitor, and use `torch.mps.driver_allocated_memory()` from Python.
 
-:::info Key idea
+:::info[Key idea]
 Always overfit one batch first. It takes two minutes and catches a huge fraction of bugs before you waste hours on a broken run.
 :::
 
-:::tip Try it
+:::tip[Try it]
 Deliberately break your MNIST script in each of the "classic bugs" ways above, one at a time, and note in `notes/` what each one does to the loss curve. Next time you see that shape, you'll recognise it.
 :::

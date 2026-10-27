@@ -37,7 +37,7 @@ $$
 
 **Learning** means finding values of $\theta$ that make $f$ produce good outputs. That's it. A linear regression has two parameters. GPT-4-class models have hundreds of billions. The idea is the same.
 
-:::info Key idea
+:::info[Key idea]
 Machine learning = choose a flexible family of functions, then use data to pick the member of that family that works best.
 :::
 
@@ -83,7 +83,7 @@ flowchart TB
 
 A useful rule of thumb:
 
-:::info Rule of thumb
+:::info[Rule of thumb]
 ML is a good fit when the rule is **hard to write down** but **examples are easy to collect**.
 :::
 
@@ -151,6 +151,6 @@ Type:         <classification / regression / unsupervised>
 Baseline:     <what simple rule would I compare against?>
 ```
 
-:::tip Try it
+:::tip[Try it]
 Before going further, write down in `notes/` three problems from your own life or work where you'd *want* a learned function, using the template above. It's fine to adapt one of the worked examples to your own situation; the point is to practise seeing problems as "input → output, learned from examples". You'll revisit this list later.
 :::

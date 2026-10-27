@@ -80,12 +80,12 @@ One attention head can only focus on one kind of relationship at a time. **Multi
 
 ## The KV cache
 
-When generating text one token at a time, the keys and values of earlier tokens don't change. Inference engines store them in a **KV cache** instead of recomputing them. This makes generation fast, but the cache grows with context length and uses a lot of VRAM, which is a key consideration when running models on your 3070.
+When generating text one token at a time, the keys and values of earlier tokens don't change. Inference engines store them in a **KV cache** instead of recomputing them. This makes generation fast, but the cache grows with context length and uses a lot of VRAM, which is a key consideration when running models on a GPU with limited memory.
 
-:::info Key idea
+:::info[Key idea]
 Attention: each token asks a question (query), compares it with every token's label (key), and takes a weighted average of their content (value). Causal masking stops tokens looking at the future.
 :::
 
-:::tip Try it
+:::tip[Try it]
 Implement `SelfAttentionHead` in `notebooks/04-architectures/attention.ipynb`. Feed it a random tensor of shape `(2, 8, 32)`, check the output shape, and print the attention weights for one example to confirm the upper triangle is zero. Then verify your output matches `F.scaled_dot_product_attention` with `is_causal=True` using the same q, k and v.
 :::

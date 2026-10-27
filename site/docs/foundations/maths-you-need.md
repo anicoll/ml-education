@@ -38,7 +38,7 @@ x = torch.randn(3)
 h = W @ x               # shape: (4,)
 ```
 
-**Why GPUs?** A matrix multiply is thousands of independent multiply-adds. GPUs are built to do thousands of those in parallel. That's the whole reason your 3070 is useful for ML.
+**Why GPUs?** A matrix multiply is thousands of independent multiply-adds. GPUs are built to do thousands of those in parallel. That's the whole reason a gaming graphics card is useful for ML.
 
 ## 2. Derivatives and gradients (calculus)
 
@@ -98,7 +98,7 @@ For this course, no. If you want to build stronger foundations later:
 - **3Blue1Brown's "Essence of Linear Algebra" and "Essence of Calculus"** video series are the best visual introductions available.
 - **Mathematics for Machine Learning** (Deisenroth, Faisal, Ong) is free online and covers everything in depth.
 
-:::tip Try it
+:::tip[Try it]
 In `notebooks/01-foundations/maths.ipynb`:
 
 1. Implement `softmax` in NumPy. Check that the outputs sum to 1.

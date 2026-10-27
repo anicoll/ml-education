@@ -30,7 +30,7 @@ Think of a ball rolling downhill. It builds up speed in directions where the gra
 optimizer = torch.optim.AdamW(model.parameters(), lr=3e-4, weight_decay=0.01)
 ```
 
-:::note Memory cost
+:::note[Memory cost]
 Adam stores two extra numbers for every parameter. With 32-bit floats that's 8 extra bytes per parameter, which matters a lot when you're budgeting VRAM. More in [VRAM maths](../hardware/vram-math.md).
 :::
 
@@ -75,6 +75,6 @@ for i, (x, y) in enumerate(loader):
         optimizer.zero_grad()
 ```
 
-:::tip Try it
+:::tip[Try it]
 Train the same small MLP on MNIST with SGD (lr 0.1), SGD with momentum, and AdamW (lr 1e-3). Plot all three loss curves on one chart. Then try AdamW at lr 1e-1 and 1e-5 to see "too high" and "too low" in practice.
 :::

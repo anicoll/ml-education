@@ -75,6 +75,6 @@ flowchart LR
 
 When you fine-tune an open-source model in Part 6, you'll be doing step 2 (and optionally 3), starting from someone else's step 1. Step 1 is the part that costs millions of dollars.
 
-:::info Key idea
+:::info[Key idea]
 Supervised = learn from labelled examples. Self-supervised = make labels out of the data itself. That second idea is what made LLMs possible.
 :::

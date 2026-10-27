@@ -18,9 +18,9 @@ x = torch.randn(32, 784)          # batch of 32 flattened images
 print(x.shape, x.dtype, x.device) # torch.Size([32, 784]) torch.float32 cpu
 
 if torch.cuda.is_available():
-    device = "cuda"               # NVIDIA GPU (your 3070)
+    device = "cuda"               # NVIDIA GPU
 elif torch.backends.mps.is_available():
-    device = "mps"                # Apple Silicon GPU (your Mac)
+    device = "mps"                # Apple Silicon GPU
 else:
     device = "cpu"
 x = x.to(device)                  # move to the GPU
@@ -48,7 +48,7 @@ x.transpose(0, 1)    # swap dimensions: (784, 32)
 | --- | --- | --- |
 | `float32` | 4 | Default. Safe, but uses the most memory. |
 | `float16` | 2 | Mixed-precision training. Can overflow. |
-| `bfloat16` | 2 | Same range as float32, less precision. Preferred for LLMs. Supported on your 3070 (Ampere) and on recent macOS/PyTorch with MPS. |
+| `bfloat16` | 2 | Same range as float32, less precision. Preferred for LLMs. Supported on NVIDIA RTX 30-series (Ampere) and newer, and on recent macOS/PyTorch with MPS. |
 | `int8` / 4-bit | 1 / 0.5 | Quantised weights for inference and QLoRA. |
 
 ## Modules
@@ -94,7 +94,7 @@ test_loader = DataLoader(test_ds, batch_size=512)
 
 ## A complete training script
 
-This is the [core loop](../foundations/the-core-loop.md) with real components. It should reach about 98% test accuracy in a few epochs on your 3070.
+This is the [core loop](../foundations/the-core-loop.md) with real components. It should reach about 98% test accuracy in a few epochs on a GPU (and not much longer on a CPU).
 
 ```python
 import torch.nn.functional as F
@@ -136,7 +136,7 @@ torch.save(model.state_dict(), "mlp.pt")
 model.load_state_dict(torch.load("mlp.pt"))
 ```
 
-:::tip Try it
+:::tip[Try it]
 Put this script in `notebooks/03-neural-networks/mnist_mlp.py` and run it on your GPU. Then:
 
 1. Time an epoch on CPU vs GPU.

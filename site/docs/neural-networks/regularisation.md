@@ -65,6 +65,6 @@ class Block(nn.Module):
         return x + self.ff(self.norm(x))   # pre-norm residual block
 ```
 
-:::info Key idea
+:::info[Key idea]
 Random init breaks symmetry. Normalisation keeps activations well-scaled. Residual connections give gradients a highway. Dropout and weight decay fight overfitting. Every one of these exists to make optimisation easier.
 :::

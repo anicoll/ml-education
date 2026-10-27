@@ -3,7 +3,7 @@ sidebar_position: 5
 title: "Setup: native Ubuntu"
 ---
 
-# Setup: native Ubuntu (RTX 3070)
+# Setup: native Ubuntu (NVIDIA GPU)
 
 Native Linux is the smoothest platform for CUDA work: every library in this course supports it. These steps are for Ubuntu 24.04 or newer. If you're using WSL2 on Windows, start with [Windows + WSL2](./setup-windows-wsl.md), which sends you back here for the shared steps.
 
@@ -28,7 +28,7 @@ Check it:
 nvidia-smi
 ```
 
-You should see your RTX 3070, the driver version, and the highest CUDA version the driver supports.
+You should see your GPU's name, the driver version, and the highest CUDA version the driver supports.
 
 ## Step 2: Build tools
 
@@ -63,8 +63,8 @@ PyTorch wheels bundle their own CUDA runtime, so you **don't need to install the
 import time, torch
 print(torch.__version__)
 print(torch.cuda.is_available())             # True
-print(torch.cuda.get_device_name(0))         # NVIDIA GeForce RTX 3070
-print(torch.cuda.is_bf16_supported())        # True on Ampere
+print(torch.cuda.get_device_name(0))         # e.g. NVIDIA GeForce RTX 4060
+print(torch.cuda.is_bf16_supported())        # True on RTX 30-series (Ampere) and newer
 
 x = torch.randn(4096, 4096, device="cuda")
 torch.cuda.synchronize()
@@ -93,6 +93,6 @@ Then start Jupyter with `jupyter lab`, or open the repo in VS Code with the Pyth
 | Driver broke after a kernel update | `sudo ubuntu-drivers install` again, then reboot. |
 | Out of memory immediately | Something else is using the GPU. Check `nvidia-smi` for other processes, including your desktop. |
 
-:::tip Try it
+:::tip[Try it]
 Get the verification script running and save its output to `notes/setup.md`, along with your driver, PyTorch and Python versions. Future you will thank you when something breaks after an update.
 :::

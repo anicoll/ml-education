@@ -131,6 +131,6 @@ title: Glossary
 
 **Unified memory.** On Apple Silicon, one pool of memory shared by the CPU and GPU, so the GPU can use most of the machine's RAM.
 
-**VRAM.** The GPU's memory. Your RTX 3070 has 8 GB.
+**VRAM.** The GPU's memory. Consumer cards typically have 8–24 GB.
 
 **Weight decay.** Shrinking weights slightly each step to regularise; equivalent to an L2 penalty for plain SGD.

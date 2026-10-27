@@ -70,7 +70,7 @@ TrackMania 2020 and the TMRL worker need **native Windows**: the worker captures
 - Keep using WSL for everything else in the course. The two environments don't interfere.
 - The **Mac can't run TrackMania 2020** natively, so it plays no part here, apart from optionally hosting the trainer.
 
-The RTX 3070 is more than enough. With LIDAR observations the networks are tiny; even with images, the bottleneck is the real-time game, not the GPU. Running the game and the trainer on the same PC is fine. Keep the game window small (TMRL's docs specify a resolution) so screen capture stays cheap.
+Any recent NVIDIA GPU with 6 GB or more is plenty. With LIDAR observations the networks are tiny; even with images, the bottleneck is the real-time game, not the GPU. Running the game and the trainer on the same PC is fine. Keep the game window small (TMRL's docs specify a resolution) so screen capture stays cheap.
 
 ## Realistic expectations
 
@@ -132,6 +132,6 @@ Switch to full image observations with a CNN policy. Expect much longer training
 - **Try Linesight** on TrackMania Nations Forever, and compare its DQN-family approach (sped-up, parallel, discrete actions) with TMRL's real-time SAC.
 - **Write it up** in `projects/trackmania/` with videos, learning curves and what worked. It makes a great portfolio piece.
 
-:::info Key idea
+:::info[Key idea]
 Trackmania is CarRacing with real-world constraints: a real game, real time and a reward you record yourself. The concepts are the same: observations, actions, a progress-based reward and an off-policy actor-critic that makes the most of every frame.
 :::

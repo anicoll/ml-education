@@ -74,10 +74,10 @@ Same numbers as the hand calculation.
 - **Vanishing gradients:** multiplying many small local derivatives together gives a gradient near zero, so early layers barely learn. Fixes: ReLU-family activations, careful initialisation, normalisation layers, residual connections.
 - **Exploding gradients:** multiplying many large derivatives gives enormous gradients and the loss goes to `NaN`. Fix: **gradient clipping** (cap the gradient's size), plus the same fixes as above.
 
-:::info Key idea
+:::info[Key idea]
 Backpropagation is the chain rule run backwards through a computation graph. It gets every gradient for about the cost of one extra forward pass, at the price of storing intermediate activations in memory.
 :::
 
-:::tip Try it
+:::tip[Try it]
 Watch Andrej Karpathy's ["The spelled-out intro to neural networks and backpropagation: building micrograd"](https://www.youtube.com/watch?v=VMj-3S1tku0) (about 2.5 hours) and build micrograd alongside him in `notebooks/03-neural-networks/micrograd.ipynb`. It's the single best exercise for understanding backprop. Afterwards, check your gradients match PyTorch's on a few expressions.
 :::

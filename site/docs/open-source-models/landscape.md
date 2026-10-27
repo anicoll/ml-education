@@ -34,11 +34,11 @@ New releases appear constantly, so check the [Hugging Face Hub](https://huggingf
 | Mistral / Ministral | Mistral AI | Efficient models, some Apache-licensed. |
 | Phi | Microsoft | Small models trained heavily on high-quality and synthetic data. |
 | SmolLM | Hugging Face | Tiny fully open models (135M–3B), excellent for learning on limited hardware. |
-| DeepSeek | DeepSeek | Strong reasoning models; the big ones are far too large for a 3070, but distilled small versions exist. |
+| DeepSeek | DeepSeek | Strong reasoning models; the big ones are far too large for a home GPU, but distilled small versions exist. |
 
 ## Sizes and what they mean for you
 
-The number in a model name (1.5B, 8B, 70B) is its parameter count. On an 8 GB RTX 3070, as a rough guide:
+The number in a model name (1.5B, 8B, 70B) is its parameter count. On an 8 GB NVIDIA card, as a rough guide:
 
 | Size | Run it (inference) | Fine-tune it |
 | --- | --- | --- |
@@ -48,13 +48,13 @@ The number in a model name (1.5B, 8B, 70B) is its parameter count. On an 8 GB RT
 | 13–14B | 4-bit, tight, with small context | Not really practical |
 | 30B+ | Only with heavy CPU offload (slow) | Rent a GPU |
 
-On a 48 GB Apple Silicon Mac everything shifts up a lot: 27–32B models run comfortably at 4-bit, and 7–8B models can be LoRA fine-tuned without quantisation. See [Choosing your machine](../hardware/overview.md), and [VRAM maths](../hardware/vram-math.md) for where these numbers come from.
+On an Apple Silicon Mac with 32 GB or more, everything shifts up a lot: 27–32B models run at 4-bit, and with 48 GB or more 7–8B models can be LoRA fine-tuned without quantisation. See [Choosing your machine](../hardware/overview.md), and [VRAM maths](../hardware/vram-math.md) for where these numbers come from.
 
 ## Model cards
 
 Every model on the Hub has a **model card**. Read it. It tells you the licence, the intended use, the **chat template** (the exact format for conversations, which matters a lot for fine-tuning), the context length and known limitations.
 
-:::tip Try it
+:::tip[Try it]
 Browse the Hub and pick three instruct models between 1B and 8B parameters. For each, write down in `notes/`: its licence, context length, chat template, and the size of its weight files. Which would you choose to fine-tune first, and why?
 
 Here's what one row might look like. Check the model card yourself, as details change between releases:

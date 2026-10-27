@@ -75,11 +75,11 @@ model = SAC("MlpPolicy", gym.make("Pendulum-v1"), verbose=1)
 model.learn(total_timesteps=20_000)
 ```
 
-:::info Key idea
+:::info[Key idea]
 Policy gradients push up the probability of actions that did better than expected. PPO adds a clip so updates stay small and stable. SAC reuses past experience from a replay buffer, which makes it the better choice when experience is slow to collect.
 :::
 
-:::tip Try it
+:::tip[Try it]
 1. Train PPO and DQN on CartPole for the same number of steps and plot both learning curves. Which learns faster, and which is more stable?
 2. Train SAC on `Pendulum-v1` (continuous torque). Then try PPO on the same task and compare how many steps each needs.
 3. Stretch goal: implement REINFORCE yourself on CartPole in about 50 lines of PyTorch. Then subtract a simple baseline (the average return) and see how much faster it learns.

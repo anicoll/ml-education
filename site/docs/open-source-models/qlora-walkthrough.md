@@ -5,13 +5,13 @@ title: "Walkthrough: your first QLoRA fine-tune"
 
 # Walkthrough: your first QLoRA fine-tune
 
-This page takes you through a complete QLoRA fine-tune of a small instruct model on your 3070. Budget an evening for it, most of it spent on data.
+This page takes you through a complete QLoRA fine-tune of a small instruct model on an 8 GB NVIDIA GPU. Budget an evening for it, most of it spent on data.
 
-:::info On a Mac?
-This walkthrough uses bitsandbytes for 4-bit quantisation, which needs an NVIDIA GPU. On Apple Silicon, follow the same steps for data (2), baseline (3) and evaluation (5), but do the training with MLX instead: see [Fine-tuning with MLX](../hardware/apple-silicon.md#fine-tuning-with-mlx-lora-and-qlora). With 48 GB of unified memory you can also skip quantisation entirely and run plain LoRA on a bf16 base up to about 8B, by deleting `quantization_config` below and using `device_map="mps"`.
+:::info[On a Mac?]
+This walkthrough uses bitsandbytes for 4-bit quantisation, which needs an NVIDIA GPU. On Apple Silicon, follow the same steps for data (2), baseline (3) and evaluation (5), but do the training with MLX instead: see [Fine-tuning with MLX](../hardware/apple-silicon.md#fine-tuning-with-mlx-lora-and-qlora). With 32 GB or more of unified memory you can also skip quantisation entirely and run plain LoRA on a bf16 base up to about 8B, by deleting `quantization_config` below and using `device_map="mps"`.
 :::
 
-:::note Library versions
+:::note[Library versions]
 The Hugging Face libraries change quickly, and argument names occasionally move between versions. If something here errors, check the current [TRL SFTTrainer docs](https://huggingface.co/docs/trl/sft_trainer) and [PEFT docs](https://huggingface.co/docs/peft). The concepts don't change.
 :::
 

@@ -6,7 +6,7 @@ slug: /intro
 
 # How to use this site
 
-This is a self-paced course on machine learning, written for someone who can program but has not studied ML before. It goes from "what is a model, really?" all the way to fine-tuning an open-source language model on your own hardware: an RTX 3070 PC (Windows with WSL2, or Ubuntu) and an Apple Silicon Mac.
+This is a self-paced course on machine learning, written for someone who can program but has not studied ML before. It goes from "what is a model, really?" all the way to fine-tuning an open-source language model on your own hardware: a PC with an NVIDIA GPU (Windows with WSL2, or Ubuntu) or an Apple Silicon Mac.
 
 ## The big picture in one paragraph
 
@@ -21,9 +21,9 @@ Machine learning is **writing programs whose behaviour is learned from data inst
 | 3. Neural networks | Neurons, backprop, optimisers, PyTorch | Train an MLP on MNIST on your GPU |
 | 4. Architectures | CNNs, embeddings, attention, transformers | Build a CNN and a self-attention layer |
 | 5. Training from scratch | Training loops, data, debugging, efficiency | Train a tiny GPT on your own text |
-| 6. Open-source models | Hugging Face, quantisation, LoRA, QLoRA | QLoRA fine-tune an LLM on the 3070 or the Mac |
+| 6. Open-source models | Hugging Face, quantisation, LoRA, QLoRA | QLoRA fine-tune an LLM on an NVIDIA GPU or a Mac |
 | 7. Reinforcement learning | Rewards, Q-learning, DQN, policy gradients, PPO | Train agents in Gymnasium, then an AI that drives in Trackmania |
-| 8. Your hardware | 3070 vs Apple Silicon, memory budgeting, setup, when to rent | A working PyTorch environment on CUDA and/or MPS |
+| 8. Your hardware | NVIDIA vs Apple Silicon, memory budgeting, setup, when to rent | A working PyTorch environment on CUDA and/or MPS |
 
 ## How each lesson works
 
@@ -34,11 +34,11 @@ Each page follows the same pattern:
 3. **Then code**, usually small enough to type out yourself.
 4. **A "Try it" box** pointing at an exercise you should do in the repo's `notebooks/` folder.
 
-:::tip Try it
+:::tip[Try it]
 Exercises look like this. They tell you what to build, not just what to read. Do them. Reading about ML without writing code is like reading about swimming.
 :::
 
-:::info Key idea
+:::info[Key idea]
 Boxes like this summarise the one thing to remember from a section.
 :::
 

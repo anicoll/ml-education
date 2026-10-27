@@ -87,10 +87,10 @@ The next pages cover each family. Both Trackmania projects you'll meet in the ca
 - **Robotics:** locomotion, grasping, often trained in simulation first.
 - **LLMs:** RLHF and RL with verifiable rewards (does the code pass its tests?) are how chat and reasoning models are tuned. See [Types of learning](../foundations/types-of-learning.md).
 
-:::info Key idea
+:::info[Key idea]
 An agent acts, the environment responds with a new observation and a reward, and the agent learns a policy that maximises total future reward. You design the reward, so design it carefully.
 :::
 
-:::tip Try it
+:::tip[Try it]
 Install Gymnasium (`pip install gymnasium`), create `CartPole-v1`, and run 10 episodes with **random** actions. Print each episode's total reward. That's your baseline: anything you train later has to beat it. Then write down in `notes/` what the observation, action and reward are for CartPole (the Gymnasium docs describe them).
 :::

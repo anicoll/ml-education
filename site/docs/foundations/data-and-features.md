@@ -56,6 +56,6 @@ Compute $\mu$ and $\sigma$ on the **training set only**, then apply the same val
 
 For fine-tuning LLMs this matters even more: a thousand carefully written examples usually beat a hundred thousand sloppy ones.
 
-:::tip Try it
+:::tip[Try it]
 Download the classic [Iris](https://scikit-learn.org/stable/datasets/toy_dataset.html#iris-dataset) or [California housing](https://scikit-learn.org/stable/datasets/real_world.html#california-housing-dataset) dataset via scikit-learn. Split it 80/10/10, standardise the features using training statistics only, and plot a histogram of each feature before and after.
 :::

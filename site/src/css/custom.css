@@ -29,3 +29,12 @@
   overflow-y: hidden;
   padding: 0.25rem 0;
 }
+
+/* Tick next to lessons marked complete in the sidebar. */
+.lesson-done > a::after {
+  content: '✓';
+  margin-left: auto;
+  padding-left: 0.5rem;
+  color: var(--ifm-color-success);
+  font-weight: 700;
+}

@@ -84,10 +84,10 @@ Sigmoid and tanh **saturate**: for large inputs their slope is nearly zero, so g
 
 Each layer transforms its input into a new representation. In an image network, early layers learn edges, middle layers learn textures and parts, later layers learn whole objects. Nobody programs this; it emerges from minimising the loss. This is the key difference from classical ML: **the network learns its own features.**
 
-:::info Key idea
+:::info[Key idea]
 A neural network is layers of "linear transform, then non-linearity", stacked. The non-linearity is what makes depth useful.
 :::
 
-:::tip Try it
+:::tip[Try it]
 Go to the [TensorFlow Playground](https://playground.tensorflow.org/) in your browser. Pick the spiral dataset. Try to classify it with no hidden layers, then one, then several. Swap ReLU for linear activation and watch it fail. Fifteen minutes here builds more intuition than an hour of reading.
 :::

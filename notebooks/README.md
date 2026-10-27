@@ -22,7 +22,7 @@ See the site's "Your hardware" section for setup on Windows + WSL2, Ubuntu or ma
 ```bash
 uv venv --python 3.12
 source .venv/bin/activate
-# Windows (WSL2) or Ubuntu with the RTX 3070
+# Windows (WSL2) or Ubuntu with an NVIDIA GPU
 uv pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
 uv pip install -r notebooks/requirements.txt
 

@@ -10,7 +10,7 @@ For language models, data work means: get text, clean it, tokenise it, and feed 
 ## Where training text comes from
 
 - **Small and classic:** Tiny Shakespeare (1 MB), perfect for first experiments.
-- **Children's stories:** [TinyStories](https://huggingface.co/datasets/roneneldan/TinyStories), synthetic simple stories designed so that very small models can learn coherent English. Excellent for a 3070.
+- **Children's stories:** [TinyStories](https://huggingface.co/datasets/roneneldan/TinyStories), synthetic simple stories designed so that very small models can learn coherent English. Excellent for a single consumer GPU.
 - **Web scale:** FineWeb, The Pile, RedPajama. Billions to trillions of tokens. Far more than you need, but you can stream a slice.
 - **Your own:** your notes, a book, a codebase. Small, but fun.
 
@@ -72,10 +72,10 @@ A useful rule of thumb from the **Chinchilla** paper: for the best model for a f
 
 Modern small models are trained far beyond this (Llama 3 8B saw 15 trillion tokens) because a smaller model that's been over-trained is cheaper to *run*. For your experiments, 20 tokens per parameter is a good target.
 
-## Throughput budget on a 3070
+## Throughput budget on a consumer GPU
 
-As a rough guide, a 3070 trains a 10M-parameter GPT at somewhere around 100k–200k tokens per second with bf16 and `torch.compile`. 200M tokens then takes about 20–30 minutes. A 100M-parameter model at 2B tokens would take a day or more. Measure your own numbers; they depend heavily on sequence length and batch size.
+As a rough guide, a mid-range consumer GPU (an RTX 3070 or 4060 class card) trains a 10M-parameter GPT at somewhere around 100k–200k tokens per second with bf16 and `torch.compile`. 200M tokens then takes about 20–30 minutes. A 100M-parameter model at 2B tokens would take a day or more. Measure your own numbers; they depend heavily on sequence length and batch size.
 
-:::tip Try it
+:::tip[Try it]
 Download TinyStories, tokenise the first 100k stories with the GPT-2 tokeniser, and save `train.bin` and `val.bin` in `notebooks/05-training/data/`. How many tokens did you get? How many parameters would be compute-optimal for that many tokens?
 :::

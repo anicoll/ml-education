@@ -68,7 +68,7 @@ QLoRA also introduced **paged optimisers**, which move optimiser state to CPU RA
 | Learning rate | 1e-4 to 2e-4 | Higher than full fine-tuning, because adapters start from zero. |
 | Epochs | 1–3 | More risks overfitting a small dataset. |
 
-## What fits on an RTX 3070 (8 GB)
+## What fits on an 8 GB NVIDIA card
 
 Approximate, with gradient checkpointing, bf16 compute and batch size 1–2 plus gradient accumulation:
 
@@ -81,9 +81,9 @@ Approximate, with gradient checkpointing, bf16 compute and batch size 1–2 plus
 
 **Unsloth** is a library that rewrites the key kernels for LoRA/QLoRA training and typically cuts memory use substantially and roughly doubles speed. On an 8 GB card it can make the difference between a 7–8B run fitting or not. Worth using once you understand the plain `peft` version.
 
-## What fits on a 48 GB Apple Silicon Mac
+## What fits on an Apple Silicon Mac (48 GB example)
 
-With about 36–40 GB usable by the GPU, using MLX (`mlx_lm.lora`):
+A 48 GB Mac has about 36–40 GB usable by the GPU. Using MLX (`mlx_lm.lora`), roughly (halve the model sizes for a 24 GB Mac):
 
 | Base model | Method | Verdict |
 | --- | --- | --- |
@@ -93,7 +93,7 @@ With about 36–40 GB usable by the GPU, using MLX (`mlx_lm.lora`):
 | 27–32B | QLoRA (4-bit base) | Possible with short sequences and fewer LoRA layers. |
 | 70B | — | Doesn't fit. Rent a GPU. |
 
-Steps are slower than on an NVIDIA card of similar size, but the Mac can fine-tune much larger models than the 3070. A good workflow is to debug your data and settings on a small model on either machine, then do the 7B+ run on the Mac. See [Apple Silicon](../hardware/apple-silicon.md) for the commands.
+Steps are slower than on an NVIDIA card of similar size, but a Mac with plenty of memory can fine-tune much larger models than an 8 GB card. A good workflow is to debug your data and settings on a small model on either machine, then do the 7B+ run on the Mac. See [Apple Silicon](../hardware/apple-silicon.md) for the commands.
 
 ## After training
 
@@ -102,10 +102,10 @@ You have two choices:
 1. **Keep the adapter separate.** Load the base model, then load the adapter on top. Easy to swap adapters.
 2. **Merge it in.** Compute $W + \frac{\alpha}{r}BA$ once and save a normal model. No extra inference cost, and you can then convert it to GGUF and run it in Ollama.
 
-:::info Key idea
+:::info[Key idea]
 LoRA freezes the big model and trains two small matrices per layer whose product is the update. QLoRA does the same with the frozen model stored in 4-bit. Together they cut fine-tuning memory by around 10× or more.
 :::
 
-:::tip Try it
+:::tip[Try it]
 Before training anything, calculate on paper: for a 3B model with 28 layers, hidden size 3072, and LoRA rank 16 on just the q and v projections (each $3072 \times 3072$), how many trainable parameters are there? What fraction of the model is that? Then check your answer with `model.print_trainable_parameters()` in the walkthrough on the next page.
 :::

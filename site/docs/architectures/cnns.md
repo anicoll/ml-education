@@ -79,8 +79,8 @@ model = torchvision.models.resnet18(weights="IMAGENET1K_V1")
 model.fc = nn.Linear(model.fc.in_features, num_classes)
 ```
 
-:::tip Try it
-1. Train `SmallCNN` on CIFAR-10 (`torchvision.datasets.CIFAR10`) on your 3070. Aim for about 80% test accuracy. Add random crops and horizontal flips as data augmentation and see how much it helps.
+:::tip[Try it]
+1. Train `SmallCNN` on CIFAR-10 (`torchvision.datasets.CIFAR10`) on your GPU. Aim for about 80% test accuracy. Add random crops and horizontal flips as data augmentation and see how much it helps.
 2. Fine-tune a pre-trained ResNet-18 on the same data and compare.
 3. Visualise the 32 filters of the first conv layer as tiny images. Can you see edge detectors?
 :::

@@ -101,7 +101,7 @@ model.save("dqn_cartpole")
 
 CartPole is "solved" at an average return of 500 (the episode limit). DQN on CartPole is notoriously sensitive to hyperparameters; the [RL Baselines3 Zoo](https://github.com/DLR-RM/rl-baselines3-zoo) has tuned settings for many environments.
 
-:::tip Try it
+:::tip[Try it]
 1. Run the tabular Q-learning code on FrozenLake. Print the learned policy grid and check it reaches the goal. Then set `is_slippery=True` and see how much harder it gets.
 2. Train SB3's DQN on CartPole and watch `rollout/ep_rew_mean` in TensorBoard.
 3. Stretch goal: write DQN yourself in PyTorch (a replay buffer, a target network and an MLP) and get CartPole above an average return of 400. Following the [CleanRL DQN implementation](https://docs.cleanrl.dev/rl-algorithms/dqn/), a single readable file, is a good guide.

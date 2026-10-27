@@ -5,7 +5,7 @@ title: Running models locally
 
 # Running models locally
 
-Before fine-tuning anything, get a feel for what open models can do by running them on your own machine. This is the quickest win in the course: you can be chatting with a capable model on your 3070 or Mac in about ten minutes.
+Before fine-tuning anything, get a feel for what open models can do by running them on your own machine. This is the quickest win in the course: you can be chatting with a capable model on your own GPU or Mac in about ten minutes.
 
 ## The options
 
@@ -50,13 +50,13 @@ An 8B model at Q4_K_M is about 4.9 GB, which leaves room on your 8 GB card for t
 
 ## What happens when a model doesn't fit
 
-llama.cpp can split layers between GPU and CPU (`--n-gpu-layers` / `-ngl`). Layers that don't fit on the GPU run on the CPU from system RAM. It works, but each layer on the CPU slows things down a lot. Rough expectations on a 3070:
+llama.cpp can split layers between GPU and CPU (`--n-gpu-layers` / `-ngl`). Layers that don't fit on the GPU run on the CPU from system RAM. It works, but each layer on the CPU slows things down a lot. Rough expectations on an 8 GB card:
 
 - 7–8B at Q4, fully on GPU: fast, typically 40+ tokens per second.
 - 13–14B at Q4: just over 8 GB, so a few layers spill to CPU. Usable but noticeably slower.
 - 30B+: mostly on CPU. Slow, but it runs if you have 32 GB+ of system RAM.
 
-On a 48 GB Mac, there's no split to worry about: the GPU uses unified memory, so 27–32B models at Q4 (about 17–20 GB) run entirely on the GPU at a usable speed. For the fastest generation on a Mac, try MLX models with `mlx_lm.chat` or in LM Studio. See [Apple Silicon](../hardware/apple-silicon.md).
+On a Mac there's no split to worry about: the GPU uses unified memory, so with 32 GB or more, 27–32B models at Q4 (about 17–20 GB) run entirely on the GPU at a usable speed. For the fastest generation on a Mac, try MLX models with `mlx_lm.chat` or in LM Studio. See [Apple Silicon](../hardware/apple-silicon.md).
 
 ## What to notice
 
@@ -87,6 +87,6 @@ A good personal test set mixes different skills, includes some prompts you know 
 
 Score each answer quickly (for example 0 = wrong, 1 = partly right, 2 = good) so you can compare models and, later, your fine-tunes with a number as well as a gut feeling.
 
-:::tip Try it
+:::tip[Try it]
 Install Ollama and run a 1–3B model and a 7–8B model (on the Mac, add a 27–32B model too). Run the ten prompts above, or your own version of them, on each model, and save the prompts, answers and scores in `notes/model-comparison.md`. You'll reuse these prompts to evaluate your fine-tunes.
 :::

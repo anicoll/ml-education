@@ -5,11 +5,11 @@ title: When to rent a GPU
 
 # When to rent a GPU
 
-Your 3070 and Mac cover most of this course between them. For the rest, renting is cheap and often the smarter choice.
+A typical home machine (an 8 GB NVIDIA card or an Apple Silicon Mac) covers most of this course. For the rest, renting is cheap and often the smarter choice.
 
 ## When renting makes sense
 
-- The run doesn't fit on your machines (for example anything 70B), or it needs CUDA-only tooling and doesn't fit in 8 GB.
+- The run doesn't fit on your machine (for example anything 70B), or it needs CUDA-only tooling and doesn't fit in your card's VRAM.
 - The run fits but would take days locally and hours on a bigger card.
 - You want to try multi-GPU training to understand it.
 
@@ -29,15 +29,15 @@ Prices change often, so check current rates. As a ballpark, 24 GB consumer cards
 
 | VRAM | Comfortable QLoRA | Comfortable LoRA (bf16 base) |
 | --- | --- | --- |
-| 8 GB (your 3070) | 3B, tight 8B | 1.5B |
-| ~36–40 GB usable (48 GB Mac, via MLX) | 14B, careful 32B | 8B |
+| 8 GB (common consumer card) | 3B, tight 8B | 1.5B |
+| ~36–40 GB usable (a 48 GB Mac, via MLX) | 14B, careful 32B | 8B |
 | 24 GB | 14B, comfy 8B with long sequences | 8B |
 | 48 GB | 32B | 14B |
 | 80 GB | 70B | 32B |
 
 ## A workflow that saves money
 
-1. **Develop locally** on the 3070 with a small model and a slice of data until the script runs end to end without errors.
+1. **Develop locally** with a small model and a slice of data until the script runs end to end without errors.
 2. **Rent** a bigger GPU only for the full run.
 3. **Push your code** to this repo, clone it on the rented machine, and run the same script with a bigger model in the config.
 4. **Download the result** (a LoRA adapter is just tens of MB) and shut the machine down. Most providers charge while it's running, even if idle.
