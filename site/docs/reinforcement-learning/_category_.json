@@ -1,0 +1,8 @@
+{
+  "label": "7. Reinforcement learning",
+  "position": 8,
+  "link": {
+    "type": "generated-index",
+    "description": "Learning from rewards instead of labels: Q-learning, DQN, policy gradients and PPO, practised on Gymnasium environments, ending with an AI that drives in Trackmania."
+  }
+}

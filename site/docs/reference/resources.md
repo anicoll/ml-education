@@ -21,6 +21,15 @@ A short, opinionated list. Better to finish two of these than start ten.
 - **Build a Large Language Model (From Scratch)** by Sebastian Raschka. A whole book doing what Part 5 does, in more depth.
 - **Hands-On Machine Learning** by Aurélien Géron. Strong on classical ML and scikit-learn.
 
+## Reinforcement learning
+
+- **Reinforcement Learning: An Introduction** by Sutton and Barto. The classic textbook, free online. Read chapters 1–6 alongside Part 7.
+- [Hugging Face Deep RL Course](https://huggingface.co/learn/deep-rl-course). Free, hands-on, from Q-learning to PPO.
+- [OpenAI Spinning Up](https://spinningup.openai.com/). Clear explanations of policy gradients, PPO and SAC.
+- [Stable-Baselines3](https://stable-baselines3.readthedocs.io/), [RL Baselines3 Zoo](https://github.com/DLR-RM/rl-baselines3-zoo) and [CleanRL](https://docs.cleanrl.dev/). Reliable implementations; CleanRL puts each algorithm in a single readable file.
+- [Gymnasium](https://gymnasium.farama.org/). The standard environment interface.
+- [TMRL](https://github.com/trackmania-rl/tmrl) and [Linesight](https://github.com/Linesight-RL/linesight). Trackmania RL frameworks for the capstone.
+
 ## Hugging Face
 
 - [Hugging Face LLM Course](https://huggingface.co/learn). Transformers, datasets, fine-tuning, all with their libraries.
@@ -36,6 +45,9 @@ You can read these now. Skim for the main idea and the diagrams; don't worry abo
 - *LoRA: Low-Rank Adaptation of Large Language Models* (Hu et al., 2021).
 - *QLoRA: Efficient Finetuning of Quantized LLMs* (Dettmers et al., 2023).
 - *Deep Residual Learning for Image Recognition* (He et al., 2015). ResNets.
+- *Human-level control through deep reinforcement learning* (Mnih et al., 2015). DQN on Atari.
+- *Proximal Policy Optimization Algorithms* (Schulman et al., 2017). PPO.
+- *Soft Actor-Critic* (Haarnoja et al., 2018). SAC.
 
 ## Tools and code
 

@@ -17,6 +17,9 @@ flowchart LR
   C --> G[Run open models locally]
   F --> H[LoRA / QLoRA fine-tune]
   G --> H
+  C --> I[Reinforcement learning]
+  E --> I
+  I --> J[Trackmania capstone]
 ```
 
 ## Stage 1: The core idea
@@ -61,12 +64,24 @@ Work through Part 6.
 
 **Milestone:** QLoRA fine-tune a 1–3B parameter instruction model on a small dataset of your own (on the 3070 with bitsandbytes, or on the Mac with MLX). Compare its answers to the base model's on prompts it hasn't seen.
 
+## Stage 8: Reinforcement learning
+
+Work through Part 7, from [How reinforcement learning works](./reinforcement-learning/rl-basics.md) to [Practice with Gymnasium](./reinforcement-learning/practice-with-gymnasium.md).
+
+**Milestone:** A PPO or SAC agent that drives CarRacing from pixels with an average return above 700, plus a video of it driving.
+
+## Stage 9: Trackmania capstone
+
+Follow [Capstone: an AI that drives in Trackmania](./reinforcement-learning/capstone-trackmania.md).
+
+**Milestone:** An agent trained with TMRL that completes a track you built yourself.
+
 ## After that
 
 Some directions once the basics are solid:
 
 - **Go deeper on LLMs:** preference tuning (DPO), evaluation, retrieval-augmented generation (RAG).
-- **Go wider:** image generation (diffusion models), speech (Whisper), reinforcement learning.
+- **Go wider:** image generation (diffusion models), speech (Whisper), multi-agent or model-based RL.
 - **Go lower-level:** write your own autograd engine (see [micrograd](https://github.com/karpathy/micrograd)), or profile and optimise a training run.
 
 Keep a log in `notes/` of what you tried and what surprised you. Surprises are where the learning is.
