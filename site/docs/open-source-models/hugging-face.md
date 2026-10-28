@@ -79,6 +79,22 @@ Some models (like Llama) are "gated": accept the licence on the model's web page
 Load `Qwen/Qwen2.5-0.5B-Instruct` and `HuggingFaceTB/SmolLM2-1.7B-Instruct`. Print each architecture and identify the attention, MLP and normalisation layers. Then ask both the same five questions and compare the answers. Note VRAM use for each with `torch.cuda.max_memory_allocated()`.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="tiZFewofSLM" title="The pipeline function" channel="Hugging Face">
+
+A short video from the official Hugging Face course on the one-line `pipeline()` API.
+
+</YouTube>
+
+<YouTube id="QEaBAZQCtwE" title="Getting Started With Hugging Face in 15 Minutes | Transformers, Pipeline, Tokenizer, Models" channel="AssemblyAI">
+
+A quick tour of pipelines, tokenizers and loading models, which is most of what this lesson covers.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

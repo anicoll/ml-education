@@ -95,6 +95,16 @@ On Windows this needs WSL2 or a recent PyTorch build with Triton support. On a M
 Take your MNIST script from Part 3 and add: a cosine learning rate schedule with warmup, bf16 autocast, gradient clipping, a validation loss check every epoch, checkpoint saving, and TensorBoard logging. Kill the script halfway, then make it resume from the checkpoint.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="l8pRSuU81PU" title="Let's reproduce GPT-2 (124M)" channel="Andrej Karpathy">
+
+A real training run built up live. Most of this lesson's pieces appear: mixed precision, `torch.compile`, gradient accumulation, a warmup-plus-cosine learning-rate schedule and evaluation during training. Long, so it's fine to dip into the sections you need.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

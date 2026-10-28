@@ -95,6 +95,22 @@ An agent acts, the environment responds with a new observation and a reward, and
 Install Gymnasium (`pip install gymnasium`), create `CartPole-v1`, and run 10 episodes with **random** actions. Print each episode's total reward. That's your baseline: anything you train later has to beat it. Then write down in `notes/` what the observation, action and reward are for CartPole (the Gymnasium docs describe them).
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="0MNVhXEX9to" title="Reinforcement Learning: Machine Learning Meets Control Theory" channel="Steve Brunton">
+
+A clear overview of agents, environments, rewards and policies, and how RL relates to the rest of ML.
+
+</YouTube>
+
+<YouTube id="2pWv7GOvuf0" title="RL Course by David Silver - Lecture 1: Introduction to Reinforcement Learning" channel="Google DeepMind">
+
+The first lecture of the classic university course. Worth it if you want the formal definitions (states, Markov property, value functions) behind this lesson.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

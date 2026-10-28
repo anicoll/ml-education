@@ -69,6 +69,22 @@ class Block(nn.Module):
 Random init breaks symmetry. Normalisation keeps activations well-scaled. Residual connections give gradients a highway. Dropout and weight decay fight overfitting. Every one of these exists to make optimisation easier.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="P6sfmUTpUmc" title="Building makemore Part 3: Activations & Gradients, BatchNorm" channel="Andrej Karpathy">
+
+Shows, with plots, why initialisation scale matters, what dead and saturated activations look like, and why batch normalisation was such a big deal. Pairs perfectly with this lesson.
+
+</YouTube>
+
+<YouTube id="Q81RR3yKn30" title="Regularization Part 1: Ridge (L2) Regression" channel="StatQuest with Josh Starmer">
+
+The idea behind weight decay, shown on simple regression: a small penalty on large weights trades a little bias for much less variance.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

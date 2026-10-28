@@ -79,6 +79,16 @@ You don't need to finish all the theory before touching real models. A good rhyt
 
 See the [learning roadmap](./roadmap.md) for a more detailed path and milestones.
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="LPZh9BOjkQs" title="Large Language Models explained briefly" channel="3Blue1Brown">
+
+An eight-minute taste of where this course ends up: what a language model is and roughly how it's trained. Don't worry if parts go over your head; every idea in it gets its own lesson here.
+
+</YouTube>
+
 ## Check your understanding
 
 Try these to see how the questions work.

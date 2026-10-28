@@ -79,8 +79,30 @@ Backpropagation is the chain rule run backwards through a computation graph. It 
 :::
 
 :::tip[Try it]
-Watch Andrej Karpathy's ["The spelled-out intro to neural networks and backpropagation: building micrograd"](https://www.youtube.com/watch?v=VMj-3S1tku0) (about 2.5 hours) and build micrograd alongside him in `notebooks/03-neural-networks/micrograd.ipynb`. It's the single best exercise for understanding backprop. Afterwards, check your gradients match PyTorch's on a few expressions.
+Watch Andrej Karpathy's ["The spelled-out intro to neural networks and backpropagation: building micrograd"](https://www.youtube.com/watch?v=VMj-3S1tku0) (about 2.5 hours, embedded [below](#watch)) and build micrograd alongside him in `notebooks/03-neural-networks/micrograd.ipynb`. It's the single best exercise for understanding backprop. Afterwards, check your gradients match PyTorch's on a few expressions.
 :::
+
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="Ilg3gGewQ5U" title="Backpropagation, intuitively | Deep Learning Chapter 3" channel="3Blue1Brown">
+
+The intuition first: how each weight's gradient says how much it should change, with no heavy maths.
+
+</YouTube>
+
+<YouTube id="tIeHLnjs5U8" title="Backpropagation calculus | Deep Learning Chapter 4" channel="3Blue1Brown">
+
+The same chain-rule calculation as the worked example above, drawn out visually.
+
+</YouTube>
+
+<YouTube id="VMj-3S1tku0" title="The spelled-out intro to neural networks and backpropagation: building micrograd" channel="Andrej Karpathy">
+
+The video for the *Try it* box above. Long, but you'll come out understanding backprop better than most people who use it every day.
+
+</YouTube>
 
 ## Check your understanding
 

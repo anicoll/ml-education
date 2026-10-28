@@ -55,6 +55,28 @@ Deep learning isn't always the answer. For a spreadsheet, try gradient boosting 
 On the same dataset you used for logistic regression, compare logistic regression, a single decision tree (try `max_depth` of 2, 5 and unlimited), a random forest and gradient boosting. Record train and validation accuracy for each in a table. Which one overfits the most?
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="_L39rN6gz7Y" title="Decision and Classification Trees, Clearly Explained!!!" channel="StatQuest with Josh Starmer">
+
+How a tree picks each split, step by step.
+
+</YouTube>
+
+<YouTube id="J4Wdy0Wc_xQ" title="StatQuest: Random Forests Part 1 - Building, Using and Evaluating" channel="StatQuest with Josh Starmer">
+
+Bootstrapping, random feature subsets and voting: why many noisy trees beat one.
+
+</YouTube>
+
+<YouTube id="3CC4N4z3GJc" title="Gradient Boost Part 1 (of 4): Regression Main Ideas" channel="StatQuest with Josh Starmer">
+
+The idea behind gradient boosting (and so XGBoost and LightGBM): each new tree fixes the mistakes of the ones before it.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

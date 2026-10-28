@@ -64,6 +64,22 @@ An embedding table gives the same vector for "dog" wherever it appears. But orde
 2. Load a sentence-embedding model (`sentence-transformers/all-MiniLM-L6-v2`), embed 20 sentences on mixed topics, and find the most similar pair for each sentence. This model is tiny and runs fine on your GPU or even CPU.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="viZrOnJclY0" title="Word Embedding and Word2Vec, Clearly Explained!!!" channel="StatQuest with Josh Starmer">
+
+How a network learns a vector for each word, and why similar words end up close together.
+
+</YouTube>
+
+<YouTube id="TCH_1BHY58I" title="Building makemore Part 2: MLP" channel="Andrej Karpathy">
+
+Builds a small model with a learned embedding table from scratch and visualises the embeddings it learns.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

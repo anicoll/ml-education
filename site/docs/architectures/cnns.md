@@ -85,6 +85,22 @@ model.fc = nn.Linear(model.fc.in_features, num_classes)
 3. Visualise the 32 filters of the first conv layer as tiny images. Can you see edge detectors?
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="KuXjwB4LzSA" title="But what is a convolution?" channel="3Blue1Brown">
+
+What a convolution is as an operation, including the image-blurring and edge-detecting kernels CNNs learn versions of.
+
+</YouTube>
+
+<YouTube id="HGwBXDKFk9I" title="Neural Networks Part 8: Image Classification with Convolutional Neural Networks (CNNs)" channel="StatQuest with Josh Starmer">
+
+Filters, pooling and how the pieces combine into an image classifier.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

@@ -107,6 +107,16 @@ CartPole is "solved" at an average return of 500 (the episode limit). DQN on Car
 3. Stretch goal: write DQN yourself in PyTorch (a replay buffer, a target network and an MLP) and get CartPole above an average return of 400. Following the [CleanRL DQN implementation](https://docs.cleanrl.dev/rl-algorithms/dqn/), a single readable file, is a good guide.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="0iqz4tcKN58" title="Q-Learning: Model Free Reinforcement Learning and Temporal Difference Learning" channel="Steve Brunton">
+
+Temporal-difference learning and Q-learning, the foundation DQN builds on, explained step by step.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

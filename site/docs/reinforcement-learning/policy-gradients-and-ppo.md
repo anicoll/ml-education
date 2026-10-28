@@ -85,6 +85,16 @@ Policy gradients push up the probability of actions that did better than expecte
 3. Stretch goal: implement REINFORCE yourself on CartPole in about 50 lines of PyTorch. Then subtract a simple baseline (the average return) and see how much faster it learns.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="5P7I-xPq8u8" title="An introduction to Policy Gradient methods - Deep Reinforcement Learning" channel="Arxiv Insights">
+
+The intuition behind policy gradients and why PPO's clipped objective makes training stable.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

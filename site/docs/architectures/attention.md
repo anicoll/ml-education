@@ -90,6 +90,16 @@ Attention: each token asks a question (query), compares it with every token's la
 Implement `SelfAttentionHead` in `notebooks/04-architectures/attention.ipynb`. Feed it a random tensor of shape `(2, 8, 32)`, check the output shape, and print the attention weights for one example to confirm the upper triangle is zero. Then verify your output matches `F.scaled_dot_product_attention` with `is_causal=True` using the same q, k and v.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="eMlx5fFNoYc" title="Attention in transformers, step-by-step | Deep Learning Chapter 6" channel="3Blue1Brown">
+
+Queries, keys and values, the attention pattern and multiple heads, all animated.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

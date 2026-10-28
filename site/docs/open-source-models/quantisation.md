@@ -80,6 +80,16 @@ You can't train 4-bit weights directly: the steps would be too small to register
 Load the same 1.5B or 3B model in bf16, 8-bit and 4-bit. For each, record memory footprint and tokens per second, and run your ten test prompts from [Running models locally](./running-locally.md). Can you tell the difference in answer quality?
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="mNE_d-C82lI" title="Which Quantization Method is Right for You? (GPTQ vs. GGUF vs. AWQ)" channel="Maarten Grootendorst">
+
+A practical comparison of the formats in [Methods you'll meet](#methods-youll-meet), with code.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

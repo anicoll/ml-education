@@ -131,6 +131,22 @@ Create `notebooks/01-foundations/gradient-descent.ipynb`. Run the code above, th
 3. Change the data to $y = x^2$. Can a straight line fit it? What does the final loss tell you?
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="IHZwWFHWa-w" title="Gradient descent, how neural networks learn" channel="3Blue1Brown">
+
+A visual tour of the loss surface and of what "step downhill" means when there are thousands of parameters.
+
+</YouTube>
+
+<YouTube id="sDv4f4s2SB8" title="Gradient Descent, Step-by-Step" channel="StatQuest with Josh Starmer">
+
+Does gradient descent by hand on a tiny line-fitting problem, one number at a time. Watch this if the maths above felt abstract.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice
