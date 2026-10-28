@@ -80,6 +80,16 @@ Linear score → sigmoid or softmax → probability → cross-entropy loss. Memo
 Use `sklearn.datasets.make_moons` to generate two-class data. Train your from-scratch logistic regression, plot the decision boundary, and see where it fails. Keep this notebook: you'll come back and solve the same data with a neural network in Part 3.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="yIYKR4sgzI8" title="StatQuest: Logistic Regression" channel="StatQuest with Josh Starmer">
+
+The S-shaped curve, how it turns a score into a probability, and how it's used for classification.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

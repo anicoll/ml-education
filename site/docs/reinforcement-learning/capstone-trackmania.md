@@ -136,6 +136,22 @@ Switch to full image observations with a CNN policy. Expect much longer training
 Trackmania is CarRacing with real-world constraints: a real game, real time and a reward you record yourself. The concepts are the same: observations, actions, a progress-based reward and an off-policy actor-critic that makes the most of every frame.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="Dw3BZ6O_8LY" title="Training an unbeatable AI in Trackmania" channel="Yosh">
+
+One of the videos that made Trackmania RL popular. Shows the whole journey: the reward design, the failures and the long training runs. Great motivation, and a realistic preview of the problems you'll hit.
+
+</YouTube>
+
+<YouTube id="cUojVsCJ51I" title="I Trained an AI for 2 Years on Trackmania. It's Breaking Records." channel="Linesight">
+
+From the team behind the open-source Linesight project: what it took to go from a car that crashes to world-record-level runs.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

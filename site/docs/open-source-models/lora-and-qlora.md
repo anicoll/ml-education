@@ -110,6 +110,16 @@ LoRA freezes the big model and trains two small matrices per layer whose product
 Before training anything, calculate on paper: for a 3B model with 28 layers, hidden size 3072, and LoRA rank 16 on just the q and v projections (each $3072 \times 3072$), how many trainable parameters are there? What fraction of the model is that? Then check your answer with `model.print_trainable_parameters()` in the walkthrough on the next page.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="t509sv5MT0w" title="LoRA explained (and a bit about precision and quantization)" channel="DeepFindr">
+
+The low-rank trick drawn out with matrices, plus the number formats that make QLoRA possible.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

@@ -92,6 +92,22 @@ A neural network is layers of "linear transform, then non-linearity", stacked. T
 Go to the [TensorFlow Playground](https://playground.tensorflow.org/) in your browser. Pick the spiral dataset. Try to classify it with no hidden layers, then one, then several. Swap ReLU for linear activation and watch it fail. Fifteen minutes here builds more intuition than an hour of reading.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="aircAruvnKk" title="But what is a neural network? | Deep learning chapter 1" channel="3Blue1Brown">
+
+Neurons, layers, weights and biases, shown on the classic handwritten-digit example. The best first video on neural networks.
+
+</YouTube>
+
+<YouTube id="CqOfi41LfDw" title="The Essential Main Ideas of Neural Networks" channel="StatQuest with Josh Starmer">
+
+A complementary take: shows how activation functions bend and add together to fit a curve, which is why the activation function matters.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

@@ -18,6 +18,12 @@ Time to put everything together and train a language model from nothing but rand
 
 Andrej Karpathy's [Let's build GPT: from scratch, in code, spelled out](https://www.youtube.com/watch?v=kCc8FmEb1nY) builds this exact model from an empty file in about two hours, on Tiny Shakespeare. Follow along and type every line yourself into `notebooks/05-training/tiny-gpt/`. Pause and predict what the next line will be before he writes it.
 
+<YouTube id="kCc8FmEb1nY" title="Let's build GPT: from scratch, in code, spelled out." channel="Andrej Karpathy">
+
+The main video for this capstone. If you haven't done the [makemore videos](https://karpathy.ai/zero-to-hero.html) yet, they build up to this one, but it stands on its own too.
+
+</YouTube>
+
 After that, his [nanoGPT](https://github.com/karpathy/nanoGPT) repo (and its successor [build-nanogpt](https://github.com/karpathy/build-nanogpt)) is a clean, readable training codebase for the same model at larger scale.
 
 ## Suggested configurations for an 8 GB GPU
@@ -65,6 +71,8 @@ Once it works, experiment. Change one thing at a time and record results in `not
 ## Then: GPT-2 itself
 
 Karpathy's [Let's reproduce GPT-2 (124M)](https://www.youtube.com/watch?v=l8pRSuU81PU) video reproduces the real GPT-2 small. A full reproduction on 10B tokens is out of reach for a single consumer GPU in reasonable time (it's a few hours on 8 high-end data-centre GPUs), but you can follow the code, train on a slice of the data, and rent a cloud GPU for a few dollars if you want to see it through. See [When to rent a GPU](../hardware/cloud-gpus.md).
+
+<YouTube id="l8pRSuU81PU" title="Let's reproduce GPT-2 (124M)" channel="Andrej Karpathy" />
 
 :::info[Key idea]
 Everything in the big LLMs is here in miniature: tokeniser, embeddings, attention, MLPs, residuals, next-token loss, AdamW, a cosine schedule. The difference between your model and a frontier one is mostly scale, data quality and the post-training steps covered in Part 6.

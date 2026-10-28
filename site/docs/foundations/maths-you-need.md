@@ -106,6 +106,22 @@ In `notebooks/01-foundations/maths.ipynb`:
 3. Compute the derivative of $f(x) = x^3$ at $x = 2$ numerically using $(f(x+h) - f(x))/h$ with $h = 0.0001$, and compare to the exact answer.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="fNk_zzaMoSs" title="Vectors | Chapter 1, Essence of linear algebra" channel="3Blue1Brown">
+
+The first chapter of the series mentioned above. If you like it, the next few chapters (linear combinations, matrices as transformations, matrix multiplication) cover everything this course uses.
+
+</YouTube>
+
+<YouTube id="WUvTyaaNkzM" title="The essence of calculus" channel="3Blue1Brown">
+
+The opening chapter of the calculus series. Chapters 1 to 4 build the intuition for derivatives and the chain rule that backpropagation relies on.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

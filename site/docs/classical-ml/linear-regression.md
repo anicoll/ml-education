@@ -85,6 +85,16 @@ A linear model can only draw straight lines (or flat planes in higher dimensions
 In `notebooks/02-classical-ml/linear-regression.ipynb`, run the NumPy version above on the California housing dataset (standardise first). Compare your weights to scikit-learn's. Then add squared features and see whether validation error improves.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="7ArmBVF2dCs" title="Linear Regression, Clearly Explained!!!" channel="StatQuest with Josh Starmer">
+
+Least squares, R² and what "fitting a line" is actually minimising, with lots of pictures.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

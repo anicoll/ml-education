@@ -80,6 +80,16 @@ As a rough guide, a mid-range consumer GPU (an RTX 3070 or 4060 class card) trai
 Download TinyStories, tokenise the first 100k stories with the GPT-2 tokeniser, and save `train.bin` and `val.bin` in `notebooks/05-training/data/`. How many tokens did you get? How many parameters would be compute-optimal for that many tokens?
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="zduSFxRajkE" title="Let's build the GPT Tokenizer" channel="Andrej Karpathy">
+
+Builds byte-pair encoding from scratch and explains many odd LLM behaviours (spelling, arithmetic, non-English text) that trace back to tokenisation.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

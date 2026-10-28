@@ -13,6 +13,11 @@ A short, opinionated list. Better to finish two of these than start ten.
 - **3Blue1Brown, [Neural networks series](https://www.3blue1brown.com/topics/neural-networks).** Beautiful visual explanations of backprop, transformers and attention.
 - **fast.ai, [Practical Deep Learning for Coders](https://course.fast.ai/).** Top-down and practical: train real models first, understand them later.
 - **Stanford CS231n** (vision) and **CS224n** (NLP). University-level depth; lectures are online.
+- **[StatQuest with Josh Starmer](https://www.youtube.com/@statquest).** Short, friendly videos on almost every classical ML topic and many deep learning ones. Great when a concept from Part 2 won't click.
+- **Andrej Karpathy, [Intro to Large Language Models](https://www.youtube.com/watch?v=zjkBMFhNj_g) and [Deep Dive into LLMs like ChatGPT](https://www.youtube.com/watch?v=7xTGNNLPyMI).** Non-coding overviews of how LLMs are built and trained. Watch the first early on, the second once you've done Part 5.
+- **David Silver, [RL Course](https://www.youtube.com/watch?v=2pWv7GOvuf0).** The classic university course on reinforcement learning, to go with Sutton and Barto.
+
+Most lessons on this site also have a **Watch** section with hand-picked videos for that topic.
 
 ## Books
 

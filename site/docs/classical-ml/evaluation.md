@@ -53,6 +53,22 @@ Choose the metric that matches the real-world cost of mistakes, and always compa
 Create an imbalanced dataset with `make_classification(weights=[0.95, 0.05])`. Train logistic regression and report accuracy, precision, recall and F1. Then compare against a model that always predicts the majority class. Plot precision and recall as you vary the threshold from 0.1 to 0.9.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="Kdsp6soqA7o" title="Machine Learning Fundamentals: The Confusion Matrix" channel="StatQuest with Josh Starmer">
+
+How to read a confusion matrix, the table every classification metric is built from.
+
+</YouTube>
+
+<YouTube id="4jRBRDbJemM" title="ROC and AUC, Clearly Explained!" channel="StatQuest with Josh Starmer">
+
+What happens as you slide the decision threshold, and how the ROC curve and AUC summarise it.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

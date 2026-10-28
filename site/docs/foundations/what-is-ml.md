@@ -155,6 +155,22 @@ Baseline:     <what simple rule would I compare against?>
 Before going further, write down in `notes/` three problems from your own life or work where you'd *want* a learned function, using the template above. It's fine to adapt one of the worked examples to your own situation; the point is to practise seeing problems as "input → output, learned from examples". You'll revisit this list later.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="R9OHn5ZF4Uo" title="AI Doesn't Know Anything. It Just Passes Tests." channel="CGP Grey">
+
+A short, animated take on the idea in this lesson: nobody writes the rules, a model is shaped by being tested and adjusted over and over until it gets good at the test.
+
+</YouTube>
+
+<YouTube id="Gv9_4yMHFhI" title="A Gentle Introduction to Machine Learning" channel="StatQuest with Josh Starmer">
+
+Covers training vs testing data and why the model that fits the training data best isn't always the one you want. A good preview of Part 2.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

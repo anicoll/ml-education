@@ -60,6 +60,16 @@ For fine-tuning LLMs this matters even more: a thousand carefully written exampl
 Download the classic [Iris](https://scikit-learn.org/stable/datasets/toy_dataset.html#iris-dataset) or [California housing](https://scikit-learn.org/stable/datasets/real_world.html#california-housing-dataset) dataset via scikit-learn. Split it 80/10/10, standardise the features using training statistics only, and plot a histogram of each feature before and after.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="fSytzGwwBVw" title="Machine Learning Fundamentals: Cross Validation" channel="StatQuest with Josh Starmer">
+
+Why you hold data back for testing, and how cross validation squeezes more out of a small dataset by rotating which part is held back.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

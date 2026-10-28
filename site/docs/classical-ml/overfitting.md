@@ -60,6 +60,16 @@ print(scores.mean(), scores.std())
 Generate 30 noisy points from $y = \sin(x)$. Fit polynomials of degree 1, 3, 9 and 20 with `numpy.polyfit`, and plot each against the data. Then generate 1,000 fresh points and compute the error of each fit on them. Which degree wins? Now add L2 regularisation (`sklearn.linear_model.Ridge` with polynomial features) to the degree-20 model and see what happens.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="EuBBz3bI-aA" title="Machine Learning Fundamentals: Bias and Variance" channel="StatQuest with Josh Starmer">
+
+The classic picture of underfitting vs overfitting, in a few minutes.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

@@ -86,6 +86,16 @@ Here's a complete plan for one project, to show the level of detail that's usefu
 Pick a fine-tuning project for yourself and write a one-page plan in `notes/fine-tuning-plan.md`, following the structure of the worked example: the behaviour you want, why prompting alone isn't enough, where you'll get 300–1,000 examples, which model and method, and how you'll judge success. Borrowing one of the ideas above is completely fine.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="7xTGNNLPyMI" title="Deep Dive into LLMs like ChatGPT" channel="Andrej Karpathy">
+
+The full story of how a chat model is made, from pre-training through supervised fine-tuning to reinforcement learning, for a general audience. It's long; the post-training sections are the most relevant to this part.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

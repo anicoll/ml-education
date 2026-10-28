@@ -60,6 +60,16 @@ Always overfit one batch first. It takes two minutes and catches a huge fraction
 Deliberately break your MNIST script in each of the "classic bugs" ways above, one at a time, and note in `notes/` what each one does to the loss curve. Next time you see that shape, you'll recognise it.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="P6sfmUTpUmc" title="Building makemore Part 3: Activations & Gradients, BatchNorm" channel="Andrej Karpathy">
+
+The second half is a masterclass in the diagnostics from [Monitoring the gradients](#monitoring-the-gradients): activation histograms, gradient histograms and the update-to-data ratio.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

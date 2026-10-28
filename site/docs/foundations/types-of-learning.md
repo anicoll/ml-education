@@ -79,6 +79,16 @@ When you fine-tune an open-source model in Part 6, you'll be doing step 2 (and o
 Supervised = learn from labelled examples. Self-supervised = make labels out of the data itself. That second idea is what made LLMs possible.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="zjkBMFhNj_g" title="[1hr Talk] Intro to Large Language Models" channel="Andrej Karpathy">
+
+The first half walks through exactly the pipeline in [How a modern chat model is built](#how-a-modern-chat-model-is-built): pre-training on internet text, then fine-tuning into an assistant. The best one-hour overview of LLMs there is.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

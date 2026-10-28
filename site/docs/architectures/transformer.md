@@ -115,6 +115,22 @@ The core is the same. The refinements:
 Read [The Illustrated Transformer](https://jalammar.github.io/illustrated-transformer/) by Jay Alammar for a visual walk-through. Then copy the `GPT` class above into a notebook, instantiate it with a vocabulary of 65 (characters), and check that a random input of shape `(4, 32)` produces logits of shape `(4, 32, 65)`. Count its parameters.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="wjZofJX0v4M" title="Transformers, the tech behind LLMs | Deep Learning Chapter 5" channel="3Blue1Brown">
+
+The whole transformer from tokens to next-token probabilities, including embeddings, unembedding and softmax.
+
+</YouTube>
+
+<YouTube id="zxQyTK8quyY" title="Transformer Neural Networks, ChatGPT's foundation, Clearly Explained!!!" channel="StatQuest with Josh Starmer">
+
+Walks one example all the way through the architecture, piece by piece.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

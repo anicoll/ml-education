@@ -144,6 +144,16 @@ Put this script in `notebooks/03-neural-networks/mnist_mlp.py` and run it on you
 3. Replace the MLP with a single `nn.Linear(784, 10)` (that's softmax regression). How much accuracy do the hidden layers buy you?
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="PaCmpygFfXo" title="The spelled-out intro to language modeling: building makemore" channel="Andrej Karpathy">
+
+Part 2 of Zero to Hero, and a great hands-on PyTorch tutorial in disguise: tensors, indexing, broadcasting and a first `loss.backward()` training loop, all on a tiny name-generating model.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice

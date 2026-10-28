@@ -79,6 +79,16 @@ for i, (x, y) in enumerate(loader):
 Train the same small MLP on MNIST with SGD (lr 0.1), SGD with momentum, and AdamW (lr 1e-3). Plot all three loss curves on one chart. Then try AdamW at lr 1e-1 and 1e-5 to see "too high" and "too low" in practice.
 :::
 
+## Watch
+
+Optional videos that explain this lesson's ideas another way. Click a thumbnail to play it here, or the title to open it on YouTube.
+
+<YouTube id="NE88eqLngkg" title="Optimization for Deep Learning (Momentum, RMSprop, AdaGrad, Adam)" channel="DeepBean">
+
+Animations of how momentum, RMSprop and Adam move across a loss surface compared with plain SGD.
+
+</YouTube>
+
 ## Check your understanding
 
 <MultipleChoice
