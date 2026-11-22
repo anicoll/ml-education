@@ -40,6 +40,11 @@ Most lessons on this site also have a **Watch** section with hand-picked videos 
 - [Hugging Face LLM Course](https://huggingface.co/learn). Transformers, datasets, fine-tuning, all with their libraries.
 - [PEFT docs](https://huggingface.co/docs/peft) and [TRL docs](https://huggingface.co/docs/trl). Reference for LoRA, QLoRA, SFT and DPO.
 
+## Working with AI agents
+
+- **Lauren Tan ([@poteto](https://x.com/poteto)), [All Code Is Slop (Except Mine)](https://www.youtube.com/watch?v=O_zcc6Xl12g).** A short talk on building an environment you can trust agents in. The basis of Part 9.
+- [pstack](https://github.com/cursor/plugins/tree/main/pstack). Her public collection of agent skills for Cursor and Claude Code, with a [guide](https://github.com/cursor/plugins/blob/main/pstack/docs/guide/README.md).
+
 ## Papers worth reading
 
 You can read these now. Skim for the main idea and the diagrams; don't worry about every equation.
