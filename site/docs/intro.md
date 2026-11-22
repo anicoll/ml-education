@@ -24,6 +24,7 @@ Machine learning is **writing programs whose behaviour is learned from data inst
 | 6. Open-source models | Hugging Face, quantisation, LoRA, QLoRA | QLoRA fine-tune an LLM on an NVIDIA GPU or a Mac |
 | 7. Reinforcement learning | Rewards, Q-learning, DQN, policy gradients, PPO | Train agents in Gymnasium, then an AI that drives in Trackmania |
 | 8. Your hardware | NVIDIA vs Apple Silicon, memory budgeting, setup, when to rent | A working PyTorch environment on CUDA and/or MPS |
+| 9. Working with AI agents | Agents vs bots, loops, trust, verification | A habit of turning agent corrections into checks and skills |
 
 ## How each lesson works
 

@@ -76,6 +76,12 @@ Follow [Capstone: an AI that drives in Trackmania](./reinforcement-learning/caps
 
 **Milestone:** An agent trained with TMRL that completes a track you built yourself.
 
+## Alongside everything: work with AI agents
+
+Part 9 can be read at any point, and is worth starting early. Use agents to explain concepts and errors while you learn, then to help with the exercises once you can check their work.
+
+**Milestone:** A correction log from five agent sessions, with the most common correction turned into a check or a small skill ([Improving your AI usage](./ai-agents/improving-your-ai-usage.md)).
+
 ## After that
 
 Some directions once the basics are solid:
